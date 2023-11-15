@@ -55,11 +55,14 @@ public class TrangChu_GUI extends javax.swing.JFrame {
             Jpanel_PhieuNhap.setVisible(false);
         }
 
-        setSize(1200, 720);
+//        setSize(1200, 720);
         GraphicsEnvironment env=GraphicsEnvironment.getLocalGraphicsEnvironment();
         Rectangle bounds=env.getMaximumWindowBounds();
         setSize(bounds.width, bounds.height);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+         System.out.println("Width: " + bounds.width);
+        System.out.println("Height: " + bounds.height);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -525,6 +528,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         Jpanel_Menu.setBackground(new java.awt.Color(0, 51, 51));
         Jpanel_Menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Jpanel_Menu.setPreferredSize(new java.awt.Dimension(180, 748));
         Jpanel_Menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Jpanel_Users.setBackground(new java.awt.Color(0, 51, 51));
@@ -542,7 +546,6 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         lbl_ChucVu.setForeground(new java.awt.Color(255, 255, 255));
         lbl_ChucVu.setText("Quản Lý");
         Jpanel_Users.add(lbl_ChucVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 110, 30));
-        lbl_ChucVu.getAccessibleContext().setAccessibleName("Quản Lý");
 
         Jpanel_Menu.add(Jpanel_Users, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 80));
 
@@ -693,22 +696,23 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         Jpanel_Menu.add(Jpanel_Time, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 180, 18));
 
-        getContentPane().add(Jpanel_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 700));
+        getContentPane().add(Jpanel_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 748));
 
         Jpanel_Main.setBackground(new java.awt.Color(204, 204, 255));
+        Jpanel_Main.setPreferredSize(new java.awt.Dimension(1186, 748));
 
         javax.swing.GroupLayout Jpanel_MainLayout = new javax.swing.GroupLayout(Jpanel_Main);
         Jpanel_Main.setLayout(Jpanel_MainLayout);
         Jpanel_MainLayout.setHorizontalGroup(
             Jpanel_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1020, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         Jpanel_MainLayout.setVerticalGroup(
             Jpanel_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        getContentPane().add(Jpanel_Main, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1020, 700));
+        getContentPane().add(Jpanel_Main, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1186, 748));
 
         jMenu1.setText("Hệ Thống");
         jMenu1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N

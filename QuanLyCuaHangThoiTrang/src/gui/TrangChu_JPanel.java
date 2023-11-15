@@ -19,9 +19,9 @@ public class TrangChu_JPanel extends javax.swing.JPanel {
     public TrangChu_JPanel() {
         initComponents();
         setVisible(true);
-        setBounds(0, 0, 1020, 720);
+        setBounds(0, 0, 1186, 748);
          ImageIcon img_TrangChu = new ImageIcon("src\\pic\\icon\\hinhnenTrangChu.png");
-    Image scaled_TrangChu = img_TrangChu.getImage().getScaledInstance(1020, 720, Image.SCALE_SMOOTH);
+    Image scaled_TrangChu = img_TrangChu.getImage().getScaledInstance(1186, 748, Image.SCALE_SMOOTH);
     img_TrangChu = new ImageIcon(scaled_TrangChu);
     lbl_IConTrangChu.setIcon(img_TrangChu);
     }
@@ -37,8 +37,12 @@ public class TrangChu_JPanel extends javax.swing.JPanel {
 
         lbl_IConTrangChu = new javax.swing.JLabel();
 
+        setMinimumSize(new java.awt.Dimension(1186, 748));
+        setPreferredSize(new java.awt.Dimension(1186, 748));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        add(lbl_IConTrangChu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 720));
+
+        lbl_IConTrangChu.setPreferredSize(new java.awt.Dimension(1186, 748));
+        add(lbl_IConTrangChu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1186, 748));
     }// </editor-fold>//GEN-END:initComponents
 
 
