@@ -4,9 +4,11 @@ import connectDB.ConnectDB;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -26,7 +28,10 @@ import javax.swing.Timer;
 import util.ToanCuc;
 
 public class TrangChu_GUI extends javax.swing.JFrame {
-
+    
+            // Dimention
+//        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        
     public TrangChu_GUI() {
 
         initComponents();
@@ -55,13 +60,19 @@ public class TrangChu_GUI extends javax.swing.JFrame {
             Jpanel_PhieuNhap.setVisible(false);
         }
 
-//        setSize(1200, 720);
-        GraphicsEnvironment env=GraphicsEnvironment.getLocalGraphicsEnvironment();
-        Rectangle bounds=env.getMaximumWindowBounds();
-        setSize(bounds.width, bounds.height);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-         System.out.println("Width: " + bounds.width);
-        System.out.println("Height: " + bounds.height);
+        setSize(1366, 768);
+//        GraphicsEnvironment env=GraphicsEnvironment.getLocalGraphicsEnvironment();
+//        Rectangle bounds=env.getMaximumWindowBounds();
+//        setSize(bounds.width, bounds.height);
+//        setExtendedState(JFrame.MAXIMIZED_BOTH);
+//         System.out.println("Width: " + bounds.width);
+//        System.out.println("Height: " + bounds.height);
+
+//         dimension
+//                setSize(screen.width, screen.height);
+//        
+//         System.out.println("Width: " + screen.width);
+//        System.out.println("Height: " + screen.height);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -528,6 +539,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         Jpanel_Menu.setBackground(new java.awt.Color(0, 51, 51));
         Jpanel_Menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Jpanel_Menu.setMinimumSize(new java.awt.Dimension(180, 672));
         Jpanel_Menu.setPreferredSize(new java.awt.Dimension(180, 748));
         Jpanel_Menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
