@@ -29,7 +29,7 @@
               <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="panel_ThongTin" alignment="0" pref="1176" max="32767" attributes="0"/>
-                  <Component id="panel_ThaoTac" alignment="0" pref="1176" max="32767" attributes="0"/>
+                  <Component id="panel_ThaoTac" alignment="0" pref="1345" max="32767" attributes="0"/>
                   <Component id="panel_DanhSachPhieuNhapHang" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
@@ -197,7 +197,7 @@
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jdc_NgayNhap">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jdc_NgayNhap.setDate(new Date());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jdc_NgayNhap.setDate(new Date());&#xa;jdc_NgayNhap.setLocale(new Locale(&quot;vi&quot;,&quot;VN&quot;));&#xa;jdc_NgayNhap.setSelectableDateRange(new Date(), null);"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -422,7 +422,7 @@
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jdc_NgayNhap_Search">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jdc_NgayNhap_Search.setDate(new Date());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jdc_NgayNhap_Search.setDate(new Date());&#xa;jdc_NgayNhap_Search.setLocale(new Locale(&quot;vi&quot;,&quot;VN&quot;));"/>
           </AuxValues>
         </Component>
       </SubComponents>

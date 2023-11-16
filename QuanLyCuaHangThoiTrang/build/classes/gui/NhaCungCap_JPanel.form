@@ -28,9 +28,9 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="panel_DanhSachNhaCungCap" pref="1176" max="32767" attributes="0"/>
-                  <Component id="panel_ThaoTac" alignment="0" pref="1176" max="32767" attributes="0"/>
-                  <Component id="panel_ThongTin" pref="1176" max="32767" attributes="0"/>
+                  <Component id="panel_DanhSachNhaCungCap" pref="1010" max="32767" attributes="0"/>
+                  <Component id="panel_ThaoTac" alignment="0" pref="1010" max="32767" attributes="0"/>
+                  <Component id="panel_ThongTin" pref="1010" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
           </Group>
@@ -46,7 +46,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="panel_ThaoTac" min="-2" pref="59" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-              <Component id="panel_DanhSachNhaCungCap" pref="547" max="32767" attributes="0"/>
+              <Component id="panel_DanhSachNhaCungCap" pref="499" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
