@@ -278,7 +278,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txt_SoLuongTonKho.setText(&quot;0&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txt_SoLuongTonKho.setText(&quot;0&quot;);&#xa;txt_SoLuongTonKho.setEditable(false);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lbl_DanhMuc">

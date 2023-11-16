@@ -28,7 +28,10 @@ import javax.swing.Timer;
 import util.ToanCuc;
 
 public class TrangChu_GUI extends javax.swing.JFrame {
-
+    
+            // Dimention
+//        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        
     public TrangChu_GUI() {
 
         initComponents();
@@ -529,7 +532,9 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         Jpanel_Menu.setBackground(new java.awt.Color(0, 51, 51));
         Jpanel_Menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Jpanel_Menu.setPreferredSize(new java.awt.Dimension(180, 768));
+
+        Jpanel_Menu.setMinimumSize(new java.awt.Dimension(180, 672));
+        Jpanel_Menu.setPreferredSize(new java.awt.Dimension(180, 748));
         Jpanel_Menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Jpanel_Users.setBackground(new java.awt.Color(0, 51, 51));

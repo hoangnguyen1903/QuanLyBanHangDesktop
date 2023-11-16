@@ -175,6 +175,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
 
         txt_SoLuongTonKho.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txt_SoLuongTonKho.setText("0");
+        txt_SoLuongTonKho.setEditable(false);
 
         lbl_DanhMuc.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         lbl_DanhMuc.setText("Danh mục");
