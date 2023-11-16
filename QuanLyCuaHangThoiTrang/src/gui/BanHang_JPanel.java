@@ -34,7 +34,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
 
     public BanHang_JPanel() {
         initComponents();
-         setBounds(0, 0, 1020, 720);
+         setBounds(0, 0, 1186, 748);
          
         ImageIcon img_btnTimKiemSanPham = new ImageIcon("src//pic//icon//buttonTimKiem.png");
         Image scaled_btnTimKiemSanPham = img_btnTimKiemSanPham.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
@@ -348,7 +348,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
                             .addComponent(lbl_DonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
 
-        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 1000, 140));
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 1170, 140));
 
         jPanel3.setBackground(new java.awt.Color(187, 205, 197));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Giỏ hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
@@ -399,9 +399,9 @@ public class BanHang_JPanel extends javax.swing.JPanel {
             table_GioHang.getColumnModel().getColumn(6).setPreferredWidth(100);
         }
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 980, 290));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 1150, 330));
 
-        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 1000, 320));
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 1170, 360));
 
         jPanel4.setBackground(new java.awt.Color(187, 205, 197));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Thông tin hoá đơn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
@@ -556,7 +556,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
                                         .addComponent(jLabel9)
                                         .addGap(267, 267, 267)
                                         .addComponent(lbl_ThueVAT, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
@@ -642,7 +642,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, 1000, 160));
+        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 580, 1170, 160));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_TimKiemSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemSanPhamActionPerformed

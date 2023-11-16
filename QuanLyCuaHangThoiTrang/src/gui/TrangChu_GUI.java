@@ -4,9 +4,11 @@ import connectDB.ConnectDB;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -46,22 +48,21 @@ public class TrangChu_GUI extends javax.swing.JFrame {
             img_User = new ImageIcon(scaled_Users);
             lbl_Users.setIcon(img_User);
         }
-        
-        if(tc.getChucvu().equals("Nhân viên")) {
+
+        if (tc.getChucvu().equals("Nhân viên")) {
             Jpanel_NhanVien.setVisible(false);
             Jpanel_NhaCungCap.setVisible(false);
             Jpanel_KhuyenMai.setVisible(false);
             Jpanel_TaiKhoan.setVisible(false);
             Jpanel_PhieuNhap.setVisible(false);
         }
-
-//        setSize(1200, 720);
-        GraphicsEnvironment env=GraphicsEnvironment.getLocalGraphicsEnvironment();
-        Rectangle bounds=env.getMaximumWindowBounds();
-        setSize(bounds.width, bounds.height);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-         System.out.println("Width: " + bounds.width);
-        System.out.println("Height: " + bounds.height);
+        setSize(1366, 768);
+//        GraphicsEnvironment env=GraphicsEnvironment.getLocalGraphicsEnvironment();
+//        Rectangle bounds=env.getMaximumWindowBounds();
+//        setSize(bounds.width, bounds.height);
+//        setExtendedState(JFrame.MAXIMIZED_BOTH);
+//         System.out.println("Width: " + bounds.width);
+//        System.out.println("Height: " + bounds.height);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -528,7 +529,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         Jpanel_Menu.setBackground(new java.awt.Color(0, 51, 51));
         Jpanel_Menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Jpanel_Menu.setPreferredSize(new java.awt.Dimension(180, 748));
+        Jpanel_Menu.setPreferredSize(new java.awt.Dimension(180, 768));
         Jpanel_Menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Jpanel_Users.setBackground(new java.awt.Color(0, 51, 51));
@@ -699,7 +700,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         getContentPane().add(Jpanel_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 748));
 
         Jpanel_Main.setBackground(new java.awt.Color(204, 204, 255));
-        Jpanel_Main.setPreferredSize(new java.awt.Dimension(1186, 748));
+        Jpanel_Main.setPreferredSize(new java.awt.Dimension(1355, 843));
 
         javax.swing.GroupLayout Jpanel_MainLayout = new javax.swing.GroupLayout(Jpanel_Main);
         Jpanel_Main.setLayout(Jpanel_MainLayout);
@@ -709,7 +710,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         );
         Jpanel_MainLayout.setVerticalGroup(
             Jpanel_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 748, Short.MAX_VALUE)
         );
 
         getContentPane().add(Jpanel_Main, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1186, 748));

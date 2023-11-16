@@ -11,7 +11,7 @@ public class DoiTra_JPanel extends javax.swing.JPanel {
      */
     public DoiTra_JPanel() {
         initComponents();
-        setBounds(0, 0, 1020, 700);
+        setBounds(0, 0, 1186, 748);
         cartLayout = new CardLayout();
         panel_content.setLayout(cartLayout);
         
@@ -60,7 +60,7 @@ public class DoiTra_JPanel extends javax.swing.JPanel {
         });
         panel_menu.add(btn_QuanLyDoiTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 180, 30));
 
-        add(panel_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1000, 30));
+        add(panel_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1170, 30));
 
         javax.swing.GroupLayout panel_contentLayout = new javax.swing.GroupLayout(panel_content);
         panel_content.setLayout(panel_contentLayout);
@@ -73,7 +73,7 @@ public class DoiTra_JPanel extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        add(panel_content, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 1000, 640));
+        add(panel_content, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 1170, 690));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_TaoDoiTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TaoDoiTraActionPerformed

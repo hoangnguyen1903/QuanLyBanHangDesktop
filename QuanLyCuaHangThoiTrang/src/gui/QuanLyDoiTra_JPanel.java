@@ -14,7 +14,7 @@ public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
     
     public QuanLyDoiTra_JPanel() {
         initComponents();
-        setBounds(0, 0, 1020, 700);
+        setBounds(0, 0, 1173, 699);
         
         ImageIcon img_btnTimKiem = new ImageIcon("src//pic//icon//buttonTimKiem.png");
         Image scaled_btnTimKiem = img_btnTimKiem.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
@@ -132,7 +132,7 @@ public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
         });
         Jpanel_ThaoTac.add(btn_XemChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, 140, 30));
 
-        add(Jpanel_ThaoTac, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1000, 100));
+        add(Jpanel_ThaoTac, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1170, 100));
 
         Jpanel_Table.setBackground(new java.awt.Color(187, 205, 197));
         Jpanel_Table.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Danh sách đơn đổi trả", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
@@ -141,9 +141,9 @@ public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
 
         jScrollPane1.setViewportView(table_DanhSachDoiTra);
 
-        Jpanel_Table.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 980, 470));
+        Jpanel_Table.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 1120, 520));
 
-        add(Jpanel_Table, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 1000, 500));
+        add(Jpanel_Table, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 1170, 550));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_MaDonDoiTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_MaDonDoiTraActionPerformed

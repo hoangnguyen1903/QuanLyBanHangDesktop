@@ -39,7 +39,7 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
      */
     public NhanVien_JPanel() {
         initComponents();
-        setBounds(0, 0, 1020, 700); 
+        setBounds(0, 0, 1186, 748); 
         ImageIcon img_btnTimKiem = new ImageIcon("src//pic//icon//buttonTimKiem.png");
         Image scaled_btnTimKiem = img_btnTimKiem.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
         img_btnTimKiem = new ImageIcon(scaled_btnTimKiem);
@@ -126,7 +126,7 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
         lbl_QuanLyNV.setText("QUẢN LÝ NHÂN VIÊN");
         panel_QuanLyNV.add(lbl_QuanLyNV);
 
-        add(panel_QuanLyNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 1000, -1));
+        add(panel_QuanLyNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1186, -1));
 
         panel_ThongTinNV.setBackground(new java.awt.Color(187, 205, 197));
         panel_ThongTinNV.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Thông tin nhân viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
@@ -364,7 +364,7 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
                 .addGap(44, 44, 44))
         );
 
-        add(panel_ThongTinNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 66, 1000, 160));
+        add(panel_ThongTinNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 66, 1175, 160));
 
         panel_ThaoTaoNV.setBackground(new java.awt.Color(187, 205, 197));
         panel_ThaoTaoNV.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Các thao tác", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
@@ -466,7 +466,7 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
                 .addGap(17, 17, 17))
         );
 
-        add(panel_ThaoTaoNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 1000, 80));
+        add(panel_ThaoTaoNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 230, 1175, 80));
 
         panel_TableNhanVien.setBackground(new java.awt.Color(187, 205, 197));
         panel_TableNhanVien.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Bảng danh sách nhân viên", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
@@ -487,9 +487,9 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(table_DanhSachNV);
 
-        panel_TableNhanVien.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 979, 350));
+        panel_TableNhanVien.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 1150, 400));
 
-        add(panel_TableNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 1000, 380));
+        add(panel_TableNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 1170, 430));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_emailActionPerformed
