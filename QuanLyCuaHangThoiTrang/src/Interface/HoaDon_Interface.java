@@ -20,5 +20,7 @@ public interface HoaDon_Interface {
     
     // Nguyen Huy Hoang
     public boolean themHoaDon(HoaDonEntity hoaDon, ArrayList<ChiTietHoaDonEntity> danhSachCTHD);
+    public boolean luuTamHoaDon(HoaDonEntity hoaDon, ArrayList<ChiTietHoaDonEntity> danhSachCTHD);
     public HoaDonEntity timKiemHoaDonTheoMa(String maHD);
+    public HoaDonEntity timKiemHoaDonChuaThanhToan(String sdt);
 }

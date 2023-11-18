@@ -6,6 +6,7 @@ import entity.GioiTinhEnum;
 import entity.HinhThucDoiTraEnum;
 import entity.KichThuocEnum;
 import entity.MauSacEnum;
+import entity.TinhTrangHDEnum;
 import entity.TinhTrangNCCEnum;
 import entity.TinhTrangNVEnum;
 import entity.TinhTrangSPEnum;
@@ -115,18 +116,28 @@ public class ConvertStringToEnum {
         if(tinhTrangSP.equals("Đang bán")) {
             return TinhTrangSPEnum.DANGBAN;
         }
-        if(tinhTrangSP.equals("Ca 2")) {
+        if(tinhTrangSP.equals("Ngừng bán")) {
             return TinhTrangSPEnum.NGUNGBAN;
         }
         return TinhTrangSPEnum.DANGBAN;
+    }
+    
+    public TinhTrangHDEnum TinhTrangHDToEnum(String tinhTrangHD) {
+        if(tinhTrangHD.equals("Đã thanh toán")) {
+            return TinhTrangHDEnum.DATHANHTOAN;
+        }
+        if(tinhTrangHD.equals("Chưa thanh toán")) {
+            return TinhTrangHDEnum.CHUATHANHTOAN;
+        }
+        return TinhTrangHDEnum.CHUATHANHTOAN;
     }
     
     public HinhThucDoiTraEnum HinhThucDTToEnum(String hinhThuc) {
         if(hinhThuc.equals("Hoàn trả")) {
             return HinhThucDoiTraEnum.HOANTRA;
         }
-        if(hinhThuc.equals("Đổi sản phẩm khác")) {
-            return HinhThucDoiTraEnum.DOISANPHAMKHAC;
+        if(hinhThuc.equals("Đổi mới")) {
+            return HinhThucDoiTraEnum.DOIMOI;
         }
         return HinhThucDoiTraEnum.HOANTRA;
     }

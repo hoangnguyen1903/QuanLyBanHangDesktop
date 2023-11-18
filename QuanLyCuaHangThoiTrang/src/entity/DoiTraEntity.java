@@ -4,29 +4,35 @@ import java.sql.Date;
 import java.util.Objects;
 
 public class DoiTraEntity {
-	private String maDYCDT;
+	private String maDT;
 	private HoaDonEntity hoaDon;
 	private NhanVienEntity nhanVien;
 	private HinhThucDoiTraEnum hinhThucDoiTra;
 	private Date thoiGianDoiTra;
+        private double tongTien;
 
         public DoiTraEntity() {
         }
+        
+        public DoiTraEntity(String maDT) {
+            this.maDT = maDT;
+        }
 
-        public DoiTraEntity(String maDYCDT, HoaDonEntity hoaDon, NhanVienEntity nhanVien, HinhThucDoiTraEnum hinhThucDoiTra, Date thoiGianDoiTra) {
-            this.maDYCDT = maDYCDT;
+        public DoiTraEntity(String maDT, HoaDonEntity hoaDon, NhanVienEntity nhanVien, HinhThucDoiTraEnum hinhThucDoiTra, Date thoiGianDoiTra, double tongTien) {
+            this.maDT = maDT;
             this.hoaDon = hoaDon;
             this.nhanVien = nhanVien;
             this.hinhThucDoiTra = hinhThucDoiTra;
             this.thoiGianDoiTra = thoiGianDoiTra;
+            this.tongTien = tongTien;
         }
 
-        public String getMaDYCDT() {
-            return maDYCDT;
+        public String getMaDT() {
+            return maDT;
         }
 
-        public void setMaDYCDT(String maDYCDT) {
-            this.maDYCDT = maDYCDT;
+        public void setMaDT(String maDT) {
+            this.maDT = maDT;
         }
 
         public HoaDonEntity getHoaDon() {
@@ -61,14 +67,22 @@ public class DoiTraEntity {
             this.thoiGianDoiTra = thoiGianDoiTra;
         }
 
+        public double getTongTien() {
+            return tongTien;
+        }
+
+        public void setTongTien(double tongTien) {
+            this.tongTien = tongTien;
+        }
+
         @Override
         public String toString() {
-            return "DonYeuCauDoiTraEntity{" + "maDYCDT=" + maDYCDT + ", hoaDon=" + hoaDon + ", nhanVien=" + nhanVien + ", hinhThucDoiTra=" + hinhThucDoiTra + ", thoiGianDoiTra=" + thoiGianDoiTra + '}';
+            return "DoiTraEntity{" + "maDT=" + maDT + ", hoaDon=" + hoaDon + ", nhanVien=" + nhanVien + ", hinhThucDoiTra=" + hinhThucDoiTra + ", thoiGianDoiTra=" + thoiGianDoiTra + ", tongTien=" + tongTien + '}';
         }
-        
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(maDYCDT);
+		return Objects.hash(maDT);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -79,7 +93,7 @@ public class DoiTraEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		DoiTraEntity other = (DoiTraEntity) obj;
-		return Objects.equals(maDYCDT, other.maDYCDT);
+		return Objects.equals(maDT, other.maDT);
 	}
 	
 	
