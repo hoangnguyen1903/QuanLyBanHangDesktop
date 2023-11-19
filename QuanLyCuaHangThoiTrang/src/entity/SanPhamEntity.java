@@ -14,6 +14,7 @@ public class SanPhamEntity {
     private ChatLieuEntity chatLieu;
     private ThuongHieuEntity thuongHieu;
     private DanhMucSanPhamEntity danhMucSanPham;
+    private ChuongTrinhKhuyenMaiEntity chuongTrinhKhuyenMai;
     private String imgUrl;
 
     public SanPhamEntity() {
@@ -24,7 +25,7 @@ public class SanPhamEntity {
         this.maSP = maSP;
     }
 
-    public SanPhamEntity(String maSP, String tenSP, KichThuocEnum kichThuoc, MauSacEnum mauSac, double donGia, int soLuongTonKho, TinhTrangSPEnum tinhTrang, ChatLieuEntity chatLieu, ThuongHieuEntity thuongHieu, DanhMucSanPhamEntity danhMucSanPham, String imgUrl) {
+    public SanPhamEntity(String maSP, String tenSP, KichThuocEnum kichThuoc, MauSacEnum mauSac, double donGia, int soLuongTonKho, TinhTrangSPEnum tinhTrang, ChatLieuEntity chatLieu, ThuongHieuEntity thuongHieu, DanhMucSanPhamEntity danhMucSanPham, ChuongTrinhKhuyenMaiEntity chuongTrinhKhuyenMai, String imgUrl) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.kichThuoc = kichThuoc;
@@ -35,6 +36,7 @@ public class SanPhamEntity {
         this.chatLieu = chatLieu;
         this.thuongHieu = thuongHieu;
         this.danhMucSanPham = danhMucSanPham;
+        this.chuongTrinhKhuyenMai = chuongTrinhKhuyenMai;
         this.imgUrl = imgUrl;
     }
 
@@ -118,6 +120,14 @@ public class SanPhamEntity {
         this.danhMucSanPham = danhMucSanPham;
     }
 
+    public ChuongTrinhKhuyenMaiEntity getChuongTrinhKhuyenMai() {
+        return chuongTrinhKhuyenMai;
+    }
+
+    public void setChuongTrinhKhuyenMai(ChuongTrinhKhuyenMaiEntity chuongTrinhKhuyenMai) {
+        this.chuongTrinhKhuyenMai = chuongTrinhKhuyenMai;
+    }
+
     public String getImgUrl() {
         return imgUrl;
     }
@@ -125,12 +135,14 @@ public class SanPhamEntity {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
-    public double tinhGiaBan(){
-        return this.donGia*1.4;
+
+    public double tinhGiaBan() {
+        return this.donGia * 1.4;
     }
+
     @Override
     public String toString() {
-        return "SanPhamEntity{" + "maSP=" + maSP + ", tenSP=" + tenSP + ", kichThuoc=" + kichThuoc + ", mauSac=" + mauSac + ", donGia=" + donGia + ", soLuongTonKho=" + soLuongTonKho + ", tinhTrang=" + tinhTrang + ", chatLieu=" + chatLieu + ", thuongHieu=" + thuongHieu + ", danhMucSanPham=" + danhMucSanPham + ", imgUrl=" + imgUrl + '}';
+        return "SanPhamEntity{" + "maSP=" + maSP + ", tenSP=" + tenSP + ", kichThuoc=" + kichThuoc + ", mauSac=" + mauSac + ", donGia=" + donGia + ", soLuongTonKho=" + soLuongTonKho + ", tinhTrang=" + tinhTrang + ", chatLieu=" + chatLieu + ", thuongHieu=" + thuongHieu + ", danhMucSanPham=" + danhMucSanPham + ", chuongTrinhKhuyenMai=" + chuongTrinhKhuyenMai + ", imgUrl=" + imgUrl + '}';
     }
 
     @Override
@@ -151,30 +163,5 @@ public class SanPhamEntity {
         }
         SanPhamEntity other = (SanPhamEntity) obj;
         return Objects.equals(maSP, other.maSP);
-    }
-// Kiểm tra xem sản phẩm có chứa tiêu chí tìm kiếm không
-
-    public boolean matchesSearchTerm(String search) {
-        if (maSP.contains(search)
-                || tenSP.contains(search)
-                || kichThuoc.toString().contains(search)
-                || mauSac.toString().contains(search)
-                || Double.toString(donGia).contains(search)
-                || tinhTrang.toString().contains(search)
-                || Integer.toString(soLuongTonKho).contains(search)
-                ) {
-            return true;
-        }
-        if (chatLieu != null && chatLieu.getMaChatLieu() != null && chatLieu.getMaChatLieu().contains(search)) {
-            return true;
-
-        }
-        if(thuongHieu != null &&  thuongHieu.getMaThuongHieu() != null && thuongHieu.getMaThuongHieu().contains(search)){
-            return true;
-        }
-        if(danhMucSanPham != null && danhMucSanPham.getMaDanhMuc() != null && danhMucSanPham.getMaDanhMuc().contains(search)){
-            return true;
-        }
-        return false;
     }
 }

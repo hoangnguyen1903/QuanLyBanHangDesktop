@@ -43,5 +43,58 @@ public class ChatLieu_dao implements ChatLieu_Interface{
         }
         return dsCL;
     }
+
+    @Override
+    public String layTenChatLieuTheoMa(String maChatLieu) {
+        String tenChatLieu = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+
+            String sql = "SELECT tenChatLieu FROM ChatLieu WHERE maChatLieu = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, maChatLieu);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                tenChatLieu = rs.getString("tenChatLieu");
+            }
+
+            ps.close();
+            rs.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChatLieu_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tenChatLieu;
+    }
+
+    @Override
+    public String layMaChatLieuTheoTen(String tenChatLieu) {
+        String maChatLieu = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+            String sql = "SELECT maChatLieu FROM ChatLieu WHERE tenChatLieu = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, tenChatLieu);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                maChatLieu = rs.getString("maChatLieu");
+            }
+
+            ps.close();
+            rs.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChatLieu_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return maChatLieu;
+    }
     
 }

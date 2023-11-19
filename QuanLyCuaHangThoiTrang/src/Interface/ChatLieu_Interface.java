@@ -13,4 +13,6 @@ import java.util.ArrayList;
  */
 public interface ChatLieu_Interface {
     public ArrayList<ChatLieuEntity> getAllCL();
+    public String layTenChatLieuTheoMa(String maChatLieu);
+    public String layMaChatLieuTheoTen(String tenChatLieu);
 }

@@ -19,5 +19,15 @@ public class ThuongHieu_bus implements ThuongHieu_Interface{
     public ArrayList<ThuongHieuEntity> getAllTH() {
         return th_dao.getAllTH();
     }
+
+    @Override
+    public String layTenThuongHieuTheoMa(String maThuongHieu) {
+        return th_dao.layTenThuongHieuTheoMa(maThuongHieu);
+    }
+
+    @Override
+    public String layMaThuongHieuTheoTen(String tenThuongHieu) {
+        return th_dao.layMaThuongHieuTheoTen(tenThuongHieu);
+    }
     
 }
