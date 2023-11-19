@@ -3,20 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/DELL/Desktop/NewDoAnPTUD/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/gui/KhuyenMai_JPanel.java</file>
             <file>file:/C:/Users/DELL/Desktop/NewDoAnPTUD/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/dao/ChuongTrinhKhuyenMai_dao.java</file>
             <file>file:/C:/Users/DELL/Desktop/NewDoAnPTUD/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/entity/ChuongTrinhKhuyenMaiEntity.java</file>
             <file>file:/C:/Users/DELL/Desktop/NewDoAnPTUD/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/Interface/ChuongTrinhKhuyenMai_Interface.java</file>
+            <file>file:/C:/Users/DELL/Desktop/NewDoAnPTUD/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/demo/runProgram.java</file>
             <file>file:/C:/Users/DELL/Desktop/NewDoAnPTUD/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/bus/ChuongTrinhKhuyenMai_bus.java</file>
-=======
-            <file>file:/D:/NetBeans/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/bus/HoaDon_bus.java</file>
-            <file>file:/D:/NetBeans/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/gui/HoaDon_JPanel.java</file>
-            <file>file:/D:/NetBeans/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/gui/BanHang_JPanel.java</file>
-            <file>file:/D:/NetBeans/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/entity/SanPhamEntity.java</file>
-            <file>file:/D:/NetBeans/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/dao/HoaDon_dao.java</file>
-            <file>file:/D:/NetBeans/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/demo/runProgram.java</file>
->>>>>>> 3889e5a70f3db062bc1350b0b31bb7314a235503
         </group>
     </open-files>
 </project-private>
