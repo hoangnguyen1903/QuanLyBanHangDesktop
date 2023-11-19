@@ -7,6 +7,7 @@ package bus;
 import Interface.ChuongTrinhKhuyenMai_Interface;
 import dao.ChuongTrinhKhuyenMai_dao;
 import entity.ChuongTrinhKhuyenMaiEntity;
+import entity.LoaiKhuyenMaiEntity;
 import java.util.ArrayList;
 
 /**
@@ -45,6 +46,10 @@ public class ChuongTrinhKhuyenMai_bus implements ChuongTrinhKhuyenMai_Interface{
        return ctkm_dao.kiemTraKhuyenMai(tongTien);
     }
 
+    @Override
+    public ArrayList<LoaiKhuyenMaiEntity> getallLoaiCTKM() {
+        return ctkm_dao.getallLoaiCTKM();
+
  
-    
+    }
 }
