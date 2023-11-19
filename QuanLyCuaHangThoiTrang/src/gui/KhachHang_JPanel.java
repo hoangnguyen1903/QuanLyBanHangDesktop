@@ -28,7 +28,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
     
     public KhachHang_JPanel() {
         initComponents();
-        setBounds(0, 0, 1020, 700);
+        setBounds(0, 0, 1186, 748);
         
         ImageIcon img_btnTimKiem = new ImageIcon("src//pic//icon//buttonTimKiem.png");
         Image scaled_btnTimKiem = img_btnTimKiem.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
@@ -107,11 +107,12 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
         panel_QuanLyKhachHang.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_QuanLyKhachHang.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        lbl_QuanLyKhachHang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_QuanLyKhachHang.setText("QUẢN LÝ KHÁCH HÀNG");
         lbl_QuanLyKhachHang.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        panel_QuanLyKhachHang.add(lbl_QuanLyKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, -1, 42));
+        panel_QuanLyKhachHang.add(lbl_QuanLyKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1186, 42));
 
-        add(panel_QuanLyKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 1000, -1));
+        add(panel_QuanLyKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1186, -1));
 
         panel_ThongTinKH.setBackground(new java.awt.Color(187, 205, 197));
         panel_ThongTinKH.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Thông tin khách hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 12))); // NOI18N
@@ -199,7 +200,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(txt_SDT, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txt_DiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
         panel_ThongTinKHLayout.setVerticalGroup(
             panel_ThongTinKHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,7 +235,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
         txt_DiaChi.getAccessibleContext().setAccessibleName("");
         txt_SDT.getAccessibleContext().setAccessibleName("");
 
-        add(panel_ThongTinKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 54, 1000, 124));
+        add(panel_ThongTinKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 54, 1175, 124));
 
         panel_ThaoTaoKH.setBackground(new java.awt.Color(187, 205, 197));
         panel_ThaoTaoKH.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Các thao tác", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 12))); // NOI18N
@@ -318,7 +319,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
         });
         panel_ThaoTaoKH.add(btn_CapNhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 30, 120, 30));
 
-        add(panel_ThaoTaoKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 184, 1000, 83));
+        add(panel_ThaoTaoKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 184, 1175, 83));
 
         panel_TableKhachHang.setBackground(new java.awt.Color(187, 205, 197));
         panel_TableKhachHang.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Bảng danh sách khách hàng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
@@ -339,9 +340,9 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(table_KhachHang);
 
-        panel_TableKhachHang.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 980, 390));
+        panel_TableKhachHang.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 1150, 440));
 
-        add(panel_TableKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 273, 1000, 421));
+        add(panel_TableKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 273, 1175, 470));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_MaKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_MaKHActionPerformed

@@ -24,7 +24,7 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
             
         initComponents();
         dateNgayLap.setLocale(new Locale("vi","VN"));
-        setBounds(0, 0, 1020, 700);
+        setBounds(0, 0, 1186, 748);
 //          Jpanel_ThaoTac.setBorder(BorderFactory.createTitledBorder("Thao tác"));
 //        Jpanel_Table.setBorder(BorderFactory.createTitledBorder("Bảng danh sách"));
         ImageIcon img_btnTimKiem = new ImageIcon("src//pic//icon//buttonTimKiem.png");
@@ -104,7 +104,7 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
         lbl_TieuDeHoaDon.setText("QUẢN LÝ HÓA ĐƠN");
         Jpanel_TieuDeHoaDon.add(lbl_TieuDeHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 10, 330, 30));
 
-        add(Jpanel_TieuDeHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 50));
+        add(Jpanel_TieuDeHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1186, 50));
 
         Jpanel_ThaoTac.setBackground(new java.awt.Color(187, 205, 197));
         Jpanel_ThaoTac.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Thao tác", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
@@ -161,7 +161,7 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
         });
         Jpanel_ThaoTac.add(btn_XemChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, 135, 30));
 
-        add(Jpanel_ThaoTac, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 1000, 100));
+        add(Jpanel_ThaoTac, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 1170, 100));
 
         Jpanel_Table.setBackground(new java.awt.Color(187, 205, 197));
         Jpanel_Table.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Danh sách hóa đơn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
@@ -186,9 +186,9 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        Jpanel_Table.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 980, 510));
+        Jpanel_Table.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 1150, 550));
 
-        add(Jpanel_Table, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 155, 1000, 540));
+        add(Jpanel_Table, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 155, 1170, 580));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_MaHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_MaHoaDonActionPerformed

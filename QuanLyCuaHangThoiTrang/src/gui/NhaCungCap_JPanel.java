@@ -35,8 +35,8 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         //---------
         ncc_bus = new NhaCungCap_bus();
         //---------
-        setBounds(0, 0, 1020, 720);
-        ImageIcon img_btnTimKiem = new ImageIcon("src//pic//buttonTimKiem.png");
+        setBounds(0, 0, 1186, 748);
+        ImageIcon img_btnTimKiem = new ImageIcon("src//pic//icon//buttonTimKiem.png");
         Image scaled_btnTimKiem = img_btnTimKiem.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
         img_btnTimKiem = new ImageIcon(scaled_btnTimKiem);
         btn_TimKiem.setIcon(img_btnTimKiem);
@@ -59,7 +59,7 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         loadDuLieuTuDataLenTable();
         txt_TenNhaCungCap.setText("Cty TNHH An Thành");
         txt_SoDienThoai.setText("0345682887");
-        txt_DiaChi.setText("Quận Bình Thạnh, TPHCM");
+        txt_DiaChi.setText("12 Lê Lợi, Quận Bình Thạnh, Thành phố HCM");
 
     }
 
@@ -158,7 +158,7 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         panel_ThongTinLayout.setHorizontalGroup(
             panel_ThongTinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_ThongTinLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
                 .addGroup(panel_ThongTinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_ThongTinLayout.createSequentialGroup()
                         .addComponent(lbl_MaNhaCungCap, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -349,7 +349,7 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         );
         panel_DanhSachNhaCungCapLayout.setVerticalGroup(
             panel_DanhSachNhaCungCapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(srcoll_TableNhaCungCap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+            .addComponent(srcoll_TableNhaCungCap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
         );
 
         lbl_TieuDe.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
@@ -363,13 +363,13 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lbl_TieuDe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(panel_ThongTin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE)
-                    .addComponent(panel_DanhSachNhaCungCap, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE)
-                    .addComponent(panel_ThaoTac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panel_DanhSachNhaCungCap, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
+                    .addComponent(panel_ThaoTac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
+                    .addComponent(panel_ThongTin, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE))
+                .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,8 +381,7 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel_ThaoTac, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
-                .addComponent(panel_DanhSachNhaCungCap, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(panel_DanhSachNhaCungCap, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -424,29 +423,35 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         capNhatNhaCungCap();
     }//GEN-LAST:event_btn_CapNhatActionPerformed
     private void themNhaCungCap() {
-        String maNCC = GenerateID.sinhMa("NCC");
-        String tenNCC = txt_TenNhaCungCap.getText();
-        String soDienThoai = txt_SoDienThoai.getText();
-        String diaChi = txt_DiaChi.getText();
-        TinhTrangNCCEnum tinhTrang = null;
-        if (cbo_TinhTrang.getSelectedItem().equals("Đang nhập")) {
-            tinhTrang = TinhTrangNCCEnum.DANGNHAP;
-        } else if (cbo_TinhTrang.getSelectedItem().equals("Ngừng nhập")) {
-            tinhTrang = TinhTrangNCCEnum.NGUNGNHAP;
-        }
-        NhaCungCapEntity ncc = new NhaCungCapEntity(maNCC, tenNCC, diaChi, soDienThoai, tinhTrang);
-        boolean kiemTra = ncc_bus.themNCC(ncc);
-        if (kiemTra) {
-            model.addRow(new Object[]{ncc.getMaNCC(), ncc.getTenNCC(), ncc.getSoDienThoai(), ncc.getDiaChi(), ncc.getTinhTrang()});
-            lamMoi();
-            JOptionPane.showMessageDialog(null, "Thêm thành công");
-        } else {
-            JOptionPane.showMessageDialog(null, "Thêm không thành công");
+        if (validata()) {
+            String maNCC = GenerateID.sinhMa("NCC");
+            String tenNCC = txt_TenNhaCungCap.getText();
+            String soDienThoai = txt_SoDienThoai.getText();
+            String diaChi = txt_DiaChi.getText();
+            TinhTrangNCCEnum tinhTrang = null;
+            if (cbo_TinhTrang.getSelectedItem().equals("Đang nhập")) {
+                tinhTrang = TinhTrangNCCEnum.DANGNHAP;
+            } else if (cbo_TinhTrang.getSelectedItem().equals("Ngừng nhập")) {
+                tinhTrang = TinhTrangNCCEnum.NGUNGNHAP;
+            }
+            NhaCungCapEntity ncc = new NhaCungCapEntity(maNCC, tenNCC, diaChi, soDienThoai, tinhTrang);
+            boolean kiemTra = ncc_bus.themNCC(ncc);
+            if (kiemTra) {
+                model.addRow(new Object[]{ncc.getMaNCC(), ncc.getTenNCC(), ncc.getSoDienThoai(), ncc.getDiaChi(), ncc.getTinhTrang()});
+                lamMoi();
+                JOptionPane.showMessageDialog(null, "Thêm thành công");
+            } else {
+                JOptionPane.showMessageDialog(null, "Thêm không thành công");
+            }
         }
     }
 
     // Hàm tìm kiếm nhà cung cấp và hiển thị kết quả trên bảng
     private void timkiemNhaCungCap(String dieuKien) {
+        String timKiem = txt_MaNhaCungCap_Search.getText().trim();
+        if (timKiem.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập điều kiện tìm kiếm");
+        }
         model.setRowCount(0);
         ArrayList<NhaCungCapEntity> dsNCC = ncc_bus.getAllNhaCungCap();
         for (NhaCungCapEntity ncc : dsNCC) {
@@ -490,28 +495,60 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Chưa chọn nhà cung cấp để cập nhật");
         } else {
             if (table_DanhSachNhaCungCap.getSelectedRowCount() == 1) {
-                if (JOptionPane.showConfirmDialog(null, "Bạn có chắc chắc cập nhật nhà cung cấp có mã " + table_DanhSachNhaCungCap.getValueAt(row, 0) + " này không?", "Cảnh báo cập nhật", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    String maNCC = txt_MaNhaCungCap.getText();
-                    String tenNCC = txt_TenNhaCungCap.getText();
-                    String soDienThoai = txt_SoDienThoai.getText();
-                    String diaChi = txt_DiaChi.getText();
-                    TinhTrangNCCEnum tinhTrang = null;
-                    if (cbo_TinhTrang.getSelectedIndex() == 0) {
-                        tinhTrang = TinhTrangNCCEnum.DANGNHAP;
-                    } else if (cbo_TinhTrang.getSelectedIndex() == 1) {
-                        tinhTrang = TinhTrangNCCEnum.NGUNGNHAP;
-                    }
-                    NhaCungCapEntity ncc = new NhaCungCapEntity(maNCC, tenNCC, diaChi, soDienThoai, tinhTrang);
-                    boolean kq=ncc_bus.capNhatNhaCungCap(ncc);
-                    if(kq){
-                        JOptionPane.showMessageDialog(null, "Cập nhật thành công");
-                        lamMoi();
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Cập nhật không thành công");
+                if (validata()) {
+                    if (JOptionPane.showConfirmDialog(null, "Bạn có chắc chắc cập nhật nhà cung cấp có mã " + table_DanhSachNhaCungCap.getValueAt(row, 0) + " này không?", "Cảnh báo cập nhật", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        String maNCC = txt_MaNhaCungCap.getText();
+                        String tenNCC = txt_TenNhaCungCap.getText();
+                        String soDienThoai = txt_SoDienThoai.getText();
+                        String diaChi = txt_DiaChi.getText();
+                        TinhTrangNCCEnum tinhTrang = null;
+                        if (cbo_TinhTrang.getSelectedIndex() == 0) {
+                            tinhTrang = TinhTrangNCCEnum.DANGNHAP;
+                        } else if (cbo_TinhTrang.getSelectedIndex() == 1) {
+                            tinhTrang = TinhTrangNCCEnum.NGUNGNHAP;
+                        }
+                        NhaCungCapEntity ncc = new NhaCungCapEntity(maNCC, tenNCC, diaChi, soDienThoai, tinhTrang);
+                        boolean kq = ncc_bus.capNhatNhaCungCap(ncc);
+                        if (kq) {
+                            JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+                            lamMoi();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Cập nhật không thành công");
+                        }
                     }
                 }
             }
         }
+    }
+
+    private boolean validata() {
+        String tenNCC = txt_TenNhaCungCap.getText().trim();
+        String sdt = txt_SoDienThoai.getText().trim();
+        String diaChi = txt_DiaChi.getText().trim();
+        if (tenNCC.isBlank() || sdt.isBlank() || diaChi.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Không được để trống");
+            return false;
+        }
+        if (!tenNCC.matches("^(\\p{L}*\\s)*\\p{L}+$")) {
+            JOptionPane.showMessageDialog(null, "Tên nhà cung cấp không đúng định dạng");
+            txt_TenNhaCungCap.requestFocus();
+            txt_TenNhaCungCap.selectAll();
+            return false;
+        }
+        if (!sdt.matches("^(\\+?84|0)([3|5|7|8|9])\\d{8}$")) {
+            JOptionPane.showMessageDialog(null, "Số điện thoại nhà cung cấp không đúng định dạng");
+            txt_SoDienThoai.requestFocus();
+            txt_SoDienThoai.selectAll();
+            return false;
+        }
+
+        if (!diaChi.matches("^(\\d*\\s)*((\\p{L}*\\s)*\\p{L}+,\\s)+(\\p{L}*\\s)*\\p{L}+$")) {
+            JOptionPane.showMessageDialog(null, "Địa nhà cung cấp không đúng định dạng");
+            txt_DiaChi.requestFocus();
+            txt_DiaChi.selectAll();
+            return false;
+        }
+        return true;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_CapNhat;

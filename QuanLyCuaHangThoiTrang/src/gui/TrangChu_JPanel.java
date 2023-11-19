@@ -37,11 +37,12 @@ public class TrangChu_JPanel extends javax.swing.JPanel {
 
         lbl_IConTrangChu = new javax.swing.JLabel();
 
-        setMinimumSize(new java.awt.Dimension(1186, 748));
-        setPreferredSize(new java.awt.Dimension(1186, 748));
+        setForeground(new java.awt.Color(255, 51, 0));
+        setMinimumSize(new java.awt.Dimension(1186, 843));
+        setPreferredSize(new java.awt.Dimension(1536, 850));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbl_IConTrangChu.setPreferredSize(new java.awt.Dimension(1186, 748));
+        lbl_IConTrangChu.setPreferredSize(new java.awt.Dimension(1355, 860));
         add(lbl_IConTrangChu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1186, 748));
     }// </editor-fold>//GEN-END:initComponents
 

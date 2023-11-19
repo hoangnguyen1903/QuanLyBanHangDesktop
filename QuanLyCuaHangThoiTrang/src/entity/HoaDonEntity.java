@@ -12,6 +12,7 @@ public class HoaDonEntity {
 	private double tienKhuyenMai;
         private double tongTien;
         private double tienThanhToan;
+        private TinhTrangHDEnum tinhTrang;
         
 	public HoaDonEntity(String maHD, Date ngayLapHD, KhachHangEntity khachHang, NhanVienEntity nhanVien,
 			ChuongTrinhKhuyenMaiEntity chuongTrinhKM) {
@@ -27,7 +28,7 @@ public class HoaDonEntity {
 		this.maHD = maHD;
 	}
 
-        public HoaDonEntity(String maHD, Date ngayLapHD, KhachHangEntity khachHang, NhanVienEntity nhanVien, ChuongTrinhKhuyenMaiEntity chuongTrinhKM, double tienKhuyenMai, double tongTien, double tienThanhToan) {
+        public HoaDonEntity(String maHD, Date ngayLapHD, KhachHangEntity khachHang, NhanVienEntity nhanVien, ChuongTrinhKhuyenMaiEntity chuongTrinhKM, double tienKhuyenMai, double tongTien, double tienThanhToan, TinhTrangHDEnum tinhTrang) {
             this.maHD = maHD;
             this.ngayLapHD = ngayLapHD;
             this.khachHang = khachHang;
@@ -36,6 +37,7 @@ public class HoaDonEntity {
             this.tienKhuyenMai = tienKhuyenMai;
             this.tongTien = tongTien;
             this.tienThanhToan = tienThanhToan;
+            this.tinhTrang = tinhTrang;
         }
 
 	public HoaDonEntity() {
@@ -97,9 +99,17 @@ public class HoaDonEntity {
             return tienThanhToan;
         }
 
+        public TinhTrangHDEnum getTinhTrang() {
+            return tinhTrang;
+        }
+
+        public void setTinhTrang(TinhTrangHDEnum tinhTrang) {
+            this.tinhTrang = tinhTrang;
+        }    
+
         @Override
         public String toString() {
-            return "HoaDonEntity{" + "maHD=" + maHD + ", ngayLapHD=" + ngayLapHD + ", khachHang=" + khachHang + ", nhanVien=" + nhanVien + ", chuongTrinhKM=" + chuongTrinhKM + ", tienKhuyenMai=" + tienKhuyenMai + ", tienThanhToan=" + tienThanhToan + ", tongTien=" + tongTien + '}';
+            return "HoaDonEntity{" + "maHD=" + maHD + ", ngayLapHD=" + ngayLapHD + ", khachHang=" + khachHang + ", nhanVien=" + nhanVien + ", chuongTrinhKM=" + chuongTrinhKM + ", tienKhuyenMai=" + tienKhuyenMai + ", tongTien=" + tongTien + ", tienThanhToan=" + tienThanhToan + ", tinhTrang=" + tinhTrang + '}';
         }
 
         

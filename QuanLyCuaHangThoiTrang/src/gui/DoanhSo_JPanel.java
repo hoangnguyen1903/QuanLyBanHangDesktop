@@ -27,7 +27,7 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
      */
     public DoanhSo_JPanel() {
         initComponents();
-        setBounds(0, 0, 1000, 540);
+        setBounds(0, 0, 1170, 590);
         setVisible(true);
         tkbus = new ThongKe_bus();
         DocDuLieuLenTable();
@@ -124,14 +124,14 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1146, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -143,7 +143,7 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 976, Short.MAX_VALUE)
+            .addGap(0, 1146, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +164,7 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
             .addGroup(paneldoanhsoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(358, Short.MAX_VALUE))
+                .addContainerGap(412, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Sơ đồ", paneldoanhso);

@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 
 public class DoiTra_JPanel extends javax.swing.JPanel {
 
@@ -11,7 +12,7 @@ public class DoiTra_JPanel extends javax.swing.JPanel {
      */
     public DoiTra_JPanel() {
         initComponents();
-        setBounds(0, 0, 1020, 700);
+        setBounds(0, 0, 1186, 748);
         cartLayout = new CardLayout();
         panel_content.setLayout(cartLayout);
         
@@ -19,6 +20,15 @@ public class DoiTra_JPanel extends javax.swing.JPanel {
         QuanLyDoiTra_JPanel QuanLyDoiTra_Panel = new QuanLyDoiTra_JPanel();
         panel_content.add(TaoDoiTra_Panel, "TaoDoiTra");
         panel_content.add(QuanLyDoiTra_Panel, "QuanLyDoiTra");
+        
+        btn_TaoDoiTra.setBackground(new Color(187,205,197));
+        btn_TaoDoiTra.setSelected(true);
+        btn_TaoDoiTra.setForeground(Color.black);
+        btn_TaoDoiTra.setBorder(null);
+        btn_QuanLyDoiTra.setBackground(new Color(0,51,51));
+        btn_QuanLyDoiTra.setSelected(false);
+        btn_QuanLyDoiTra.setForeground(Color.white);
+        cartLayout.show(panel_content, "TaoDoiTra");
     }
 
     @SuppressWarnings("unchecked")
@@ -32,7 +42,7 @@ public class DoiTra_JPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(187, 205, 197));
         setMinimumSize(new java.awt.Dimension(1020, 700));
-        setPreferredSize(new java.awt.Dimension(1020, 700));
+        setPreferredSize(new java.awt.Dimension(1186, 748));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panel_menu.setBackground(new java.awt.Color(187, 205, 197));
@@ -60,7 +70,7 @@ public class DoiTra_JPanel extends javax.swing.JPanel {
         });
         panel_menu.add(btn_QuanLyDoiTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 180, 30));
 
-        add(panel_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1000, 30));
+        add(panel_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 1170, 30));
 
         javax.swing.GroupLayout panel_contentLayout = new javax.swing.GroupLayout(panel_content);
         panel_content.setLayout(panel_contentLayout);
@@ -73,16 +83,28 @@ public class DoiTra_JPanel extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        add(panel_content, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 1000, 640));
+        add(panel_content, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 1170, 690));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_TaoDoiTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TaoDoiTraActionPerformed
-        // TODO add your handling code here:
+        btn_TaoDoiTra.setBackground(new Color(187,205,197));
+        btn_TaoDoiTra.setSelected(true);
+        btn_TaoDoiTra.setForeground(Color.black);
+        btn_TaoDoiTra.setBorder(null);
+        btn_QuanLyDoiTra.setBackground(new Color(0,51,51));
+        btn_QuanLyDoiTra.setSelected(false);
+        btn_QuanLyDoiTra.setForeground(Color.white);
         cartLayout.show(panel_content, "TaoDoiTra");
     }//GEN-LAST:event_btn_TaoDoiTraActionPerformed
 
     private void btn_QuanLyDoiTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_QuanLyDoiTraActionPerformed
-        // TODO add your handling code here:
+        btn_QuanLyDoiTra.setBackground(new Color(187,205,197));
+        btn_QuanLyDoiTra.setSelected(true);
+        btn_QuanLyDoiTra.setForeground(Color.black);
+        btn_QuanLyDoiTra.setBorder(null);
+        btn_TaoDoiTra.setBackground(new Color(0,51,51));
+        btn_TaoDoiTra.setSelected(false);
+        btn_TaoDoiTra.setForeground(Color.white);
         cartLayout.show(panel_content, "QuanLyDoiTra");
     }//GEN-LAST:event_btn_QuanLyDoiTraActionPerformed
 

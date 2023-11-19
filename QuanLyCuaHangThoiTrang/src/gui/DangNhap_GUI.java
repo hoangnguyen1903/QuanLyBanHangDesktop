@@ -87,7 +87,7 @@ public class DangNhap_GUI extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtf_TenTaiKhoan.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jtf_TenTaiKhoan.setText("0123456789");
+        jtf_TenTaiKhoan.setText("0976474170");
         jtf_TenTaiKhoan.setToolTipText("");
         jtf_TenTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +97,6 @@ public class DangNhap_GUI extends javax.swing.JFrame {
         getContentPane().add(jtf_TenTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(572, 180, 227, 30));
 
         jpf_MatKhau.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-
         jpf_MatKhau.setText("1111");
         jpf_MatKhau.setToolTipText("");
         getContentPane().add(jpf_MatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(572, 238, 227, 30));

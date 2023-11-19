@@ -16,6 +16,7 @@ public class NhanVienEntity {
 	private ChucVuEnum chucVu;
 	private TinhTrangNVEnum tinhTrang;
 	private CaLamViecEnum caLamViec;
+        
 	public NhanVienEntity(String maNV, String hoTen, GioiTinhEnum gioiTinh, LocalDate ngaySinh, String email,
 			String soDienThoai, String diaChi, ChucVuEnum chucVu, TinhTrangNVEnum tinhTrang, CaLamViecEnum caLamViec) {
 		super();

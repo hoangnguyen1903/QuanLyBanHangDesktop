@@ -55,7 +55,11 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+<<<<<<< HEAD
               <AbsoluteConstraints x="15" y="1" width="1160" height="38"/>
+=======
+              <AbsoluteConstraints x="0" y="0" width="1186" height="38"/>
+>>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
             </Constraint>
           </Constraints>
         </Component>
@@ -79,7 +83,11 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+<<<<<<< HEAD
           <AbsoluteConstraints x="10" y="40" width="1160" height="150"/>
+=======
+          <AbsoluteConstraints x="10" y="55" width="1170" height="100"/>
+>>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
         </Constraint>
       </Constraints>
 
@@ -383,7 +391,11 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+<<<<<<< HEAD
           <AbsoluteConstraints x="10" y="200" width="1160" height="60"/>
+=======
+          <AbsoluteConstraints x="10" y="165" width="1170" height="60"/>
+>>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
         </Constraint>
       </Constraints>
 
@@ -567,7 +579,11 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+<<<<<<< HEAD
           <AbsoluteConstraints x="10" y="265" width="1160" height="470"/>
+=======
+          <AbsoluteConstraints x="10" y="235" width="1170" height="510"/>
+>>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
         </Constraint>
       </Constraints>
 
@@ -576,7 +592,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+<<<<<<< HEAD
                   <Component id="jScrollPane1" pref="1138" max="32767" attributes="0"/>
+=======
+                  <Component id="jScrollPane1" pref="1148" max="32767" attributes="0"/>
+>>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -585,7 +605,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+<<<<<<< HEAD
                   <Component id="jScrollPane1" pref="436" max="32767" attributes="0"/>
+=======
+                  <Component id="jScrollPane1" pref="476" max="32767" attributes="0"/>
+>>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>

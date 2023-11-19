@@ -11,7 +11,7 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
 
     public ThongKe_JPanel() {
         initComponents();
-        setBounds(0, 0, 1020, 700);
+        setBounds(0, 0, 1186, 748);
         ImageIcon img_btnTimKiem = new ImageIcon("src//pic//icon//buttonTimKiem.png");
         Image scaled_btnTimKiem = img_btnTimKiem.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
         img_btnTimKiem = new ImageIcon(scaled_btnTimKiem);
@@ -64,9 +64,9 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
         lbl_TieuDeHoaDon.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         lbl_TieuDeHoaDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_TieuDeHoaDon.setText("THỐNG KÊ");
-        Jpanel_TieuDeHoaDon.add(lbl_TieuDeHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 10, 330, 30));
+        Jpanel_TieuDeHoaDon.add(lbl_TieuDeHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(1186, 10, 330, 30));
 
-        add(Jpanel_TieuDeHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 40));
+        add(Jpanel_TieuDeHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1186, 40));
 
         Jpanel_ThaoTac.setBackground(new java.awt.Color(187, 205, 197));
         Jpanel_ThaoTac.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Các thao tác", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
@@ -130,20 +130,20 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
         });
         Jpanel_ThaoTac.add(rdo_XemDoanhSo, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 65, -1, -1));
 
-        add(Jpanel_ThaoTac, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 1000, 100));
+        add(Jpanel_ThaoTac, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 1170, 100));
 
         javax.swing.GroupLayout Jpanel_TKLayout = new javax.swing.GroupLayout(Jpanel_TK);
         Jpanel_TK.setLayout(Jpanel_TKLayout);
         Jpanel_TKLayout.setHorizontalGroup(
             Jpanel_TKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGap(0, 1170, Short.MAX_VALUE)
         );
         Jpanel_TKLayout.setVerticalGroup(
             Jpanel_TKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGap(0, 590, Short.MAX_VALUE)
         );
 
-        add(Jpanel_TK, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 1000, 540));
+        add(Jpanel_TK, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 1170, 590));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed

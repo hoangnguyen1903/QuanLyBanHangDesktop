@@ -28,6 +28,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="panel_QuanLyTaiKhoan" alignment="0" max="32767" attributes="0"/>
+<<<<<<< HEAD
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="panel_ThaoTacTK" min="-2" max="-2" attributes="0"/>
@@ -35,6 +36,10 @@
                       </Group>
                       <EmptySpace min="0" pref="13" max="32767" attributes="0"/>
                   </Group>
+=======
+                  <Component id="panel_ThaoTacTK" max="32767" attributes="0"/>
+                  <Component id="panel_TableTaiKhoan" alignment="0" max="32767" attributes="0"/>
+>>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -107,7 +112,11 @@
                   <Component id="cbo_TinhTrang" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btn_CapNhat" min="-2" max="-2" attributes="0"/>
+<<<<<<< HEAD
                   <EmptySpace pref="21" max="32767" attributes="0"/>
+=======
+                  <EmptySpace pref="200" max="32767" attributes="0"/>
+>>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
               </Group>
           </Group>
         </DimensionLayout>
@@ -249,7 +258,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+<<<<<<< HEAD
                   <Component id="jScrollPane1" pref="529" max="32767" attributes="0"/>
+=======
+                  <Component id="jScrollPane1" pref="577" max="32767" attributes="0"/>
+>>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>

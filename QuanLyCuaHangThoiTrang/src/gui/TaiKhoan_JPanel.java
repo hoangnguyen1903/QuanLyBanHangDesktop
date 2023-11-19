@@ -14,7 +14,7 @@ public class TaiKhoan_JPanel extends javax.swing.JPanel {
     private DefaultTableModel tableModel = new DefaultTableModel();
     public TaiKhoan_JPanel() {
         initComponents();
-        setBounds(0, 0, 1020, 720);
+        setBounds(0, 0, 1186, 748);
         ImageIcon img_btnTimKiem = new ImageIcon("src//pic//icon//buttonTimKiem.png");
         Image scaled_btnTimKiem = img_btnTimKiem.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
         img_btnTimKiem = new ImageIcon(scaled_btnTimKiem);
@@ -118,7 +118,7 @@ public class TaiKhoan_JPanel extends javax.swing.JPanel {
                 .addComponent(cbo_TinhTrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         panel_ThaoTacTKLayout.setVerticalGroup(
             panel_ThaoTacTKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +165,7 @@ public class TaiKhoan_JPanel extends javax.swing.JPanel {
             panel_TableTaiKhoanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_TableTaiKhoanLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -177,11 +177,8 @@ public class TaiKhoan_JPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panel_QuanLyTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(panel_ThaoTacTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panel_TableTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 13, Short.MAX_VALUE)))
+                    .addComponent(panel_ThaoTacTK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_TableTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

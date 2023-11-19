@@ -4,7 +4,9 @@ import bus.DoiTra_bus;
 import entity.DoiTraEntity;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
@@ -14,7 +16,7 @@ public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
     
     public QuanLyDoiTra_JPanel() {
         initComponents();
-        setBounds(0, 0, 1020, 700);
+        setBounds(0, 0, 1173, 699);
         
         ImageIcon img_btnTimKiem = new ImageIcon("src//pic//icon//buttonTimKiem.png");
         Image scaled_btnTimKiem = img_btnTimKiem.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
@@ -32,9 +34,10 @@ public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
         btn_LamMoi.setIcon(img_btnLamMoi);
         
         // Table
-        String[] cols = {"Mã đơn đổi trả", "Mã hoá đơn", "Mã nhân viên", "Thời gian đổi trả", "Hình thức đổi trả"};
+        String[] cols = {"Mã đơn đổi trả", "Mã hoá đơn", "Mã nhân viên", "Ngày lập", "Hình thức đổi trả", "Tiền trả lại"};
         tableModel = new DefaultTableModel(cols, 0);
         table_DanhSachDoiTra.setModel(tableModel);
+//        table_DanhSachDoiTra.setEdi;
         importDoiTra();
     }
 
@@ -47,13 +50,11 @@ public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Jpanel_TieuDeHoaDon = new javax.swing.JPanel();
-        lbl_TieuDeHoaDon = new javax.swing.JLabel();
         Jpanel_ThaoTac = new javax.swing.JPanel();
         lbl_MaHoaDon = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txt_MaDonDoiTra = new javax.swing.JTextField();
-        jdc_NgaySinh = new com.toedter.calendar.JDateChooser();
+        jdc_NgayLap = new com.toedter.calendar.JDateChooser();
         btn_TimKiem = new javax.swing.JButton();
         btn_LamMoi = new javax.swing.JButton();
         btn_XemChiTiet = new javax.swing.JButton();
@@ -65,15 +66,6 @@ public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(1020, 700));
         setPreferredSize(new java.awt.Dimension(1000, 640));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        Jpanel_TieuDeHoaDon.setBackground(new java.awt.Color(187, 205, 197));
-
-        lbl_TieuDeHoaDon.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        lbl_TieuDeHoaDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_TieuDeHoaDon.setText("QUẢN LÝ ĐƠN ĐỔI TRẢ");
-        Jpanel_TieuDeHoaDon.add(lbl_TieuDeHoaDon);
-
-        add(Jpanel_TieuDeHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 40));
 
         Jpanel_ThaoTac.setBackground(new java.awt.Color(187, 205, 197));
         Jpanel_ThaoTac.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Các thao tác", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
@@ -94,7 +86,7 @@ public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
             }
         });
         Jpanel_ThaoTac.add(txt_MaDonDoiTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 200, 30));
-        Jpanel_ThaoTac.add(jdc_NgaySinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 200, 30));
+        Jpanel_ThaoTac.add(jdc_NgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 200, 30));
 
         btn_TimKiem.setBackground(new java.awt.Color(0, 51, 51));
         btn_TimKiem.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
@@ -132,18 +124,20 @@ public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
         });
         Jpanel_ThaoTac.add(btn_XemChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, 140, 30));
 
-        add(Jpanel_ThaoTac, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1000, 100));
+        add(Jpanel_ThaoTac, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 100));
 
         Jpanel_Table.setBackground(new java.awt.Color(187, 205, 197));
         Jpanel_Table.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Danh sách đơn đổi trả", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
         Jpanel_Table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         Jpanel_Table.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        table_DanhSachDoiTra.setColumnSelectionAllowed(false);
+        table_DanhSachDoiTra.setFocusable(false);
         jScrollPane1.setViewportView(table_DanhSachDoiTra);
 
-        Jpanel_Table.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 980, 470));
+        Jpanel_Table.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 1150, 550));
 
-        add(Jpanel_Table, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 1000, 500));
+        add(Jpanel_Table, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 1170, 580));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_MaDonDoiTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_MaDonDoiTraActionPerformed
@@ -152,32 +146,30 @@ public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
 
     private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
         txt_MaDonDoiTra.setText("");
-        jdc_NgaySinh.setDate(null);
+        jdc_NgayLap.setDate(null);
         importDoiTra();
     }//GEN-LAST:event_btn_LamMoiActionPerformed
 
     private void btn_XemChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XemChiTietActionPerformed
-        // TODO add your handling code here:
+        xemChiTiet();
 
     }//GEN-LAST:event_btn_XemChiTietActionPerformed
 
     private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
-        // TODO add your handling code here:
+        timKiemDoiTra();
     }//GEN-LAST:event_btn_TimKiemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Jpanel_Table;
     private javax.swing.JPanel Jpanel_ThaoTac;
-    private javax.swing.JPanel Jpanel_TieuDeHoaDon;
     private javax.swing.JButton btn_LamMoi;
     private javax.swing.JButton btn_TimKiem;
     private javax.swing.JButton btn_XemChiTiet;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.toedter.calendar.JDateChooser jdc_NgaySinh;
+    private com.toedter.calendar.JDateChooser jdc_NgayLap;
     private javax.swing.JLabel lbl_MaHoaDon;
-    private javax.swing.JLabel lbl_TieuDeHoaDon;
     private javax.swing.JTable table_DanhSachDoiTra;
     private javax.swing.JTextField txt_MaDonDoiTra;
     // End of variables declaration//GEN-END:variables
@@ -187,9 +179,49 @@ public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
         ArrayList<DoiTraEntity> dtList = dt_bus.getAllDoiTra();
         if(dtList != null) {
             for (DoiTraEntity dt : dtList) {
-                String[] data = {dt.getMaDYCDT(), dt.getHoaDon().getMaHD(), dt.getNhanVien().getMaNV(), dt.getThoiGianDoiTra().toString(), dt.getHinhThucDoiTra().toString()};
+                String[] data = {dt.getMaDT(), dt.getHoaDon().getMaHD(), dt.getNhanVien().getMaNV(), dt.getThoiGianDoiTra().toString(), dt.getHinhThucDoiTra().toString(), dt.getTongTien()+""};
                 tableModel.addRow(data);
             }
         }
+    }
+    
+    public void timKiemDoiTra() {
+        String ma = txt_MaDonDoiTra.getText().trim();
+        Date ngayLap = jdc_NgayLap.getDate();
+        if(ma.equals("") && ngayLap == null) {
+            JOptionPane.showMessageDialog(this, "Mã đơn đổi trả hoặc ngày lập chưa được nhập!");
+            return;
+        }
+        ArrayList<DoiTraEntity> dtList = new ArrayList<>();
+        if(ma.length() > 0 && ngayLap == null) {
+            DoiTraEntity dt = dt_bus.getDoiTraTheoMa(ma);
+            dtList.add(dt);
+        } else if(ma.equals("") && ngayLap != null) {
+            dtList = dt_bus.getDoiTraTheoNgayLap(new java.sql.Date(ngayLap.getTime()));
+        } else {
+            DoiTraEntity dt = dt_bus.getDoiTraTheoDieuKien(ma, new java.sql.Date(ngayLap.getTime()));
+            dtList.add(dt);
+        }
+        
+        if(!dtList.isEmpty()) {
+            tableModel.setRowCount(0);
+            for (DoiTraEntity dt : dtList) {
+                String[] data = {dt.getMaDT(), dt.getHoaDon().getMaHD(), dt.getNhanVien().getMaNV(), dt.getThoiGianDoiTra().toString(), dt.getHinhThucDoiTra().toString(), dt.getTongTien()+""};
+                tableModel.addRow(data);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Đơn đổi trả không tồn tại!");
+        }
+    }
+    
+    public void xemChiTiet() {
+        int row = table_DanhSachDoiTra.getSelectedRow();
+        if(row < 0) {
+            JOptionPane.showMessageDialog(this, "Đơn đổi trả chưa được chọn!");
+            return;
+        }
+        
+        String ma = tableModel.getValueAt(row, 0).toString();
+        new ChiTietDoiTra_GUI(ma).setVisible(true);
     }
 }
