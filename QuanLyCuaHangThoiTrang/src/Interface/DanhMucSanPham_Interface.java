@@ -13,4 +13,6 @@ import java.util.ArrayList;
  */
 public interface DanhMucSanPham_Interface {
     public ArrayList<DanhMucSanPhamEntity> getAllDMSP();
+    public String layTenDanhMucTheoMa(String maDanhMuc);
+    public String layMaDanhMucTheoTen(String tenDanhMuc);
 }

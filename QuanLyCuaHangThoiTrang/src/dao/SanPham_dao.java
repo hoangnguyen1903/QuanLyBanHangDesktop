@@ -7,6 +7,7 @@ package dao;
 import Interface.SanPham_Interface;
 import connectDB.ConnectDB;
 import entity.ChatLieuEntity;
+import entity.ChuongTrinhKhuyenMaiEntity;
 import entity.DanhMucSanPhamEntity;
 import entity.KichThuocEnum;
 import entity.MauSacEnum;
@@ -48,7 +49,9 @@ public class SanPham_dao implements SanPham_Interface {
                 int soLuongTonKho = rs.getInt("soLuongTonKho");
                 String chatLieu = rs.getString("maChatLieu");
                 String thuongHieu = rs.getString("maThuongHieu");
+//                String tenThuongHieu = rs.getString("tenThuongHieu");
                 String danhMuc = rs.getString("maDanhMuc");
+                String chuongTrinhKhuyenMai = rs.getString("maCTKM");
                 String imgUrl = rs.getString("imgUrl");
                 KichThuocEnum kichThuocEnum = null;
                 if (kichThuoc.equals("XS")) {
@@ -80,8 +83,10 @@ public class SanPham_dao implements SanPham_Interface {
                 }
                 ChatLieuEntity maChatLieu = new ChatLieuEntity(chatLieu);
                 ThuongHieuEntity maThuongHieu = new ThuongHieuEntity(thuongHieu);
+//                ThuongHieuEntity maThuongHieu=new ThuongHieuEntity(thuongHieu, tenThuongHieu);
                 DanhMucSanPhamEntity maDanhMuc = new DanhMucSanPhamEntity(danhMuc);
-                SanPhamEntity sp = new SanPhamEntity(maSP, tenSP, kichThuocEnum, mauSacEnum, donGia, soLuongTonKho, tinhTrangSPEnum, maChatLieu, maThuongHieu, maDanhMuc, imgUrl);
+                ChuongTrinhKhuyenMaiEntity maCTKM = new ChuongTrinhKhuyenMaiEntity(chuongTrinhKhuyenMai);
+                SanPhamEntity sp = new SanPhamEntity(maSP, tenSP, kichThuocEnum, mauSacEnum, donGia, soLuongTonKho, tinhTrangSPEnum, maChatLieu, maThuongHieu, maDanhMuc, maCTKM, imgUrl);
                 dsSanPham.add(sp);
             }
             ps.close();
@@ -99,7 +104,7 @@ public class SanPham_dao implements SanPham_Interface {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             PreparedStatement ps = null;
-            String sql = "Insert into SanPham(maSP,tenSP,kichThuoc,mauSac,donGia,tinhTrang,soLuongTonKho,maChatLieu,maThuongHieu,maDanhMuc,imgUrl) values(?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "Insert into SanPham(maSP,tenSP,kichThuoc,mauSac,donGia,tinhTrang,soLuongTonKho,maChatLieu,maThuongHieu,maDanhMuc,imgUrl,maCTKM) values(?,?,?,?,?,?,?,?,?,?,?,?)";
             ps = con.prepareStatement(sql);
             ps.setString(1, sp.getMaSP());
             ps.setString(2, sp.getTenSP());
@@ -112,12 +117,13 @@ public class SanPham_dao implements SanPham_Interface {
             ps.setString(9, sp.getThuongHieu().getMaThuongHieu());
             ps.setString(10, sp.getDanhMucSanPham().getMaDanhMuc());
             ps.setString(11, sp.getImgUrl());
+            ps.setString(12, sp.getChuongTrinhKhuyenMai().getMaCTKM());
             int check = ps.executeUpdate();
             ps.close();
             ConnectDB.getInstance().disconnect();
             return check > 0;
         } catch (SQLException ex) {
-            Logger.getLogger(NhaCungCap_dao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -169,8 +175,9 @@ public class SanPham_dao implements SanPham_Interface {
                 ChatLieuEntity chatLieu = new ChatLieuEntity(rs.getString("maChatLieu"));
                 ThuongHieuEntity thuongHieu = new ThuongHieuEntity(rs.getString("maThuongHieu"));
                 DanhMucSanPhamEntity danhMuc = new DanhMucSanPhamEntity(rs.getString("maDanhMuc"));
+                ChuongTrinhKhuyenMaiEntity chuongTrinhKhuyenMai = new ChuongTrinhKhuyenMaiEntity(rs.getString("maCTKM"));
                 String imgUrl = rs.getString("imgUrl");
-                SanPhamEntity sp = new SanPhamEntity(maSP, tenSP, kichThuoc, mauSac, donGia, soLuongTonKho, tinhTrang, chatLieu, thuongHieu, danhMuc, imgUrl);
+                SanPhamEntity sp = new SanPhamEntity(maSP, tenSP, kichThuoc, mauSac, donGia, soLuongTonKho, tinhTrang, chatLieu, thuongHieu, danhMuc, chuongTrinhKhuyenMai, imgUrl);
                 dsSanPham.add(sp);
             }
             ps.close();
@@ -188,7 +195,7 @@ public class SanPham_dao implements SanPham_Interface {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             PreparedStatement ps = null;
-            String sql = "update SanPham set tenSP=?, kichThuoc=?, mauSac=?, donGia=?, tinhTrang=?, soLuongTonKho=?, maChatLieu=?, maThuongHieu=?, maDanhMuc=?, imgUrl=? where maSP=?";
+            String sql = "update SanPham set tenSP=?, kichThuoc=?, mauSac=?, donGia=?, tinhTrang=?, soLuongTonKho=?, maChatLieu=?, maThuongHieu=?, maDanhMuc=?, imgUrl=?, maCTKM=? where maSP=?";
             ps = con.prepareStatement(sql);
             ps.setString(1, sp.getTenSP());
             ps.setString(2, sp.getKichThuoc().toString());
@@ -200,13 +207,14 @@ public class SanPham_dao implements SanPham_Interface {
             ps.setString(8, sp.getThuongHieu().getMaThuongHieu());
             ps.setString(9, sp.getDanhMucSanPham().getMaDanhMuc());
             ps.setString(10, sp.getImgUrl());
-            ps.setString(11, sp.getMaSP());
+            ps.setString(11, sp.getChuongTrinhKhuyenMai().getMaCTKM());
+            ps.setString(12, sp.getMaSP());
             ps.executeUpdate();
             ps.close();
             ConnectDB.getInstance().disconnect();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(NhaCungCap_dao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -232,6 +240,7 @@ public class SanPham_dao implements SanPham_Interface {
                 String chatLieu = rs.getString("maChatLieu");
                 String thuongHieu = rs.getString("maThuongHieu");
                 String danhMuc = rs.getString("maDanhMuc");
+                String chuongTrinhKhuyenMai = rs.getString("maCTKM");
                 String imgUrl = rs.getString("imgUrl");
                 KichThuocEnum kichThuocEnum = null;
                 if (kichThuoc.equals("XS")) {
@@ -264,7 +273,8 @@ public class SanPham_dao implements SanPham_Interface {
                 ChatLieuEntity maChatLieu = new ChatLieuEntity(chatLieu);
                 ThuongHieuEntity maThuongHieu = new ThuongHieuEntity(thuongHieu);
                 DanhMucSanPhamEntity maDanhMuc = new DanhMucSanPhamEntity(danhMuc);
-                SanPhamEntity sp = new SanPhamEntity(maSP, tenSP, kichThuocEnum, mauSacEnum, donGia, soLuongTonKho, tinhTrangSPEnum, maChatLieu, maThuongHieu, maDanhMuc, imgUrl);
+                ChuongTrinhKhuyenMaiEntity maCTKM = new ChuongTrinhKhuyenMaiEntity(chuongTrinhKhuyenMai);
+                SanPhamEntity sp = new SanPhamEntity(maSP, tenSP, kichThuocEnum, mauSacEnum, donGia, soLuongTonKho, tinhTrangSPEnum, maChatLieu, maThuongHieu, maDanhMuc, maCTKM, imgUrl);
                 dsSP.add(sp);
             }
         } catch (SQLException ex) {
@@ -309,10 +319,12 @@ public class SanPham_dao implements SanPham_Interface {
                 String maDanhMuc = rs.getString("maDanhMuc");
                 String tenDanhMuc = rs.getString("tenDanhMuc");
                 DanhMucSanPhamEntity danhMucSanPham = new DanhMucSanPhamEntity(maDanhMuc, tenDanhMuc);
+                String maCTKM = rs.getString("maCTKM");
+                ChuongTrinhKhuyenMaiEntity chuongTrinhKhuyenMai = new ChuongTrinhKhuyenMaiEntity(maCTKM);
 
                 ConvertStringToEnum convertToEnum = new ConvertStringToEnum();
 
-                sanPham = new SanPhamEntity(maSP, tenSP, convertToEnum.KichThuoctoEnum(kichThuoc), convertToEnum.MauSactoEnum(mauSac), donGia, soLuongTonKho, convertToEnum.TinhTrangSPToEnum(tinhTrang), chatLieu, thuongHieu, danhMucSanPham, imgUrl);
+                sanPham = new SanPhamEntity(maSP, tenSP, convertToEnum.KichThuoctoEnum(kichThuoc), convertToEnum.MauSactoEnum(mauSac), donGia, soLuongTonKho, convertToEnum.TinhTrangSPToEnum(tinhTrang), chatLieu, thuongHieu, danhMucSanPham, chuongTrinhKhuyenMai, imgUrl);
             }
             return sanPham;
         } catch (SQLException e) {
@@ -369,5 +381,29 @@ public class SanPham_dao implements SanPham_Interface {
             Logger.getLogger(SanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    @Override
+    public boolean kiemTraMaSanPhamTonTai(String maSP) {
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+            String sql = "SELECT COUNT(*) FROM SanPham WHERE maSP =?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, maSP);
+            ResultSet rs=ps.executeQuery();
+            if(rs.next()){
+                int sl=rs.getInt(1);
+                return sl>0;
+            }
+            ps.close();
+            rs.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        return false;
     }
 }

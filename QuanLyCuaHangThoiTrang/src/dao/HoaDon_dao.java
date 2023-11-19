@@ -175,7 +175,7 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
     }
 
     @Override
-    public HoaDonEntity timKiemHoaDonChuaThanhToan(String sdt) {
+    public ArrayList<HoaDonEntity> timKiemHoaDonChuaThanhToan(String sdt) {
         try {
             ConnectDB.getInstance().connect();
         } catch (SQLException ex) {
@@ -191,8 +191,8 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             statement.setString(1, sdt);
             
             ResultSet rs = statement.executeQuery();
-            HoaDonEntity hd = null;
-            if(rs.next()) {
+            ArrayList<HoaDonEntity> hdList = new ArrayList<>();
+            while(rs.next()) {
                 String mahd = rs.getString("maHD");
                 String makh = rs.getString("maKH");
                 String hoTen = rs.getString("hoTen");
@@ -213,9 +213,10 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                 double tienKhuyenMai = rs.getDouble("tienKhuyenMai");
                 double tienThanhToan = rs.getDouble("tienThanhToan");
                 
-                hd = new HoaDonEntity(mahd, nglap, kh, nv, km, tienKhuyenMai, tongTien, tienThanhToan, toEnum.TinhTrangHDToEnum("Chưa thanh toán"));
+                HoaDonEntity hd = new HoaDonEntity(mahd, nglap, kh, nv, km, tienKhuyenMai, tongTien, tienThanhToan, toEnum.TinhTrangHDToEnum("Chưa thanh toán"));
+                hdList.add(hd);
             }
-            return hd;
+            return hdList;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
