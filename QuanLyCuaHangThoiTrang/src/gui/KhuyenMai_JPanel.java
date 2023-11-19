@@ -77,11 +77,6 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
 //        img_btnXoa = new ImageIcon(scaled_btnXoa);
 //        btn_Xoa.setIcon(img_btnXoa);
         ctkmbus = new ChuongTrinhKhuyenMai_bus();
-//       jcb_LoaiKhuyenMai.addItem("Mã Loại KM");
-//        ArrayList<LoaiKhuyenMaiEntity> dslkm = ctkmbus.getallLoaiCTKM();
-//        for(LoaiKhuyenMaiEntity lkm : dslkm ){
-//            jcb_LoaiKhuyenMai.addItem(lkm.getMaLoaiKM());
-//        }
     // set LoaiKM sẵn cho Hoá đơn
     txtLoaiKM.setText("GGHD");
         DocDuLieuTuSQLvaoTable();
