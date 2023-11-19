@@ -55,7 +55,7 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
     }
 
     @Override
-    public ArrayList<ChuongTrinhKhuyenMaiEntity> getCTKMTheoMaCTKM(String maCTKM) {
+    public ArrayList<ChuongTrinhKhuyenMaiEntity> getCTKMTheoMaCTKM(String maCTKM,String maLoai) {
         ArrayList<ChuongTrinhKhuyenMaiEntity> dsctkm = new ArrayList<ChuongTrinhKhuyenMaiEntity>();
         try {
             ConnectDB.getInstance().connect();
@@ -65,18 +65,24 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
         Connection con = ConnectDB.getConnection();
         PreparedStatement stmt = null;
         try {
-            String sql = "SELECT * FROM ChuongTrinhKhuyenMai WHERE maCTKM = ?";
+            String sql = "SELECT * FROM ChuongTrinhKhuyenMai WHERE maCTKM = ? and maLoaiCTKM = ?";
             stmt = con.prepareStatement(sql);
             stmt.setString(1, maCTKM);
+            stmt.setString(2, maLoai);
             ResultSet  rs = stmt.executeQuery();
             while (rs.next()){
-                String ma =  rs.getString("maCTKM");
-                String ten = rs.getString("tenCTKm");
-                Double sotien = rs.getDouble("soTienToiThieu");
+                 String maKM = rs.getString("maCTKM");
+                String ten = rs.getString("tenCTKM");
+                String maLoaiKM = rs.getString("maLoaiCTKM");
+                LoaiKhuyenMaiEntity lkm = new LoaiKhuyenMaiEntity(maLoaiKM);
+                double sotienTT = rs.getDouble("soTienToiThieu");
+                double sotienTD = rs.getDouble("soTienToiDa");
                 int giamgia = rs.getInt("giamGia");
                 Date ngaybatdau = rs.getDate("ngayBatDau");
                 Date ngayketthuc = rs.getDate("ngayKetThuc");
-                ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(maCTKM, ten, sotien, giamgia, ngaybatdau, ngayketthuc);
+                String tinhTrang = rs.getString("tinhTrang");
+//                ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(ma, ten, sotienTT, giamgia, ngaybatdau, ngayketthuc);
+                ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(maKM, ten, lkm, sotienTT, sotienTD, giamgia, ngaybatdau, ngayketthuc, tinhTrang);
                 dsctkm.add(ctkm);
                 
             }
@@ -97,16 +103,17 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
        PreparedStatement stmt = null;
        int n =0;
         try {
-            stmt = con.prepareStatement("INSERT INTO ChuongTrinhKhuyenMai values(?,?,?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO ChuongTrinhKhuyenMai values(?,?,?,?,?,?,?,?,?)");
             stmt.setString(1, ctkm.getMaCTKM());
-            stmt.setString(2, ctkm.getMaLoaiKM().getMaLoaiKM());
-            stmt.setString(3, ctkm.getTenCTKM());
-            stmt.setDouble(4, ctkm.getSoTienToiDa());
-            stmt.setDouble(5, ctkm.getSoTienToiThieu());
-            stmt.setInt(6, ctkm.getGiamGia());
-            stmt.setDate(7, (Date) ctkm.getNgayBatDau());
-            stmt.setDate(8, (Date) ctkm.getNgayKetThuc());
-            stmt.setString(9, ctkm.getTinhTrang());
+            
+            stmt.setString(2, ctkm.getTenCTKM());
+            stmt.setDouble(3, ctkm.getSoTienToiDa());
+            stmt.setDouble(4, ctkm.getSoTienToiThieu());
+            stmt.setInt(5, ctkm.getGiamGia());
+            stmt.setDate(6, (Date) ctkm.getNgayBatDau());
+            stmt.setDate(7, (Date) ctkm.getNgayKetThuc());
+            stmt.setString(8, ctkm.getTinhTrang());
+            stmt.setString(9, ctkm.getMaLoaiKM().getMaLoaiKM());
             n = stmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -192,9 +199,35 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
             e.printStackTrace();
         }
         return n >0;
+        
     }
+       @Override
+    public ArrayList<LoaiKhuyenMaiEntity> getallLoaiCTKM() {
+        ArrayList<LoaiKhuyenMaiEntity> dsLoaiKM = new ArrayList<>();
+        
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            Statement stmt = null;
+            
+            String sql = "select * from LoaiChuongTrinhKhuyenMai";
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                String ma = rs.getString("maLoaiCTKM");
+                String mota = rs.getString("moTa");
+                LoaiKhuyenMaiEntity lkm = new  LoaiKhuyenMaiEntity(ma, mota);
+                dsLoaiKM.add(lkm);
+            }
+        } catch (Exception e) {
+        
+            e.printStackTrace();
+    }
+        return dsLoaiKM;
+}
     
     // Nguyen Huy Hoang
+    @Override
     public ChuongTrinhKhuyenMaiEntity kiemTraKhuyenMai(double tongTien) {
         try {
             ConnectDB.getInstance().connect();
@@ -236,28 +269,37 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
             }
         }
     }
+
     @Override
-    public ArrayList<LoaiKhuyenMaiEntity> getallLoaiCTKM() {
-        ArrayList<LoaiKhuyenMaiEntity> dsLoaiKM = new ArrayList<>();
-        
+    public ArrayList<ChuongTrinhKhuyenMaiEntity> getallCTKMtheoLoaiKM(String ma) {
+        ArrayList<ChuongTrinhKhuyenMaiEntity> dsctkm = new ArrayList<>();
         try {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
-            Statement stmt = null;
-            
-            String sql = "select * from LoaiChuongTrinhKhuyenMai";
-            stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            PreparedStatement stmt = null;
+            String sql = "select * from ChuongTrinhKhuyenMai where maLoaiCTKM = ?";
+            stmt =con.prepareStatement(sql);
+            stmt.setString(1, ma);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()){
-                String ma = rs.getString("maLoaiCTKM");
-                String mota = rs.getString("moTa");
-                LoaiKhuyenMaiEntity lkm = new  LoaiKhuyenMaiEntity(ma, mota);
-                dsLoaiKM.add(lkm);
+                 String maKM = rs.getString("maCTKM");
+                String ten = rs.getString("tenCTKM");
+                String maLoaiKM = rs.getString("maLoaiCTKM");
+                LoaiKhuyenMaiEntity lkm = new LoaiKhuyenMaiEntity(maLoaiKM);
+                double sotienTT = rs.getDouble("soTienToiThieu");
+                double sotienTD = rs.getDouble("soTienToiDa");
+                int giamgia = rs.getInt("giamGia");
+                Date ngaybatdau = rs.getDate("ngayBatDau");
+                Date ngayketthuc = rs.getDate("ngayKetThuc");
+                String tinhTrang = rs.getString("tinhTrang");
+//                ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(ma, ten, sotienTT, giamgia, ngaybatdau, ngayketthuc);
+                ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(maKM, ten, lkm, sotienTT, sotienTD, giamgia, ngaybatdau, ngayketthuc, tinhTrang);
+                dsctkm.add(ctkm);
             }
         } catch (Exception e) {
-        
             e.printStackTrace();
+        }
+        return dsctkm;
     }
-        return dsLoaiKM;
-}
+ 
 }

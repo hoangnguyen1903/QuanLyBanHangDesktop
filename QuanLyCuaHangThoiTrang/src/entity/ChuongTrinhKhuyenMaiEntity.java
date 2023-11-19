@@ -37,6 +37,8 @@ public class ChuongTrinhKhuyenMaiEntity {
         this.ngayKetThuc = ngayKetThuc;
         this.tinhTrang = tinhTrang;
     }
+
+
         
     public LoaiKhuyenMaiEntity getMaLoaiKM() {
         return maLoaiKM;

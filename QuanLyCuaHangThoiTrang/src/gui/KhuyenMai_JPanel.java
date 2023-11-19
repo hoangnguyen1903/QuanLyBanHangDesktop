@@ -70,23 +70,25 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         ImageIcon img_btnCapNhat = new ImageIcon("src//pic//icon//buttonCapNhat.png");
         Image scaled_btnCapNhat = img_btnCapNhat.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
         img_btnCapNhat = new ImageIcon(scaled_btnCapNhat);
-        btn_Xoa.setIcon(img_btnCapNhat);
-
-        ImageIcon img_btnXoa = new ImageIcon("src//pic//icon//buttonXoa.png");
-        Image scaled_btnXoa = img_btnXoa.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
-        img_btnXoa = new ImageIcon(scaled_btnXoa);
-        btn_Xoa.setIcon(img_btnXoa);
+        btn_CapNhat.setIcon(img_btnCapNhat);
+//
+//        ImageIcon img_btnXoa = new ImageIcon("src//pic//icon//buttonXoa.png");
+//        Image scaled_btnXoa = img_btnXoa.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+//        img_btnXoa = new ImageIcon(scaled_btnXoa);
+//        btn_Xoa.setIcon(img_btnXoa);
         ctkmbus = new ChuongTrinhKhuyenMai_bus();
-       jcb_LoaiKhuyenMai.addItem("Mã Loại KM");
-        ArrayList<LoaiKhuyenMaiEntity> dslkm = ctkmbus.getallLoaiCTKM();
-        for(LoaiKhuyenMaiEntity lkm : dslkm ){
-            jcb_LoaiKhuyenMai.addItem(lkm.getMaLoaiKM());
-        }
+//       jcb_LoaiKhuyenMai.addItem("Mã Loại KM");
+//        ArrayList<LoaiKhuyenMaiEntity> dslkm = ctkmbus.getallLoaiCTKM();
+//        for(LoaiKhuyenMaiEntity lkm : dslkm ){
+//            jcb_LoaiKhuyenMai.addItem(lkm.getMaLoaiKM());
+//        }
+    // set LoaiKM sẵn cho Hoá đơn
+    txtLoaiKM.setText("GGHD");
         DocDuLieuTuSQLvaoTable();
     }
 
     private void DocDuLieuTuSQLvaoTable() {
-        ArrayList<ChuongTrinhKhuyenMaiEntity> listCTKM = ctkmbus.getallCTKM();
+          ArrayList<ChuongTrinhKhuyenMaiEntity> listCTKM = ctkmbus.getallCTKMtheoLoaiKM(txtLoaiKM.getText());
         for (ChuongTrinhKhuyenMaiEntity ctkm : listCTKM) {
             addRows(new Object[]{ctkm.getMaCTKM(),ctkm.getMaLoaiKM().getMaLoaiKM(), ctkm.getTenCTKM(),ctkm.getSoTienToiDa(), ctkm.getSoTienToiThieu(), ctkm.getGiamGia(), ctkm.getNgayBatDau(), ctkm.getNgayKetThuc(),ctkm.getTinhTrang()});
         }
@@ -105,6 +107,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
     private void LamMoi() {
         txtMaCTKM.setText("");
         txtTenCTKM.setText("");
+        txtSoTienGiamTT.setText("");
         txtSoTienGiamTD.setText("");
         txtGiamGia.setText("");
         dateNgayBatDau.setDate(null);
@@ -120,11 +123,11 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
 
             } else {
                 ArrayList<ChuongTrinhKhuyenMaiEntity> listCTKM = null;
-                listCTKM = ctkmbus.getCTKMTheoMaCTKM(maTim);
+                listCTKM = ctkmbus.getCTKMTheoMaCTKM(maTim,txtLoaiKM.getText());
                 if (!listCTKM.isEmpty()) {
                     XoahetDuLieuTrenTable();
                     for (ChuongTrinhKhuyenMaiEntity ctkm : listCTKM) {
-                        addRows(new Object[]{ctkm.getMaCTKM(),ctkm.getMaLoaiKM().getMaLoaiKM(), ctkm.getTenCTKM(),ctkm.getSoTienToiDa(), ctkm.getSoTienToiThieu(), ctkm.getGiamGia(), ctkm.getNgayBatDau(), ctkm.getNgayKetThuc(),ctkm.getTinhTrang()});
+                       addRows(new Object[]{ctkm.getMaCTKM(),ctkm.getMaLoaiKM().getMaLoaiKM(), ctkm.getTenCTKM(),ctkm.getSoTienToiDa(), ctkm.getSoTienToiThieu(), ctkm.getGiamGia(), ctkm.getNgayBatDau(), ctkm.getNgayKetThuc(),ctkm.getTinhTrang()});
                     }
                 }
                 else JOptionPane.showMessageDialog(null, "Không tìm thấy !");
@@ -135,12 +138,15 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
     }
 
     private void DocDuLieuTrenTable() {
+        LamMoi();
         int row = jTable1.getSelectedRow();
         txtMaCTKM.setText(jTable1.getValueAt(row, 0).toString());
-        jcb_LoaiKhuyenMai.setSelectedItem(jTable1.getValueAt(row, 1));
+//        txtLoaiKM.setText(jTable1.getValueAt(row, 1).toString());
         txtTenCTKM.setText(jTable1.getValueAt(row, 2).toString());
-        txtSoTienGiamTT.setText(jTable1.getValueAt(row, 3).toString());
-         txtSoTienGiamTD.setText(jTable1.getValueAt(row, 4).toString());
+        if(txtLoaiKM.getText().equals("GGHD")){
+            txtSoTienGiamTT.setText(jTable1.getValueAt(row, 3).toString());
+            txtSoTienGiamTD.setText(jTable1.getValueAt(row, 4).toString());
+        }
         txtGiamGia.setText(jTable1.getValueAt(row, 5).toString());
         try {
             dateNgayBatDau.setDate((Date) jTable1.getValueAt(row, 6));
@@ -168,11 +174,24 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         if(CheckValid()){
         String ma = PhatSinhMaCTKM();
         String ten = txtTenCTKM.getText();
-        double sotien = Double.parseDouble(txtGiamGia.getText());
+        String maLoai = txtLoaiKM.getText();
+        LoaiKhuyenMaiEntity lkm = new LoaiKhuyenMaiEntity(maLoai);
+        double sotienTT;
+        double sotienTD;
+        if(txtLoaiKM.getText().equals("GGSP")){
+            sotienTT = 0;
+            sotienTD =0;
+        }
+        else{
+             sotienTT = Double.parseDouble(txtSoTienGiamTT.getText());
+             sotienTD = Double.parseDouble(txtSoTienGiamTD.getText());
+        }
+        
         int giamgia = Integer.parseInt(txtGiamGia.getText());
         java.sql.Date ngayBD = new java.sql.Date(dateNgayBatDau.getDate().getTime());
         java.sql.Date ngayKT = new java.sql.Date(dateNgayKetThuc.getDate().getTime());
-        ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(ma, ten, sotien, giamgia, ngayBD, ngayKT);
+        String tinhtrang = SetTinhTrang(ngayKT);
+        ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(ma, ten, lkm, sotienTT, sotienTD, giamgia, ngayBD, ngayKT, tinhtrang);
         try {
             ctkmbus.create(ctkm);
            
@@ -197,7 +216,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         int row = jTable1.getSelectedRow();
         String ma = jTable1.getValueAt(row, 0).toString();
         ArrayList<ChuongTrinhKhuyenMaiEntity> ctkm = new ArrayList<ChuongTrinhKhuyenMaiEntity>();
-        ctkm = ctkmbus.getCTKMTheoMaCTKM(ma);
+        ctkm = ctkmbus.getCTKMTheoMaCTKM(ma,txtLoaiKM.getText());
         for(ChuongTrinhKhuyenMaiEntity km: ctkm){
             if(ctkmbus.delete(km)){
             JOptionPane.showMessageDialog(null, "Xoá thành công !");
@@ -223,11 +242,15 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         try {
             String ma = txtMaCTKM.getText();
             String ten = txtTenCTKM.getText();
-            Double sotienTT = Double.parseDouble(txtSoTienGiamTD.getText());
+            String maLoai = txtLoaiKM.getText();
+            LoaiKhuyenMaiEntity lkm = new LoaiKhuyenMaiEntity(maLoai);
+            Double sotienTT = Double.parseDouble(txtSoTienGiamTT.getText());
+            Double sotienTD = Double.parseDouble(txtSoTienGiamTD.getText());
             int giam = Integer.parseInt(txtGiamGia.getText());
             java.sql.Date ngayBD = new java.sql.Date(dateNgayBatDau.getDate().getTime());
             java.sql.Date ngayKT = new java.sql.Date(dateNgayKetThuc.getDate().getTime());
-            ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(ma, ten, sotienTT, giam, ngayBD, ngayKT);
+            String tinhtrang = SetTinhTrang(ngayKT);
+            ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(ma, ten, lkm, sotienTT, sotienTD, giam, ngayBD, ngayKT, tinhtrang);
             if (ctkmbus.update(ctkm)) {
                 JOptionPane.showMessageDialog(null, "Cập nhật thành công" );
                 XoahetDuLieuTrenTable();
@@ -252,20 +275,22 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
     
     private boolean CheckValid(){
         String ten = txtTenCTKM.getText();
-        String sotienTT = txtSoTienGiamTD.getText().trim();
+        String sotienTT = txtSoTienGiamTT.getText().trim();
+        String sotienTD = txtSoTienGiamTD.getText().trim();
         String giamgia  = txtGiamGia.getText().trim();
  
         if(ten.equals("")){
             JOptionPane.showMessageDialog(null, "Không để trống tên Chương trình ");
             return false;
         }
-        if(!(ten.length() >0 && ten.matches("^[\\p{L}' ]+$") )){
+        if(!(ten.length() >0 && ten.matches("^[\\p{L}'\\s\\p{N}\\p{P}]+$"))){
             JOptionPane.showMessageDialog(null, "Tên Chương trình không chứa ký tự đặc biệt");
             txtTenCTKM.selectAll();
             txtTenCTKM.requestFocus();
             return false;
         }
-        if(sotienTT.length() > 0){
+        if(txtLoaiKM.getText().equals("GGHD")){
+            if(sotienTT.length() > 0){
             try {
                 double stTT = Double.parseDouble(sotienTT);
                 if(stTT  <=0){
@@ -281,6 +306,24 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập số tiền tối thiểu !");
             return false;
         }
+        if(sotienTD.length() > 0){
+            try {
+                double stTD = Double.parseDouble(sotienTD);
+                if(stTD  <=0){
+                JOptionPane.showMessageDialog(null, "Số tiền tối đa phải lớn hơn 0");
+                return false;
+            }
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Nhập số tiền không hợp lệ !");
+                return false;
+            }
+        }else {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập số tiền tối đa !");
+            return false;
+        }
+        }
+        
         if(giamgia.length() > 0){
             try {
                 double gg = Double.parseDouble(giamgia);
@@ -311,6 +354,10 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
             LocalDate ngaykt = dateNgayKetThuc.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             long khoangcach = ChronoUnit.DAYS.between(ngaybd, ngaykt);
             System.out.println(khoangcach);
+            if(!ngaybd.isBefore(ngaykt)){
+                JOptionPane.showMessageDialog(null, "Ngày bắt đầu phải đứng trước ngày kết thúc");
+                return false;
+            }
             if (khoangcach < 2) {
                  JOptionPane.showMessageDialog(null, "Ngày kết thúc với ngày bắt đầu cách it nhất 2 ngày !");
                 return false;
@@ -347,15 +394,14 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtSoTienGiamTT = new javax.swing.JTextField();
-        jcb_LoaiKhuyenMai = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         rdo_sp = new javax.swing.JRadioButton();
         rdo_hd = new javax.swing.JRadioButton();
+        txtLoaiKM = new javax.swing.JTextField();
         JPanel_ThaoTac = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtTimMaCTKM = new javax.swing.JTextField();
         btn_TimKiem = new javax.swing.JButton();
-        btn_Xoa = new javax.swing.JButton();
         btn_LamMoi = new javax.swing.JButton();
         btn_Them = new javax.swing.JButton();
         btn_CapNhat = new javax.swing.JButton();
@@ -374,11 +420,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("QUẢN LÝ CHƯƠNG TRÌNH KHUYẾN MÃI");
-<<<<<<< HEAD
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 1, 1160, 38));
-=======
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1186, 38));
->>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 40));
 
@@ -415,6 +457,11 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         JPanel_ThongTinCTKM.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 110, 30));
 
         dateNgayKetThuc.setDateFormatString("dd-MM-yyyy");
+        dateNgayKetThuc.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateNgayKetThucPropertyChange(evt);
+            }
+        });
         JPanel_ThongTinCTKM.add(dateNgayKetThuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 60, 180, 30));
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
@@ -432,6 +479,11 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         JPanel_ThongTinCTKM.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, 100, 30));
 
         dateNgayBatDau.setDateFormatString("dd-MM-yyyy");
+        dateNgayBatDau.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateNgayBatDauPropertyChange(evt);
+            }
+        });
         JPanel_ThongTinCTKM.add(dateNgayBatDau, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 20, 180, 30));
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
@@ -439,7 +491,6 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         jLabel8.setPreferredSize(new java.awt.Dimension(109, 30));
         JPanel_ThongTinCTKM.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 120, 30));
 
-<<<<<<< HEAD
         jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jLabel9.setText("Số Tiền Giảm Tối Thiểu");
         jLabel9.setPreferredSize(new java.awt.Dimension(109, 30));
@@ -448,9 +499,6 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         txtSoTienGiamTT.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txtSoTienGiamTT.setBorder(null);
         JPanel_ThongTinCTKM.add(txtSoTienGiamTT, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 170, 30));
-
-        jcb_LoaiKhuyenMai.setModel(new javax.swing.DefaultComboBoxModel<>());
-        JPanel_ThongTinCTKM.add(jcb_LoaiKhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, 170, 30));
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jLabel10.setText("Số Tiền Giảm Tối Đa");
@@ -478,10 +526,13 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         });
         JPanel_ThongTinCTKM.add(rdo_hd, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 110, -1, -1));
 
+        txtLoaiKM.setEditable(false);
+        txtLoaiKM.setBackground(new java.awt.Color(244, 244, 244));
+        txtLoaiKM.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        txtLoaiKM.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        JPanel_ThongTinCTKM.add(txtLoaiKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, 170, 30));
+
         add(JPanel_ThongTinCTKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 1160, 150));
-=======
-        add(JPanel_ThongTinCTKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 55, 1170, 100));
->>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
 
         JPanel_ThaoTac.setBackground(new java.awt.Color(187, 205, 197));
         JPanel_ThaoTac.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Thao tác", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
@@ -508,22 +559,6 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         });
         JPanel_ThaoTac.add(btn_TimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 120, 30));
 
-        btn_Xoa.setBackground(new java.awt.Color(255, 0, 0));
-        btn_Xoa.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
-        btn_Xoa.setForeground(new java.awt.Color(255, 255, 255));
-        btn_Xoa.setText("Xoá");
-        btn_Xoa.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_XoaMouseClicked(evt);
-            }
-        });
-        btn_Xoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_XoaActionPerformed(evt);
-            }
-        });
-        JPanel_ThaoTac.add(btn_Xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 20, 120, 30));
-
         btn_LamMoi.setBackground(new java.awt.Color(0, 51, 51));
         btn_LamMoi.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
         btn_LamMoi.setForeground(new java.awt.Color(255, 255, 255));
@@ -539,7 +574,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
                 btn_LamMoiActionPerformed(evt);
             }
         });
-        JPanel_ThaoTac.add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 120, 30));
+        JPanel_ThaoTac.add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, 120, 30));
 
         btn_Them.setBackground(new java.awt.Color(0, 51, 51));
         btn_Them.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
@@ -551,9 +586,8 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
                 btn_ThemMouseClicked(evt);
             }
         });
-        JPanel_ThaoTac.add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 20, 120, 30));
+        JPanel_ThaoTac.add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 20, 120, 30));
 
-<<<<<<< HEAD
         btn_CapNhat.setBackground(new java.awt.Color(0, 51, 51));
         btn_CapNhat.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
         btn_CapNhat.setForeground(new java.awt.Color(255, 255, 255));
@@ -569,12 +603,9 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
                 btn_CapNhatActionPerformed(evt);
             }
         });
-        JPanel_ThaoTac.add(btn_CapNhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 20, 120, 30));
+        JPanel_ThaoTac.add(btn_CapNhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 20, 120, 30));
 
         add(JPanel_ThaoTac, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 1160, 60));
-=======
-        add(JPanel_ThaoTac, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 165, 1170, 60));
->>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
 
         JPanel_Table.setBackground(new java.awt.Color(187, 205, 197));
         JPanel_Table.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Danh sách bảng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
@@ -618,30 +649,18 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
             JPanel_TableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPanel_TableLayout.createSequentialGroup()
                 .addContainerGap()
-<<<<<<< HEAD
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1138, Short.MAX_VALUE)
-=======
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1148, Short.MAX_VALUE)
->>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
                 .addContainerGap())
         );
         JPanel_TableLayout.setVerticalGroup(
             JPanel_TableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPanel_TableLayout.createSequentialGroup()
                 .addContainerGap()
-<<<<<<< HEAD
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         add(JPanel_Table, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 265, 1160, 470));
-=======
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        add(JPanel_Table, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 235, 1170, 510));
->>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
@@ -671,21 +690,12 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         ThemMoi();
     }//GEN-LAST:event_btn_ThemMouseClicked
 
-    private void btn_XoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_XoaMouseClicked
-        // TODO add your handling code here:
-        Xoa();
-    }//GEN-LAST:event_btn_XoaMouseClicked
-
-    private void btn_XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XoaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_XoaActionPerformed
-
     private void btn_CapNhatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CapNhatMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_CapNhatMouseClicked
 
     private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CapNhatActionPerformed
-        // TODO add your handling code here:
+        CapNhat();
     }//GEN-LAST:event_btn_CapNhatActionPerformed
 
     private void rdo_spActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_spActionPerformed
@@ -706,7 +716,11 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         models.getColumn(4).setMaxWidth(0);
         models.getColumn(4).setMinWidth(0);
         }
-  
+       txtLoaiKM.setText("");
+       txtLoaiKM.setText("GGSP");
+       LamMoi();
+       XoahetDuLieuTrenTable();
+        DocDuLieuTuSQLvaoTable();
     }//GEN-LAST:event_rdo_spActionPerformed
 
     private void rdo_hdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_hdActionPerformed
@@ -721,7 +735,31 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         models.getColumn(4).setMaxWidth(100);
         models.getColumn(4).setMinWidth(100);
        }
+       txtLoaiKM.setText("");
+       txtLoaiKM.setText("GGHD");
+       LamMoi();
+       XoahetDuLieuTrenTable();
+        DocDuLieuTuSQLvaoTable();
     }//GEN-LAST:event_rdo_hdActionPerformed
+
+    private void dateNgayBatDauPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateNgayBatDauPropertyChange
+        // TODO add your handling code here:
+        if(dateNgayKetThuc.getDate() !=null && dateNgayBatDau.getDate() !=null){
+            if(!dateNgayBatDau.getDate().before(dateNgayKetThuc.getDate())){
+                JOptionPane.showMessageDialog(null, "Ngày bắt đầu phải đứng trước ngày kết thúc");
+                dateNgayBatDau.setDate(null);
+            }
+        }
+    }//GEN-LAST:event_dateNgayBatDauPropertyChange
+
+    private void dateNgayKetThucPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateNgayKetThucPropertyChange
+         if(dateNgayBatDau.getDate() !=null && dateNgayKetThuc.getDate() !=null){
+            if(!dateNgayBatDau.getDate().before(dateNgayKetThuc.getDate())){
+                JOptionPane.showMessageDialog(null, "Ngày kết thúc phải đứng sau ngày bắt đầu");
+                dateNgayKetThuc.setDate(null);
+            }
+        }
+    }//GEN-LAST:event_dateNgayKetThucPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -732,7 +770,6 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
     private javax.swing.JButton btn_LamMoi;
     private javax.swing.JButton btn_Them;
     private javax.swing.JButton btn_TimKiem;
-    private javax.swing.JButton btn_Xoa;
     private com.toedter.calendar.JDateChooser dateNgayBatDau;
     private com.toedter.calendar.JDateChooser dateNgayKetThuc;
     private javax.swing.JLabel jLabel1;
@@ -748,10 +785,10 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JComboBox<String> jcb_LoaiKhuyenMai;
     private javax.swing.JRadioButton rdo_hd;
     private javax.swing.JRadioButton rdo_sp;
     private javax.swing.JTextField txtGiamGia;
+    private javax.swing.JTextField txtLoaiKM;
     private javax.swing.JTextField txtMaCTKM;
     private javax.swing.JTextField txtSoTienGiamTD;
     private javax.swing.JTextField txtSoTienGiamTT;
