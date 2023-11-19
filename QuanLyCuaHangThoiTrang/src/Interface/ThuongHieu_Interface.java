@@ -13,4 +13,6 @@ import java.util.ArrayList;
  */
 public interface ThuongHieu_Interface {
     public ArrayList<ThuongHieuEntity> getAllTH();
+    public String layTenThuongHieuTheoMa(String maThuongHieu);
+    public String layMaThuongHieuTheoTen(String tenThuongHieu);
 }

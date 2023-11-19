@@ -20,9 +20,14 @@ public interface SanPham_Interface {
     public ArrayList<SanPhamEntity> timSanPham(String ma);
 
     public boolean capNhatSanPham(SanPhamEntity sp);
+
     public ArrayList<SanPhamEntity> kiemTraTonKho();
 
     public SanPhamEntity timKiemSanPham(String ma);
+
     public int laySoLuongTonKhoTheoMaSP(String maSP);
+
     public boolean capNhatSoLuong(String maSP, int soLuongNhap);
+    
+    public boolean kiemTraMaSanPhamTonTai(String maSP);
 }

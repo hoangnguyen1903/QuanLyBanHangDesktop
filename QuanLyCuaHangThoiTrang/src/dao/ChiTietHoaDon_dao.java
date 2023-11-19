@@ -1,10 +1,10 @@
-
 package dao;
 
 import Interface.ChiTietHoaDon_Interface;
 import connectDB.ConnectDB;
 import entity.ChatLieuEntity;
 import entity.ChiTietHoaDonEntity;
+import entity.ChuongTrinhKhuyenMaiEntity;
 import entity.DanhMucSanPhamEntity;
 import entity.HoaDonEntity;
 import entity.KichThuocEnum;
@@ -26,99 +26,100 @@ import util.GenerateID;
  *
  * @author DELL
  */
-public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
-    public ChiTietHoaDon_dao (){
-        
+public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface {
+
+    public ChiTietHoaDon_dao() {
+
     }
 
     @Override
     public ArrayList<ChiTietHoaDonEntity> getallCTHD() {
-    ArrayList<ChiTietHoaDonEntity> dscthd = new ArrayList<ChiTietHoaDonEntity>();
-    Connection con = null; // Khởi tạo biến kết nối
-    try {
-        ConnectDB.getInstance();
-        con = ConnectDB.getConnection(); // Gán kết nối từ ConnectDB
-        String sql = "Select * from ChiTietHoaDon";
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(sql);
-        while (rs.next()) {
-            String masp = rs.getString("maSP");
-           SanPhamEntity sp = new SanPhamEntity(masp);
-           String mahd = rs.getString("maHD");
-           HoaDonEntity hd = new HoaDonEntity(mahd);
-           int sl = rs.getInt("soLuong");
-           double giaban = rs.getDouble("giaBan");
-           double thanhtien = rs.getDouble("thanhTien");
-           ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity(sp, hd, sl, giaban, thanhtien);
-            dscthd.add(cthd);
+        ArrayList<ChiTietHoaDonEntity> dscthd = new ArrayList<ChiTietHoaDonEntity>();
+        Connection con = null; // Khởi tạo biến kết nối
+        try {
+            ConnectDB.getInstance();
+            con = ConnectDB.getConnection(); // Gán kết nối từ ConnectDB
+            String sql = "Select * from ChiTietHoaDon";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String masp = rs.getString("maSP");
+                SanPhamEntity sp = new SanPhamEntity(masp);
+                String mahd = rs.getString("maHD");
+                HoaDonEntity hd = new HoaDonEntity(mahd);
+                int sl = rs.getInt("soLuong");
+                double giaban = rs.getDouble("giaBan");
+                double thanhtien = rs.getDouble("thanhTien");
+                ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity(sp, hd, sl, giaban, thanhtien);
+                dscthd.add(cthd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        if (con != null) {
+        return dscthd;
+
+    }
+
+    @Override
+    public ArrayList<SanPhamEntity> getSanPhamTheoMaSP(String maSP) {
+        ArrayList<SanPhamEntity> dsSP = new ArrayList<SanPhamEntity>();
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ConnectDB.getConnection();
+            String sql = "select * from SanPham where maSP = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, maSP);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                // Xử lý dữ liệu ở đây
+                String ma = rs.getString("maSP");
+                String ten = rs.getString("tenSP");
+                KichThuocEnum kichthuoc = KichThuocEnum.valueOf(rs.getString("kichThuoc"));
+                MauSacEnum mausac = MauSacEnum.valueOf(rs.getString("mauSac"));
+                double dongia = rs.getDouble("donGia");
+                int sl = rs.getInt("soLuong");
+                TinhTrangSPEnum tinhtrang = TinhTrangSPEnum.valueOf(rs.getString("tinhTrang"));
+                ChatLieuEntity chatlieu = new ChatLieuEntity(rs.getString("maChatLieu"));
+                ThuongHieuEntity thuonghieu = new ThuongHieuEntity(rs.getString("maThuongHieu"));
+                DanhMucSanPhamEntity danhmuc = new DanhMucSanPhamEntity(rs.getString("maDanhMuc"));
+                ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(rs.getString("maCTKM"));
+                SanPhamEntity sp = new SanPhamEntity(maSP, ten, kichthuoc, mausac, dongia, sl, tinhtrang, chatlieu, thuonghieu, danhmuc, ctkm, null);
+                dsSP.add(sp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             try {
-                con.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
+        return dsSP;
     }
-    return dscthd;
-       
-    }
-
-    @Override   
-    public ArrayList<SanPhamEntity> getSanPhamTheoMaSP(String maSP) {
-    ArrayList<SanPhamEntity> dsSP = new ArrayList<SanPhamEntity>();
-    Connection con = null;
-    PreparedStatement stmt = null;
-    ResultSet rs = null;
-
-    try {
-        con = ConnectDB.getConnection();
-        String sql = "select * from SanPham where maSP = ?";
-        stmt = con.prepareStatement(sql);
-        stmt.setString(1, maSP);
-        rs = stmt.executeQuery();
-        
-        while (rs.next()) {
-            // Xử lý dữ liệu ở đây
-            String ma = rs.getString("maSP");
-            String ten = rs.getString("tenSP");
-            KichThuocEnum kichthuoc = KichThuocEnum.valueOf(rs.getString("kichThuoc"));
-            MauSacEnum mausac = MauSacEnum.valueOf(rs.getString("mauSac"));
-            double dongia = rs.getDouble("donGia");
-            int sl = rs.getInt("soLuong");
-            TinhTrangSPEnum tinhtrang = TinhTrangSPEnum.valueOf(rs.getString("tinhTrang"));
-            ChatLieuEntity chatlieu = new ChatLieuEntity(rs.getString("maChatLieu"));
-            ThuongHieuEntity thuonghieu = new ThuongHieuEntity(rs.getString("maThuongHieu"));
-            DanhMucSanPhamEntity danhmuc = new DanhMucSanPhamEntity(rs.getString("maDanhMuc"));
-            SanPhamEntity sp=new SanPhamEntity(maSP, ten, kichthuoc, mausac, dongia, sl, tinhtrang, chatlieu, thuonghieu, danhmuc, null);
-            dsSP.add(sp);
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        try {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-    return dsSP;
-}
-
 
     @Override
-   public ArrayList<SanPhamEntity> getSanPhamTheoMaHD(String maHD) {
+    public ArrayList<SanPhamEntity> getSanPhamTheoMaHD(String maHD) {
         try {
             ConnectDB.getInstance().connect();
         } catch (SQLException e) {
@@ -129,16 +130,16 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-    try {
-        ConnectDB.getInstance();
-        con = ConnectDB.getConnection();
-        String sql = "select * from SanPham where maSP in (select maSP from ChiTietHoaDon where maHD = ?)";
-        stmt = con.prepareStatement(sql);
-        stmt.setString(1, maHD);
-        rs = stmt.executeQuery();
+        try {
+            ConnectDB.getInstance();
+            con = ConnectDB.getConnection();
+            String sql = "select * from SanPham where maSP in (select maSP from ChiTietHoaDon where maHD = ?)";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, maHD);
+            rs = stmt.executeQuery();
 
-        while (rs.next()) {
-             String maSP = rs.getString("maSP");
+            while (rs.next()) {
+                String maSP = rs.getString("maSP");
                 String tenSP = rs.getString("tenSP");
                 String kichThuoc = rs.getString("kichThuoc");
                 String mauSac = rs.getString("mauSac");
@@ -147,6 +148,7 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
                 String chatLieu = rs.getString("maChatLieu");
                 String thuongHieu = rs.getString("maThuongHieu");
                 String danhMuc = rs.getString("maDanhMuc");
+                String ctkm = rs.getString("maCTKM");
                 String imgUrl = rs.getString("imgUrl");
                 KichThuocEnum kichThuocEnum = null;
                 if (kichThuoc.equals("XS")) {
@@ -179,30 +181,31 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
                 ChatLieuEntity maChatLieu = new ChatLieuEntity(chatLieu);
                 ThuongHieuEntity maThuongHieu = new ThuongHieuEntity(thuongHieu);
                 DanhMucSanPhamEntity maDanhMuc = new DanhMucSanPhamEntity(danhMuc);
-                SanPhamEntity sp = new SanPhamEntity(maSP, tenSP, kichThuocEnum, mauSacEnum, donGia, donGia, tinhTrangSPEnum, maChatLieu, maThuongHieu, maDanhMuc, imgUrl);
-            dsSP.add(sp);
+                ChuongTrinhKhuyenMaiEntity maCTKM = new ChuongTrinhKhuyenMaiEntity(ctkm);
+                SanPhamEntity sp = new SanPhamEntity(maSP, tenSP, kichThuocEnum, mauSacEnum, donGia, donGia, tinhTrangSPEnum, maChatLieu, maThuongHieu, maDanhMuc, maCTKM, imgUrl);
+                dsSP.add(sp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        try {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+
+        return dsSP;
     }
 
-    return dsSP;
-}
-   
     // Nguyen Huy Hoang
     @Override
     public boolean themChiTietHoaDon(ChiTietHoaDonEntity cthd) {
@@ -210,7 +213,7 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
         try {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
-            
+
             String sql = "Insert into ChiTietHoaDon(maSP, maHD, soLuong, giaBan, thanhTien) values (?, ?, ?, ?, ?)";
             statement = con.prepareStatement(sql);
             statement.setString(1, cthd.getSanPham().getMaSP());
@@ -218,15 +221,15 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
             statement.setInt(3, cthd.getSoLuong());
             statement.setDouble(4, cthd.getGiaBan());
             statement.setDouble(5, cthd.getThanhTien());
-            
+
             int ketQua = statement.executeUpdate();
 
-            if(ketQua < 1) {
+            if (ketQua < 1) {
                 return false;
             }
-            
+
             return true;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         } finally {
@@ -238,7 +241,7 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
             }
         }
     }
-    
+
     @Override
     public ArrayList<ChiTietHoaDonEntity> getAllCTHDTheoMaHD(String maHD) {
         try {
@@ -248,15 +251,15 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
         }
         Connection con = ConnectDB.getConnection();
         PreparedStatement statement = null;
-        
+
         try {
             String sql = "Select cthd.*, sp.tenSP, sp.kichThuoc, sp.mauSac from ChiTietHoaDon as cthd inner join SanPham as sp on cthd.maSP=sp.maSP where maHD=?";
             statement = con.prepareStatement(sql);
             statement.setString(1, maHD);
-            
+
             ResultSet rs = statement.executeQuery();
             ArrayList<ChiTietHoaDonEntity> cthdList = new ArrayList<ChiTietHoaDonEntity>();
-            while(rs.next()) {
+            while (rs.next()) {
                 String mahd = rs.getString("maHD");
                 HoaDonEntity hd = new HoaDonEntity(mahd);
                 String masp = rs.getString("maSP");
@@ -271,9 +274,9 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
                 int soLuong = rs.getInt("soLuong");
                 double giaBan = rs.getDouble("giaBan");
                 double thanhTien = rs.getDouble("thanhTien");
-                
+
                 ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity(sp, hd, soLuong, giaBan, thanhTien);
-                
+
                 cthdList.add(cthd);
             }
             return cthdList;
@@ -281,7 +284,7 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
             e.printStackTrace();
             return null;
         } finally {
-            if(con != null) {
+            if (con != null) {
                 try {
                     con.close();
                 } catch (SQLException ex) {
@@ -290,7 +293,7 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
             }
         }
     }
-    
+
 //chung
     @Override
     public int soluongSP(String maHD, String maSP) {
@@ -298,18 +301,18 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
         Connection con = null;
         PreparedStatement stmt = null;
         try {
-         ConnectDB.getInstance().connect();
-        con = ConnectDB.getConnection();
-        String sql = "select soLuong from ChiTietHoaDon where maHD = ? and maSP = ?";
-        stmt = con.prepareStatement(sql);
-        stmt.setString(1, maHD);
-        stmt.setString(2, maSP);
-        
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()){
-            int soluong =rs.getInt("soLuong");
-            sl = soluong;
-        }
+            ConnectDB.getInstance().connect();
+            con = ConnectDB.getConnection();
+            String sql = "select soLuong from ChiTietHoaDon where maHD = ? and maSP = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, maHD);
+            stmt.setString(2, maSP);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int soluong = rs.getInt("soLuong");
+                sl = soluong;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -317,31 +320,31 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface{
     }
 
     @Override
-    public ArrayList<ChiTietHoaDonEntity> getCTHDTheoMaHDvaMaSP(String maHD,String maSP) {
-       ArrayList<ChiTietHoaDonEntity> dscthd = new ArrayList<ChiTietHoaDonEntity>();
+    public ArrayList<ChiTietHoaDonEntity> getCTHDTheoMaHDvaMaSP(String maHD, String maSP) {
+        ArrayList<ChiTietHoaDonEntity> dscthd = new ArrayList<ChiTietHoaDonEntity>();
         try {
             ConnectDB.getInstance().connect();
-       Connection con = ConnectDB.getConnection();
-       PreparedStatement stmt = con.prepareStatement("select * from [dbo].[ChiTietHoaDon] where maHD = ? and maSP = ?");
-       stmt.setString(1, maHD);
-       stmt.setString(2, maSP);
-       ResultSet rs = stmt.executeQuery();
-       while (rs.next()){
-           String masp = rs.getString("maSP");
-           SanPhamEntity sp = new SanPhamEntity(masp);
-           String mahd = rs.getString("maHD");
-           HoaDonEntity hd = new HoaDonEntity(mahd);
-           int sl = rs.getInt("soLuong");
-           double giaban = rs.getDouble("giaBan");
-           double thanhtien = rs.getDouble("thanhTien");
-           ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity(sp, hd, sl, giaban, thanhtien);
-           dscthd.add(cthd);
-           
-       }
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement stmt = con.prepareStatement("select * from [dbo].[ChiTietHoaDon] where maHD = ? and maSP = ?");
+            stmt.setString(1, maHD);
+            stmt.setString(2, maSP);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String masp = rs.getString("maSP");
+                SanPhamEntity sp = new SanPhamEntity(masp);
+                String mahd = rs.getString("maHD");
+                HoaDonEntity hd = new HoaDonEntity(mahd);
+                int sl = rs.getInt("soLuong");
+                double giaban = rs.getDouble("giaBan");
+                double thanhtien = rs.getDouble("thanhTien");
+                ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity(sp, hd, sl, giaban, thanhtien);
+                dscthd.add(cthd);
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return dscthd;
     }
-   
+
 }

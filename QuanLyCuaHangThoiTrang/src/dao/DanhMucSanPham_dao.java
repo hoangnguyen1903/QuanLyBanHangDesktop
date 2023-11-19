@@ -40,5 +40,58 @@ public class DanhMucSanPham_dao implements DanhMucSanPham_Interface{
         }
         return dsDMSP;
     }
+
+    @Override
+    public String layTenDanhMucTheoMa(String maDanhMuc) {
+        String tenDanhMuc = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+
+            String sql = "SELECT tenDanhMuc FROM DanhMucSanPham WHERE maDanhMuc = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, maDanhMuc);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                tenDanhMuc = rs.getString("tenDanhMuc");
+            }
+
+            ps.close();
+            rs.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucSanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tenDanhMuc;
+    }
+
+    @Override
+    public String layMaDanhMucTheoTen(String tenDanhMuc) {
+        String maDanhMuc = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+            String sql = "SELECT maDanhMuc FROM DanhMucSanPham WHERE tenDanhMuc = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, tenDanhMuc);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                maDanhMuc = rs.getString("maDanhMuc");
+            }
+
+            ps.close();
+            rs.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucSanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return maDanhMuc;
+    }
     
 }

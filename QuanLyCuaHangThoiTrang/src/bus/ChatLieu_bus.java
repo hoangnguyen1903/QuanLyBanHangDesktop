@@ -20,4 +20,14 @@ public class ChatLieu_bus implements ChatLieu_Interface{
     public ArrayList<ChatLieuEntity> getAllCL() {
         return cl_dao.getAllCL();
     }
+
+    @Override
+    public String layTenChatLieuTheoMa(String maChatLieu) {
+        return cl_dao.layTenChatLieuTheoMa(maChatLieu);
+    }
+
+    @Override
+    public String layMaChatLieuTheoTen(String tenChatLieu) {
+        return cl_dao.layMaChatLieuTheoTen(tenChatLieu);
+    }
 }
