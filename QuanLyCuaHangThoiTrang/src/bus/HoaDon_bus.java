@@ -50,7 +50,7 @@ public class HoaDon_bus implements HoaDon_Interface{
     }
 
     @Override
-    public HoaDonEntity timKiemHoaDonChuaThanhToan(String sdt) {
+    public ArrayList<HoaDonEntity> timKiemHoaDonChuaThanhToan(String sdt) {
         return hd_dao.timKiemHoaDonChuaThanhToan(sdt);
     }
     
