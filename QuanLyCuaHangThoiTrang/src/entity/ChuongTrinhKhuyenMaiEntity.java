@@ -6,10 +6,14 @@ import java.util.Objects;
 
 public class ChuongTrinhKhuyenMaiEntity {
 	private String maCTKM, tenCTKM;
+        private LoaiKhuyenMaiEntity maLoaiKM;
 	private double soTienToiThieu;
+        private double soTienToiDa;
 	private int giamGia;
 	private Date ngayBatDau;
 	private Date ngayKetThuc;
+        private String tinhTrang;
+        
 	public ChuongTrinhKhuyenMaiEntity(String maCTKM, String tenCTKM, double soTienToiThieu, int giamGia,
 			Date ngayBatDau, Date ngayKetThuc) {
 		super();
@@ -20,6 +24,45 @@ public class ChuongTrinhKhuyenMaiEntity {
 		this.ngayBatDau = ngayBatDau;
 		this.ngayKetThuc = ngayKetThuc;
 	}
+// Đinh Nguyên Chung
+
+    public ChuongTrinhKhuyenMaiEntity(String maCTKM, String tenCTKM, LoaiKhuyenMaiEntity maLoaiKM, double soTienToiThieu, double soTienToiDa, int giamGia, Date ngayBatDau, Date ngayKetThuc, String tinhTrang) {
+        this.maCTKM = maCTKM;
+        this.tenCTKM = tenCTKM;
+        this.maLoaiKM = maLoaiKM;
+        this.soTienToiThieu = soTienToiThieu;
+        this.soTienToiDa = soTienToiDa;
+        this.giamGia = giamGia;
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.tinhTrang = tinhTrang;
+    }
+        
+    public LoaiKhuyenMaiEntity getMaLoaiKM() {
+        return maLoaiKM;
+    }
+
+    public void setMaLoaiKM(LoaiKhuyenMaiEntity maLoaiKM) {
+        this.maLoaiKM = maLoaiKM;
+    }
+        
+
+    public double getSoTienToiDa() {
+        return soTienToiDa;
+    }
+
+    public void setSoTienToiDa(double soTienToiDa) {
+        this.soTienToiDa = soTienToiDa;
+    }
+
+    public String getTinhTrang() {
+        return tinhTrang;
+    }
+
+    public void setTinhTrang(String tinhTrang) {
+        this.tinhTrang = tinhTrang;
+    }
+        
 	public ChuongTrinhKhuyenMaiEntity(String maCTKM) {
 		super();
 		this.maCTKM = maCTKM;
