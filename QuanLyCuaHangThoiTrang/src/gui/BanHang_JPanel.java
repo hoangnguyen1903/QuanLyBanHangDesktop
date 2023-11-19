@@ -963,8 +963,8 @@ public class BanHang_JPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txt_SoDienThoaiKH;
     private javax.swing.JTextField txt_TienNhan;
     // End of variables declaration//GEN-END:variables
-    
-    public void timKiemSanPham() { // dang sua
+    // Dang sua
+    public void timKiemSanPham() { 
         String maSP = txt_MaSanPham.getText().trim();
         if(maSP.equals("")) {
             JOptionPane.showMessageDialog(this, "Mã sản phẩm chưa nhập !");

@@ -57,11 +57,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-<<<<<<< HEAD
-                      <Component id="jScrollPane1" pref="976" max="32767" attributes="0"/>
-=======
                       <Component id="jScrollPane1" pref="1146" max="32767" attributes="0"/>
->>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -70,11 +66,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-<<<<<<< HEAD
-                      <Component id="jScrollPane1" pref="481" max="32767" attributes="0"/>
-=======
                       <Component id="jScrollPane1" pref="535" max="32767" attributes="0"/>
->>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -123,11 +115,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
-                      <EmptySpace pref="358" max="32767" attributes="0"/>
-=======
                       <EmptySpace pref="412" max="32767" attributes="0"/>
->>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
                   </Group>
               </Group>
             </DimensionLayout>
@@ -143,11 +131,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
-                      <EmptySpace min="0" pref="976" max="32767" attributes="0"/>
-=======
                       <EmptySpace min="0" pref="1146" max="32767" attributes="0"/>
->>>>>>> 0cd7e2e98e950f83f283b5dc60dad6d189da1947
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
