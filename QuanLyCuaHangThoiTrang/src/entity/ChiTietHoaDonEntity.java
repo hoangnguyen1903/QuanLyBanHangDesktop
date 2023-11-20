@@ -46,7 +46,11 @@ public class ChiTietHoaDonEntity {
         }
 
         public void setGiaBan() {
-            this.giaBan = sanPham.getDonGia() * 1.4;
+            if(sanPham.getChuongTrinhKhuyenMai() != null) {
+                this.giaBan = (sanPham.getDonGia() * 1.4) * (1 - (sanPham.getChuongTrinhKhuyenMai().getGiamGia() * 0.01));
+            } else {
+                this.giaBan = sanPham.getDonGia() * 1.4;
+            }
         }
 
         public double getThanhTien() {

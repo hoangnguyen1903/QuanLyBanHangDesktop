@@ -84,7 +84,16 @@ public class HoaDonEntity {
         }
 
         public void setTienKhuyenMai() {
-            this.tienKhuyenMai = tongTien * (chuongTrinhKM.getGiamGia()*0.01);
+            if(this.getChuongTrinhKM() != null) {
+                double tienKM = tongTien * (chuongTrinhKM.getGiamGia()*0.01);
+                if(tienKM > chuongTrinhKM.getSoTienToiDa()) {
+                    this.tienKhuyenMai = chuongTrinhKM.getSoTienToiDa();
+                } else {
+                    this.tienKhuyenMai = tienKM;
+                }
+            } else {
+                this.tienKhuyenMai = 0;
+            }
         }
 
         public void setTienThanhToan() {

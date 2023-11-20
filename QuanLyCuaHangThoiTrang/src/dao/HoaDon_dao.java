@@ -95,9 +95,17 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             statement = con.prepareStatement(sql);
             
             statement.setString(1, hoaDon.getMaHD());
-            statement.setString(2, hoaDon.getKhachHang().getMaKH());
+            if(hoaDon.getKhachHang() != null) {
+                statement.setString(2, hoaDon.getKhachHang().getMaKH());
+            } else {
+                statement.setString(2, "KH12345678NULL");
+            }
             statement.setString(3, hoaDon.getNhanVien().getMaNV());
-            statement.setString(4, hoaDon.getChuongTrinhKM().getMaCTKM());
+            if(hoaDon.getChuongTrinhKM() != null) {
+                statement.setString(4, hoaDon.getChuongTrinhKM().getMaCTKM());
+            } else {
+                statement.setString(4, "KM12345678NULL");
+            }
             statement.setDate(5, hoaDon.getNgayLapHD());
             statement.setDouble(6, hoaDon.getTienKhuyenMai());
             statement.setDouble(7, hoaDon.getTongTien());
@@ -275,6 +283,42 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        } finally {
+            if(con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(HoaDon_dao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+    
+    @Override
+    public int getSoLuongTonTheoMa(String maSP) {
+        try {
+            ConnectDB.getInstance().connect();
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDon_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement statement = null;
+        
+        try {
+            String sql = "Select soLuongTonKho from SanPham where maSP=?";
+            statement = con.prepareStatement(sql);
+            statement.setString(1, maSP);
+            
+            ResultSet rs = statement.executeQuery();
+            int soLuong=-1;
+            if(rs.next()) {
+                soLuong = rs.getInt("soLuongTonKho");
+                
+            }
+            return soLuong;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
         } finally {
             if(con != null) {
                 try {

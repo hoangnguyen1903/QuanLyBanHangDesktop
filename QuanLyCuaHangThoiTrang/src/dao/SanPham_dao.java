@@ -290,8 +290,9 @@ public class SanPham_dao implements SanPham_Interface {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
 
-            String sql = "Select sp.*, dm.tenDanhMuc, cl.tenChatLieu, cl.xuatXu, th.tenThuongHieu from SanPham as sp inner join DanhMucSanPham as dm on sp.maDanhMuc=dm.maDanhMuc"
-                    + " inner join ThuongHieu as th on sp.maThuongHieu=th.maThuongHieu inner join ChatLieu as cl on sp.maChatLieu=cl.maChatLieu where maSP=? ";
+            String sql = "Select sp.*, dm.tenDanhMuc, cl.tenChatLieu, cl.xuatXu, th.tenThuongHieu, ctkm.giamGia from SanPham as sp inner join DanhMucSanPham as dm on sp.maDanhMuc=dm.maDanhMuc"
+                    + " inner join ThuongHieu as th on sp.maThuongHieu=th.maThuongHieu inner join ChatLieu as cl on sp.maChatLieu=cl.maChatLieu"
+                    + " inner join ChuongTrinhKhuyenMai as ctkm on sp.maCTKM=ctkm.maCTKM where maSP=? ";
             statement = con.prepareStatement(sql);
             statement.setString(1, ma);
 
@@ -320,8 +321,10 @@ public class SanPham_dao implements SanPham_Interface {
                 String tenDanhMuc = rs.getString("tenDanhMuc");
                 DanhMucSanPhamEntity danhMucSanPham = new DanhMucSanPhamEntity(maDanhMuc, tenDanhMuc);
                 String maCTKM = rs.getString("maCTKM");
+                int giamGia = rs.getInt("giamGia");
                 ChuongTrinhKhuyenMaiEntity chuongTrinhKhuyenMai = new ChuongTrinhKhuyenMaiEntity(maCTKM);
-
+                chuongTrinhKhuyenMai.setGiamGia(giamGia);
+                
                 ConvertStringToEnum convertToEnum = new ConvertStringToEnum();
 
                 sanPham = new SanPhamEntity(maSP, tenSP, convertToEnum.KichThuoctoEnum(kichThuoc), convertToEnum.MauSactoEnum(mauSac), donGia, soLuongTonKho, convertToEnum.TinhTrangSPToEnum(tinhTrang), chatLieu, thuongHieu, danhMucSanPham, chuongTrinhKhuyenMai, imgUrl);

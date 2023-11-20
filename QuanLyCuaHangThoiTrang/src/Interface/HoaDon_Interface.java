@@ -23,4 +23,5 @@ public interface HoaDon_Interface {
     public boolean luuTamHoaDon(HoaDonEntity hoaDon, ArrayList<ChiTietHoaDonEntity> danhSachCTHD);
     public HoaDonEntity timKiemHoaDonTheoMa(String maHD);
     public ArrayList<HoaDonEntity> timKiemHoaDonChuaThanhToan(String sdt);
+    public int getSoLuongTonTheoMa(String maSP);
 }
