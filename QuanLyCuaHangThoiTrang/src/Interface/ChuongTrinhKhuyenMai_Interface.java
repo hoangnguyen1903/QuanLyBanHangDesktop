@@ -20,4 +20,6 @@ public interface ChuongTrinhKhuyenMai_Interface {
 
     // Nguyen Huy Hoang
     public ChuongTrinhKhuyenMaiEntity kiemTraKhuyenMai(double tongTien);
+    public String layTenKhuyenMaiTheoMa(String maKhuyenMai);
+    public String layMaKhuyenMaiTheoTen(String tenKhuyenMai);
 }
