@@ -34,6 +34,8 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(187, 205, 197));
         jPanel1.setPreferredSize(new java.awt.Dimension(1167, 130));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Nhân viên khách hàng");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
