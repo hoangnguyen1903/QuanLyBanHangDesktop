@@ -7,6 +7,7 @@ package gui;
 import entity.ChiTietHoaDonEntity;
 import entity.HoaDonEntity;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 import util.ConvertDoubleToMoney;
 
 /**
@@ -19,6 +20,7 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
     private ArrayList<ChiTietHoaDonEntity> cthdList;
     private double tienNhan, tienTraLai;
     private ConvertDoubleToMoney convert = new ConvertDoubleToMoney();
+    private DefaultTableModel tableModel;
             
     public ThongTinHoaDon_GUI(HoaDonEntity hoaDon, ArrayList<ChiTietHoaDonEntity> cthdList, double tienNhan, double tienTraLai) {
         this.hoaDon = hoaDon;
@@ -26,6 +28,7 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
         this.tienNhan = tienNhan;
         this.tienTraLai = tienTraLai;
         initComponents();
+        setLocationRelativeTo(null);
         
         lbl_MaHoaDon.setText(hoaDon.getMaHD());
         lbl_MaNhanVien.setText(hoaDon.getNhanVien().getMaNV());
@@ -42,6 +45,15 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
         lbl_TienThanhToan.setText(convert.toMoney(hoaDon.getTienThanhToan()));
         lbl_TienNhan.setText(convert.toMoney(tienNhan));
         lbl_TienTraLai.setText(convert.toMoney(tienTraLai));
+        
+        String[] cols = {"Mã sản phẩm", "Tên sản phẩm", "Kích thước", "Màu sắc", "Số lượng", "Giá bán", "Thành tiền"};
+        tableModel = new DefaultTableModel(cols, 0);
+        table.setModel(tableModel);
+        
+        for (ChiTietHoaDonEntity cthd : cthdList) {
+            String[] data = {cthd.getSanPham().getMaSP(), cthd.getSanPham().getTenSP(), cthd.getSanPham().getKichThuoc().toString(), cthd.getSanPham().getMauSac().toString(), cthd.getSoLuong()+"", convert.toMoney(cthd.getGiaBan()), convert.toMoney(cthd.getThanhTien())};
+            tableModel.addRow(data);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -58,7 +70,7 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         lbl_SoDienThoai = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         lbl_TongTien = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -83,6 +95,8 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(890, 794));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -118,7 +132,7 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
         lbl_SoDienThoai.setFont(new java.awt.Font("Times New Roman", 2, 16)); // NOI18N
         getContentPane().add(lbl_SoDienThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 130, 120, 20));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -137,12 +151,12 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(20);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(20);
+        jScrollPane1.setViewportView(table);
+        if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(1).setPreferredWidth(200);
+            table.getColumnModel().getColumn(2).setPreferredWidth(20);
+            table.getColumnModel().getColumn(3).setPreferredWidth(50);
+            table.getColumnModel().getColumn(4).setPreferredWidth(20);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 174, 811, 300));
@@ -303,7 +317,6 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbl_KhuyenMai;
     private javax.swing.JLabel lbl_MaHoaDon;
     private javax.swing.JLabel lbl_MaNhanVien;
@@ -314,5 +327,6 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_TienThanhToan;
     private javax.swing.JLabel lbl_TienTraLai;
     private javax.swing.JLabel lbl_TongTien;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

@@ -22,8 +22,8 @@ public class ChuongTrinhKhuyenMai_bus implements ChuongTrinhKhuyenMai_Interface{
     }
 
     @Override
-    public ArrayList<ChuongTrinhKhuyenMaiEntity> getCTKMTheoMaCTKM(String maCTKM) {
-       return ctkm_dao.getCTKMTheoMaCTKM(maCTKM);
+    public ArrayList<ChuongTrinhKhuyenMaiEntity> getCTKMTheoMaCTKM(String maCTKM, String maLoai) {
+       return ctkm_dao.getCTKMTheoMaCTKM(maCTKM,maLoai);
     }
 
     @Override
@@ -51,5 +51,10 @@ public class ChuongTrinhKhuyenMai_bus implements ChuongTrinhKhuyenMai_Interface{
         return ctkm_dao.getallLoaiCTKM();
 
  
+    }
+
+    @Override
+    public ArrayList<ChuongTrinhKhuyenMaiEntity> getallCTKMtheoLoaiKM(String ma) {
+       return ctkm_dao.getallCTKMtheoLoaiKM(ma);
     }
 }

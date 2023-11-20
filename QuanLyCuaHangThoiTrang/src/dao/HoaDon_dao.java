@@ -95,17 +95,9 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             statement = con.prepareStatement(sql);
             
             statement.setString(1, hoaDon.getMaHD());
-            if(hoaDon.getKhachHang() != null) {
-                statement.setString(2, hoaDon.getKhachHang().getMaKH());
-            } else {
-                statement.setString(2, "KH12345678NULL");
-            }
+            statement.setString(2, hoaDon.getKhachHang().getMaKH());
             statement.setString(3, hoaDon.getNhanVien().getMaNV());
-            if(hoaDon.getChuongTrinhKM() != null) {
-                statement.setString(4, hoaDon.getChuongTrinhKM().getMaCTKM());
-            } else {
-                statement.setString(4, "KM12345678NULL");
-            }
+            statement.setString(4, hoaDon.getChuongTrinhKM().getMaCTKM());
             statement.setDate(5, hoaDon.getNgayLapHD());
             statement.setDouble(6, hoaDon.getTienKhuyenMai());
             statement.setDouble(7, hoaDon.getTongTien());
@@ -168,6 +160,58 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                     return false;
                 }
             }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                statement.close();
+                ConnectDB.getInstance().disconnect();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    @Override
+    public boolean themHoaDonLuuTam(HoaDonEntity hoaDon, ArrayList<ChiTietHoaDonEntity> danhSachCTHD) {
+        PreparedStatement statement = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            
+            String sql = "Update HoaDon set maNV=?, maCTKM=?, ngayLapHD=?, tienKhuyenMai=?, tongTien=?, tienThanhToan=?, tinhTrang=? where maHD=? and maKH=?";
+            statement = con.prepareStatement(sql);
+            
+            statement.setString(1, hoaDon.getNhanVien().getMaNV());
+            statement.setString(2, hoaDon.getChuongTrinhKM().getMaCTKM());
+            statement.setDate(3, hoaDon.getNgayLapHD());
+            statement.setDouble(4, hoaDon.getTienKhuyenMai());
+            statement.setDouble(5, hoaDon.getTongTien());
+            statement.setDouble(6, hoaDon.getTienThanhToan());
+            statement.setString(7, "Đã thanh toán");
+            statement.setString(8, hoaDon.getMaHD());
+            statement.setString(9, hoaDon.getKhachHang().getMaKH());
+            
+            int ketQua = statement.executeUpdate();
+            if(ketQua < 1) {
+                return false;
+            }
+            
+            ChiTietHoaDon_dao cthd_dao = new ChiTietHoaDon_dao();
+            boolean kq = cthd_dao.xoaCTHDTheoMaHoaDon(hoaDon.getMaHD());
+            
+            if(kq) {
+                for (ChiTietHoaDonEntity cthd : danhSachCTHD) {
+                    if(!cthd_dao.themChiTietHoaDon(cthd)) {
+                        return false;
+                    }
+                }
+            } else {
+                return false;
+            }
+            
             return true;
         } catch (SQLException e) {
             e.printStackTrace();

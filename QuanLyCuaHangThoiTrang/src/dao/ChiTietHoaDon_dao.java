@@ -241,6 +241,37 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface {
             }
         }
     }
+    
+    @Override
+    public boolean xoaCTHDTheoMaHoaDon(String maHD) {
+        PreparedStatement statement = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+
+            String sql = "Delete from ChiTietHoaDon where maHD=?";
+            statement = con.prepareStatement(sql);
+            statement.setString(1, maHD);
+
+            int ketQua = statement.executeUpdate();
+
+            if (ketQua < 1) {
+                return false;
+            }
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                statement.close();
+                ConnectDB.getInstance().disconnect();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public ArrayList<ChiTietHoaDonEntity> getAllCTHDTheoMaHD(String maHD) {

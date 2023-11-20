@@ -58,5 +58,10 @@ public class HoaDon_bus implements HoaDon_Interface{
     public int getSoLuongTonTheoMa(String maSP) {
         return hd_dao.getSoLuongTonTheoMa(maSP);
     }
+
+    @Override
+    public boolean themHoaDonLuuTam(HoaDonEntity hoaDon, ArrayList<ChiTietHoaDonEntity> danhSachCTHD) {
+        return hd_dao.themHoaDonLuuTam(hoaDon, danhSachCTHD);
+    }
     
 }

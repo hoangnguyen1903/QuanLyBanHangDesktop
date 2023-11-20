@@ -14,16 +14,6 @@ public class ChuongTrinhKhuyenMaiEntity {
 	private Date ngayKetThuc;
         private String tinhTrang;
         
-	public ChuongTrinhKhuyenMaiEntity(String maCTKM, String tenCTKM, double soTienToiThieu, int giamGia,
-			Date ngayBatDau, Date ngayKetThuc) {
-		super();
-		this.maCTKM = maCTKM;
-		this.tenCTKM = tenCTKM;
-		this.soTienToiThieu = soTienToiThieu;
-		this.giamGia = giamGia;
-		this.ngayBatDau = ngayBatDau;
-		this.ngayKetThuc = ngayKetThuc;
-	}
 // Đinh Nguyên Chung
 
     public ChuongTrinhKhuyenMaiEntity(String maCTKM, String tenCTKM, LoaiKhuyenMaiEntity maLoaiKM, double soTienToiThieu, double soTienToiDa, int giamGia, Date ngayBatDau, Date ngayKetThuc, String tinhTrang) {
@@ -37,6 +27,8 @@ public class ChuongTrinhKhuyenMaiEntity {
         this.ngayKetThuc = ngayKetThuc;
         this.tinhTrang = tinhTrang;
     }
+
+
         
     public LoaiKhuyenMaiEntity getMaLoaiKM() {
         return maLoaiKM;
