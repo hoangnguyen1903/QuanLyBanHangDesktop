@@ -305,14 +305,57 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
         return dsctkm;
     }
 
-    @Override
-    public String layTenKhuyenMaiTheoMa(String maKhuyenMai) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+  @Override
+    public String layTenKhuyenMaiTheoMa(String maDanhMuc) {
+        String tenDanhMuc = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+
+            String sql = "SELECT tenCTKM FROM ChuongTrinhKhuyenMai WHERE maCTKM = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, maDanhMuc);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                tenDanhMuc = rs.getString("tenCTKM");
+            }
+
+            ps.close();
+            rs.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucSanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tenDanhMuc;
     }
 
     @Override
-    public String layMaKhuyenMaiTheoTen(String tenKhuyenMai) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String layMaKhuyenMaiTheoTen(String tenDanhMuc) {
+        String maDanhMuc = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+            String sql = "SELECT maCTKM FROM ChuongTrinhKhuyenMai WHERE tenCTKM = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, tenDanhMuc);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                maDanhMuc = rs.getString("maCTKM");
+            }
+
+            ps.close();
+            rs.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucSanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return maDanhMuc;
     }
  
 }
