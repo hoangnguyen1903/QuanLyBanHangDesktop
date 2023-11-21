@@ -304,8 +304,12 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
         }
         return dsctkm;
     }
+<<<<<<< HEAD
 
   @Override
+=======
+ @Override
+>>>>>>> 40c906ac4172ba3c74e8c9da48fc9f9560ba05c4
     public String layTenKhuyenMaiTheoMa(String maDanhMuc) {
         String tenDanhMuc = null;
         try {
@@ -357,5 +361,8 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
 
         return maDanhMuc;
     }
+<<<<<<< HEAD
  
+=======
+>>>>>>> 40c906ac4172ba3c74e8c9da48fc9f9560ba05c4
 }
