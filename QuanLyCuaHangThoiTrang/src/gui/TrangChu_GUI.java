@@ -831,17 +831,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JMenu_TroGiupActionPerformed
 
-    public static void main(String args[]) {
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                TrangChu_GUI trangchu = new TrangChu_GUI();
-//                trangchu.setUndecorated(true);
-
-                trangchu.setVisible(true);
-            }
-        });
-    }
 
     private class PanelButtonMouseAdapter extends MouseAdapter {
 

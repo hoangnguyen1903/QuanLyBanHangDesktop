@@ -468,6 +468,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         JPanel_ThongTinCTKM.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 110, 30));
 
         dateNgayKetThuc.setDateFormatString("dd-MM-yyyy");
+        dateNgayKetThuc.setSelectableDateRange(new Date(), null);
         dateNgayKetThuc.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 dateNgayKetThucPropertyChange(evt);
@@ -490,6 +491,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         JPanel_ThongTinCTKM.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, 100, 30));
 
         dateNgayBatDau.setDateFormatString("dd-MM-yyyy");
+        dateNgayBatDau.setSelectableDateRange(new Date(), null);
         dateNgayBatDau.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 dateNgayBatDauPropertyChange(evt);
@@ -775,7 +777,13 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
 
     private void dateNgayBatDauPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateNgayBatDauPropertyChange
         // TODO add your handling code here:
+        
         if(dateNgayKetThuc.getDate() !=null && dateNgayBatDau.getDate() !=null){
+//            Date datenow = new Date();
+//            if(!datenow.before(dateNgayBatDau.getDate())){
+//                JOptionPane.showMessageDialog(null, "Ngày bắt đầu phải bắt đầu từ ngày hiện tại");
+//                dateNgayBatDau.setDate(null);
+//            }
             if(!dateNgayBatDau.getDate().before(dateNgayKetThuc.getDate())){
                 JOptionPane.showMessageDialog(null, "Ngày bắt đầu phải đứng trước ngày kết thúc");
                 dateNgayBatDau.setDate(null);
