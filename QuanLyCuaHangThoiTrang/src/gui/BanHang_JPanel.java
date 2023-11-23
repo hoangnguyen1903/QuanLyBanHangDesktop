@@ -201,6 +201,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel2.setText("Tên sản phẩm");
 
+        lbl_TenSanPham.setBackground(new java.awt.Color(255, 255, 255));
         lbl_TenSanPham.setFont(new java.awt.Font("Times New Roman", 2, 20)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
@@ -390,12 +391,9 @@ public class BanHang_JPanel extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(19, 19, 19))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(lbl_KhuyenMai2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jLabel2)
+                                    .addComponent(lbl_KhuyenMai2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbl_DonGia1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()

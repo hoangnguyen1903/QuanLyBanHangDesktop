@@ -197,7 +197,7 @@
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jdc_NgayNhap">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jdc_NgayNhap.setDate(new Date());&#xa;jdc_NgayNhap.setLocale(new Locale(&quot;vi&quot;,&quot;VN&quot;));&#xa;jdc_NgayNhap.setSelectableDateRange(new Date(), null);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jdc_NgayNhap.setDate(new Date());&#xa;jdc_NgayNhap.setLocale(new Locale(&quot;vi&quot;,&quot;VN&quot;));&#xa;//jdc_NgayNhap.setSelectableDateRange(new Date(), null);&#xa;jdc_NgayNhap.setMinSelectableDate(new Date());&#xa;jdc_NgayNhap.setMaxSelectableDate(new Date());"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -211,6 +211,9 @@
               <Font name="Times New Roman" size="14" style="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="SpinnerNumberModel modelSpinner = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);&#xa;spinner_SoLuong.setModel(modelSpinner);"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="870" y="20" width="108" height="25"/>

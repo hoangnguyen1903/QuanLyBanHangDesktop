@@ -32,7 +32,7 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
      */
     public NhaCungCap_JPanel() {
         initComponents();
-        //---------
+        //Khỏi tạo
         ncc_bus = new NhaCungCap_bus();
         //---------
         setBounds(0, 0, 1186, 748);
@@ -57,12 +57,13 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         img_btnLoc = new ImageIcon(scaled_btnLoc);
         btn_Loc.setIcon(img_btnLoc);
         loadDuLieuTuDataLenTable();
-        txt_TenNhaCungCap.setText("Cty TNHH An Thành");
-        txt_SoDienThoai.setText("0345682887");
-        txt_DiaChi.setText("12 Lê Lợi, Quận Bình Thạnh, Thành phố HCM");
+//        txt_TenNhaCungCap.setText("Cty TNHH An Thành");
+//        txt_SoDienThoai.setText("0345682887");
+//        txt_DiaChi.setText("12 Lê Lợi, Quận Bình Thạnh, Thành phố HCM");
 
     }
 
+    //Hàm load dữ liệu từ database lên table
     private void loadDuLieuTuDataLenTable() {
         ArrayList<NhaCungCapEntity> dsNCC = ncc_bus.getAllNhaCungCap();
         for (NhaCungCapEntity ncc : dsNCC) {
@@ -220,7 +221,7 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         panel_ThaoTac.setPreferredSize(new java.awt.Dimension(990, 50));
 
         lbl_MaNhaCungCap_Search.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        lbl_MaNhaCungCap_Search.setText("Mã nhà cung cấp");
+        lbl_MaNhaCungCap_Search.setText("Điều kiện tìm");
 
         txt_MaNhaCungCap_Search.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
@@ -366,9 +367,9 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panel_DanhSachNhaCungCap, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
-                    .addComponent(panel_ThaoTac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
-                    .addComponent(panel_ThongTin, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE))
+                    .addComponent(panel_DanhSachNhaCungCap, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE)
+                    .addComponent(panel_ThaoTac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE)
+                    .addComponent(panel_ThongTin, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE))
                 .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
@@ -381,7 +382,7 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel_ThaoTac, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
-                .addComponent(panel_DanhSachNhaCungCap, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE))
+                .addComponent(panel_DanhSachNhaCungCap, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -390,38 +391,7 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         themNhaCungCap();
     }//GEN-LAST:event_btn_ThemActionPerformed
 
-    private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
-        // TODO add your handling code here:
-//        timKiemNhaCungCap();
-        String dieuKien = txt_MaNhaCungCap_Search.getText();
-        timkiemNhaCungCap(dieuKien);
-    }//GEN-LAST:event_btn_TimKiemActionPerformed
-
-    private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
-        // TODO add your handling code here:
-        lamMoi();
-    }//GEN-LAST:event_btn_LamMoiActionPerformed
-
-    private void table_DanhSachNhaCungCapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_DanhSachNhaCungCapMouseClicked
-        // TODO add your handling code here:
-        int row = table_DanhSachNhaCungCap.getSelectedRow();
-        txt_MaNhaCungCap.setText(model.getValueAt(row, 0).toString());
-        txt_TenNhaCungCap.setText(model.getValueAt(row, 1).toString());
-        txt_SoDienThoai.setText(model.getValueAt(row, 2).toString());
-        txt_DiaChi.setText(model.getValueAt(row, 3).toString());
-        cbo_TinhTrang.setSelectedItem(model.getValueAt(row, 4).toString());
-    }//GEN-LAST:event_table_DanhSachNhaCungCapMouseClicked
-
-    private void btn_LocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LocActionPerformed
-        // TODO add your handling code here:
-        String tinhTrang = (String) cbo_TinhTrang.getSelectedItem();
-        loc(tinhTrang);
-    }//GEN-LAST:event_btn_LocActionPerformed
-
-    private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CapNhatActionPerformed
-        // TODO add your handling code here:
-        capNhatNhaCungCap();
-    }//GEN-LAST:event_btn_CapNhatActionPerformed
+    //Hàm thêm nhà cung cấp
     private void themNhaCungCap() {
         if (validata()) {
             String maNCC = GenerateID.sinhMa("NCC");
@@ -446,7 +416,13 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         }
     }
 
-    // Hàm tìm kiếm nhà cung cấp và hiển thị kết quả trên bảng
+    private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
+        // TODO add your handling code here:
+        String dieuKien = txt_MaNhaCungCap_Search.getText();
+        timkiemNhaCungCap(dieuKien);
+    }//GEN-LAST:event_btn_TimKiemActionPerformed
+
+    // Hàm tìm kiếm nhà cung cấp
     private void timkiemNhaCungCap(String dieuKien) {
         String timKiem = txt_MaNhaCungCap_Search.getText().trim();
         if (timKiem.isBlank()) {
@@ -461,6 +437,12 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         }
     }
 
+    private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
+        // TODO add your handling code here:
+        lamMoi();
+    }//GEN-LAST:event_btn_LamMoiActionPerformed
+
+    //Hàm làm mói
     private void lamMoi() {
         txt_MaNhaCungCap.setText("");
         txt_TenNhaCungCap.setText("");
@@ -470,9 +452,27 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         txt_MaNhaCungCap_Search.setText("");
         model.setRowCount(0);
         resetLoc();
+        btn_Them.setEnabled(true);
         loadDuLieuTuDataLenTable();
     }
+    private void table_DanhSachNhaCungCapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_DanhSachNhaCungCapMouseClicked
+        // TODO add your handling code here:
+        int row = table_DanhSachNhaCungCap.getSelectedRow();
+        txt_MaNhaCungCap.setText(model.getValueAt(row, 0).toString());
+        txt_TenNhaCungCap.setText(model.getValueAt(row, 1).toString());
+        txt_SoDienThoai.setText(model.getValueAt(row, 2).toString());
+        txt_DiaChi.setText(model.getValueAt(row, 3).toString());
+        cbo_TinhTrang.setSelectedItem(model.getValueAt(row, 4).toString());
+        btn_Them.setEnabled(false);
+    }//GEN-LAST:event_table_DanhSachNhaCungCapMouseClicked
 
+    private void btn_LocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LocActionPerformed
+        // TODO add your handling code here:
+        String tinhTrang = (String) cbo_TinhTrang.getSelectedItem();
+        loc(tinhTrang);
+    }//GEN-LAST:event_btn_LocActionPerformed
+
+    //Lọc và cung cấp theo tình trạng
     private void loc(String ma) {
         DefaultTableModel data = (DefaultTableModel) table_DanhSachNhaCungCap.getModel();
         TableRowSorter<DefaultTableModel> sort = new TableRowSorter<DefaultTableModel>(data);
@@ -480,15 +480,12 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         sort.setRowFilter(RowFilter.regexFilter(ma));
     }
 
-    private void resetLoc() {
-        DefaultTableModel data = (DefaultTableModel) table_DanhSachNhaCungCap.getModel();
-        TableRowSorter<DefaultTableModel> sort = (TableRowSorter<DefaultTableModel>) table_DanhSachNhaCungCap.getRowSorter();
-        if (sort != null) {
-            sort.setRowFilter(null); // Xóa bộ lọc
-            table_DanhSachNhaCungCap.setRowSorter(null); // Loại bỏ RowSorter
-        }
-    }
-
+    private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CapNhatActionPerformed
+        // TODO add your handling code here:
+        capNhatNhaCungCap();
+    }//GEN-LAST:event_btn_CapNhatActionPerformed
+    
+    //Hàm cập nhật nhà cung cấp
     private void capNhatNhaCungCap() {
         int row = table_DanhSachNhaCungCap.getSelectedRow();
         if (row == -1) {
@@ -521,6 +518,17 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         }
     }
 
+    //hàm reset lọc
+    private void resetLoc() {
+        DefaultTableModel data = (DefaultTableModel) table_DanhSachNhaCungCap.getModel();
+        TableRowSorter<DefaultTableModel> sort = (TableRowSorter<DefaultTableModel>) table_DanhSachNhaCungCap.getRowSorter();
+        if (sort != null) {
+            sort.setRowFilter(null); // Xóa bộ lọc
+            table_DanhSachNhaCungCap.setRowSorter(null); // Loại bỏ RowSorter
+        }
+    }
+    
+    //Hàm kiểm tra regex
     private boolean validata() {
         String tenNCC = txt_TenNhaCungCap.getText().trim();
         String sdt = txt_SoDienThoai.getText().trim();
@@ -550,6 +558,7 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
         }
         return true;
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_CapNhat;
     private javax.swing.JButton btn_LamMoi;

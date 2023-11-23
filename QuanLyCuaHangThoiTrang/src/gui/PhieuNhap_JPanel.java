@@ -10,19 +10,18 @@ import bus.SanPham_bus;
 import entity.MatHangNhapEntity;
 import entity.NhaCungCapEntity;
 import entity.SanPhamEntity;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import util.GenerateID;
@@ -43,7 +42,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
      */
     public PhieuNhap_JPanel() {
         initComponents();
-        //-------------
+        //Khỏi tạo
         mhn_bus = new MatHangNhap_bus();
         ncc_bus = new NhaCungCap_bus();
         sp_bus = new SanPham_bus();
@@ -157,10 +156,14 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
 
         jdc_NgayNhap.setDate(new Date());
         jdc_NgayNhap.setLocale(new Locale("vi","VN"));
-        jdc_NgayNhap.setSelectableDateRange(new Date(), null);
+        //jdc_NgayNhap.setSelectableDateRange(new Date(), null);
+        jdc_NgayNhap.setMinSelectableDate(new Date());
+        jdc_NgayNhap.setMaxSelectableDate(new Date());
         panel_ThongTin.add(jdc_NgayNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, 200, 25));
 
         spinner_SoLuong.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        SpinnerNumberModel modelSpinner = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
+        spinner_SoLuong.setModel(modelSpinner);
         panel_ThongTin.add(spinner_SoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 20, 108, 25));
 
         txt_An.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -322,7 +325,9 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
                 .addComponent(panel_DanhSachPhieuNhapHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-     private void loadDuLieuTuDataLenTable() {
+
+    //Hàn load dữ liệu từ database lên table
+    private void loadDuLieuTuDataLenTable() {
         ArrayList<MatHangNhapEntity> dsMHN = mhn_bus.getAllMatHangNhap();
         for (MatHangNhapEntity mhn : dsMHN) {
             model.addRow(new Object[]{mhn.getMaMHN(), mhn.getSanPham().getMaSP(), mhn.getNhaCungCap().getMaNCC(), mhn.getSoLuongNhap(), mhn.getNgayNhap()});
@@ -342,6 +347,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         }
         comboBox.setModel(model);
     }
+
     private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
         // TODO add your handling code here:
         Date date = jdc_NgayNhap_Search.getDate();
@@ -350,39 +356,46 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btn_TimKiemActionPerformed
 
+    //Hàm tìm kiếm theo ngày
+    private void timKiemTheoNgay(LocalDate ngayTimKiem) {
+        model.setRowCount(0);
+        ArrayList<MatHangNhapEntity> dsMHN = mhn_bus.timKiemMHN(ngayTimKiem);
+        if (dsMHN.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Không có phiếu đặt hàng");
+            loadDuLieuTuDataLenTable();
+        } else {
+            for (MatHangNhapEntity mhn : dsMHN) {
+                model.addRow(new Object[]{mhn.getMaMHN(), mhn.getSanPham().getMaSP(), mhn.getNhaCungCap().getMaNCC(), mhn.getSoLuongNhap(), mhn.getNgayNhap()});
+            }
+        }
+    }
+
     private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
         // TODO add your handling code here:
         lamMoi();
     }//GEN-LAST:event_btn_LamMoiActionPerformed
-
+    
+    //Hàm làm mới
+    private void lamMoi() {
+        txt_MaMatHangNhap.setText("");
+        cbo_MaNhaCungCap.setSelectedIndex(0);
+        txt_MaSanPham.setText("");
+        txt_MaSanPham.setEditable(true);
+        spinner_SoLuong.setValue(0);
+        jdc_NgayNhap.setDate(new Date());
+        jdc_NgayNhap_Search.setDate(new Date());
+        model.setRowCount(0);
+        loadDuLieuTuDataLenTable();
+        cbo_MaNhaCungCap.setEnabled(true);
+        btn_NhapHang.setEnabled(true);
+    }
+    
     private void btn_NhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NhapHangActionPerformed
         // TODO add your handling code here:
         nhapHang();
     }//GEN-LAST:event_btn_NhapHangActionPerformed
 
-    private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CapNhatActionPerformed
-        // TODO add your handling code here:
-        capNhatMatHangNhap();
-    }//GEN-LAST:event_btn_CapNhatActionPerformed
-
-    private void table_PhieuNhapHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_PhieuNhapHangMouseClicked
-        // TODO add your handling code here:
-        int row = table_PhieuNhapHang.getSelectedRow();
-        txt_MaMatHangNhap.setText(model.getValueAt(row, 0).toString());
-        txt_MaMatHangNhap.setEditable(false);
-        cbo_MaNhaCungCap.setSelectedItem(model.getValueAt(row, 2).toString());
-        txt_MaSanPham.setText(model.getValueAt(row, 1).toString());
-        txt_MaSanPham.setEditable(false);
-        spinner_SoLuong.setValue(model.getValueAt(row, 3));
-        LocalDate ngayNhap = (LocalDate) model.getValueAt(row, 4);
-        Date chuyenDoi = Date.from(ngayNhap.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        jdc_NgayNhap.setDate(chuyenDoi);
-        cbo_MaNhaCungCap.setEnabled(false);
-        panel_ThaoTac.remove(cbo_MaNhaCungCap);
-        txt_An.setText(model.getValueAt(row, 2).toString());
-        txt_An.setEditable(false);
-    }//GEN-LAST:event_table_PhieuNhapHangMouseClicked
-
+    //Hàm nhập hàng
     private void nhapHang() {
         if (validata()) {
             String maMHN = GenerateID.sinhMa("MHN");
@@ -408,42 +421,12 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         }
     }
 
-    private void timKiemTheoNgay(LocalDate ngayTimKiem) {
-        model.setRowCount(0);
-        ArrayList<MatHangNhapEntity> dsMHN = mhn_bus.timKiemMHN(ngayTimKiem);
-        if (dsMHN.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Không có phiếu đặt hàng");
-            loadDuLieuTuDataLenTable();
-        } else {
-            for (MatHangNhapEntity mhn : dsMHN) {
-                model.addRow(new Object[]{mhn.getMaMHN(), mhn.getSanPham().getMaSP(), mhn.getNhaCungCap().getMaNCC(), mhn.getSoLuongNhap(), mhn.getNgayNhap()});
-            }
-        }
-    }
+    private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CapNhatActionPerformed
+        // TODO add your handling code here:
+        capNhatMatHangNhap();
+    }//GEN-LAST:event_btn_CapNhatActionPerformed
 
-    private void lamMoi() {
-        txt_MaMatHangNhap.setText("");
-        cbo_MaNhaCungCap.setSelectedIndex(0);
-        txt_MaSanPham.setText("");
-        txt_MaSanPham.setEditable(true);
-        spinner_SoLuong.setValue(0);
-        jdc_NgayNhap.setDate(new Date());
-        jdc_NgayNhap_Search.setDate(new Date());
-        model.setRowCount(0);
-        loadDuLieuTuDataLenTable();
-        cbo_MaNhaCungCap.setEnabled(true);
-    }
-
-    public int laySoLuongNhapBanDau(String maMHN) {
-        ArrayList<MatHangNhapEntity> dsMHN = mhn_bus.getAllMatHangNhap();
-        for (MatHangNhapEntity mhn : dsMHN) {
-            if (mhn.getMaMHN().equals(maMHN)) {
-                return mhn.getSoLuongNhap();
-            }
-        }
-        return -1;
-    }
-
+    //Hàm cập nhập mặt hàng nhập
     private void capNhatMatHangNhap() {
         int row = table_PhieuNhapHang.getSelectedRow();
         if (row == -1) {
@@ -483,6 +466,37 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         }
     }
 
+    private void table_PhieuNhapHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_PhieuNhapHangMouseClicked
+        // TODO add your handling code here:
+        int row = table_PhieuNhapHang.getSelectedRow();
+        txt_MaMatHangNhap.setText(model.getValueAt(row, 0).toString());
+        txt_MaMatHangNhap.setEditable(false);
+        cbo_MaNhaCungCap.setSelectedItem(model.getValueAt(row, 2).toString());
+        txt_MaSanPham.setText(model.getValueAt(row, 1).toString());
+        txt_MaSanPham.setEditable(false);
+        spinner_SoLuong.setValue(model.getValueAt(row, 3));
+        LocalDate ngayNhap = (LocalDate) model.getValueAt(row, 4);
+        Date chuyenDoi = Date.from(ngayNhap.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        jdc_NgayNhap.setDate(chuyenDoi);
+        cbo_MaNhaCungCap.setEnabled(false);
+        panel_ThaoTac.remove(cbo_MaNhaCungCap);
+        txt_An.setText(model.getValueAt(row, 2).toString());
+        txt_An.setEditable(false);
+        btn_NhapHang.setEnabled(false);
+    }//GEN-LAST:event_table_PhieuNhapHangMouseClicked
+
+    //Hàm lấy số lượng tồn kho của sản phẩm nhập ban đầu
+    public int laySoLuongNhapBanDau(String maMHN) {
+        ArrayList<MatHangNhapEntity> dsMHN = mhn_bus.getAllMatHangNhap();
+        for (MatHangNhapEntity mhn : dsMHN) {
+            if (mhn.getMaMHN().equals(maMHN)) {
+                return mhn.getSoLuongNhap();
+            }
+        }
+        return -1;
+    }
+
+    //Hàm kiểm tra regex
     private boolean validata() {
         String maSP = txt_MaSanPham.getText().trim();
         ArrayList<SanPhamEntity> ketQuaTimKiem = sp_bus.timSanPham(maSP);
@@ -512,6 +526,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         }
         return true;
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_CapNhat;
     private javax.swing.JButton btn_LamMoi;
