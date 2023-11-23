@@ -197,7 +197,7 @@
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jdc_NgayNhap">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jdc_NgayNhap.setDate(new Date());&#xa;jdc_NgayNhap.setLocale(new Locale(&quot;vi&quot;,&quot;VN&quot;));&#xa;//jdc_NgayNhap.setSelectableDateRange(new Date(), null);&#xa;jdc_NgayNhap.setMinSelectableDate(new Date());&#xa;jdc_NgayNhap.setMaxSelectableDate(new Date());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jdc_NgayNhap.setDate(new Date());&#xa;jdc_NgayNhap.setLocale(new Locale(&quot;vi&quot;,&quot;VN&quot;));&#xa;//jdc_NgayNhap.setSelectableDateRange(new Date(), null);&#xa;//jdc_NgayNhap.setMinSelectableDate(new Date());&#xa;jdc_NgayNhap.setMaxSelectableDate(new Date());"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

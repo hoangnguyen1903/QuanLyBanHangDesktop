@@ -157,7 +157,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         jdc_NgayNhap.setDate(new Date());
         jdc_NgayNhap.setLocale(new Locale("vi","VN"));
         //jdc_NgayNhap.setSelectableDateRange(new Date(), null);
-        jdc_NgayNhap.setMinSelectableDate(new Date());
+        //jdc_NgayNhap.setMinSelectableDate(new Date());
         jdc_NgayNhap.setMaxSelectableDate(new Date());
         panel_ThongTin.add(jdc_NgayNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, 200, 25));
 
