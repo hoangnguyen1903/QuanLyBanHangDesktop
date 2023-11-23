@@ -75,5 +75,77 @@ public class ThongKe_dao implements ThongKe_Interface{
         }
         return ds;
     }
+
+    @Override
+    public ArrayList<Object[]> getListDoanhThuTheoThangvaNam(String thang, String nam) {
+         ArrayList<Object[]> ds = new ArrayList<Object[]>();
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            String sql ="SELECT \n" +
+                        "    ngayLapHD AS NgayBan,\n" +
+                        "    COUNT(DISTINCT cthd.maSP) AS 'SoSanPhamBanDuoc',\n" +
+                        "    SUM(cthd.thanhTien) AS 'DoanhThuTrongNgay'\n" +
+                        "FROM \n" +
+                        "    HoaDon hd\n" +
+                        "JOIN \n" +
+                        "    ChiTietHoaDon cthd ON hd.maHD = cthd.maHD\n" +
+                        "WHERE \n" +
+                        "    YEAR(ngayLapHD) = ? AND MONTH(ngayLapHD) = ?\n" +
+                        "GROUP BY \n" +
+                        "    ngayLapHD;";
+           PreparedStatement stmt = con.prepareStatement(sql);
+           stmt.setString(1, nam);
+           stmt.setString(2, thang);
+           ResultSet rs = stmt.executeQuery();
+           while (rs.next()){
+               Date ngay = rs.getDate("NgayBan");
+               int soluong = rs.getInt("SoSanPhamBanDuoc");
+               double doanhthu = rs.getDouble("DoanhThuTrongNgay");
+               Object[] row = {ngay,soluong,doanhthu};
+               ds.add(row);
+               
+           }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
+    }
+
+    @Override
+    public ArrayList<Object[]> getListDoanhThuTrongNam(String nam) {
+         ArrayList<Object[]> ds = new ArrayList<Object[]>();
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            String sql ="	SELECT \n" +
+                        "    MONTH(ngayLapHD) AS Thang,\n" +
+                        "    COUNT(DISTINCT cthd.maSP) AS 'SoSanPhamBanDuoc',\n" +
+                        "    SUM(cthd.thanhTien) AS 'DoanhThuTrongThang'\n" +
+                        "FROM \n" +
+                        "    HoaDon hd\n" +
+                        "JOIN \n" +
+                        "    ChiTietHoaDon cthd ON hd.maHD = cthd.maHD\n" +
+                        "WHERE \n" +
+                        "    YEAR(ngayLapHD) = ? \n" +
+                        "GROUP BY \n" +
+                        "    MONTH(ngayLapHD);";
+           PreparedStatement stmt = con.prepareStatement(sql);
+           stmt.setString(1, nam);
+           
+           ResultSet rs = stmt.executeQuery();
+           while (rs.next()){
+               int thang = rs.getInt("Thang");
+               int soluong = rs.getInt("SoSanPhamBanDuoc");
+               double doanhthu = rs.getDouble("DoanhThuTrongThang");
+               Object[] row = {thang,soluong,doanhthu};
+               ds.add(row);
+               
+           }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
+    }
     
 }

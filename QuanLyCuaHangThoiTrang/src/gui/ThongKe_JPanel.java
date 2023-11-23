@@ -6,29 +6,34 @@ import javax.swing.ImageIcon;
 
 public class ThongKe_JPanel extends javax.swing.JPanel {
 
-    private final DoanhThu_JPanel panel_doanhthu;
-    private final DoanhSo_JPanel panel_doanhso;
+    private final DoanhThu_JPanel panel_doanhthu ;
+    private final DoanhSo_JPanel panel_doanhso ;
+    private final ThongKeNVKH_Panel panel_nvkh;
 
     public ThongKe_JPanel() {
         initComponents();
         setBounds(0, 0, 1186, 748);
-        ImageIcon img_btnTimKiem = new ImageIcon("src//pic//icon//buttonTimKiem.png");
-        Image scaled_btnTimKiem = img_btnTimKiem.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
-        img_btnTimKiem = new ImageIcon(scaled_btnTimKiem);
-        btn_TimKiem.setIcon(img_btnTimKiem);
+//        ImageIcon img_btnTimKiem = new ImageIcon("src//pic//icon//buttonTimKiem.png");
+//        Image scaled_btnTimKiem = img_btnTimKiem.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+//        img_btnTimKiem = new ImageIcon(scaled_btnTimKiem);
+//        btn_TimKiem.setIcon(img_btnTimKiem);
         ImageIcon img_btnXemChiTiet = new ImageIcon("src//pic//icon//buttonXemChiTiet.png");
         Image scaled_btnXemChiTiet = img_btnXemChiTiet.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
         img_btnXemChiTiet = new ImageIcon(scaled_btnXemChiTiet);
 //        btn_XemChiTiet.setIcon(img_btnXemChiTiet);
         
-        ButtonGroup btnGR = new ButtonGroup();
-        btnGR.add(rdo_XemDoanhSo);
-        btnGR.add(rdo_XemDoanhThu);
-        rdo_XemDoanhThu.setSelected(true);
+//        ButtonGroup btnGR = new ButtonGroup();
+//        btnGR.add(rdo_XemDoanhSo);
+//        btnGR.add(rdo_XemDoanhThu);
+//        rdo_XemDoanhThu.setSelected(true);
         panel_doanhthu = new DoanhThu_JPanel();
         panel_doanhso = new DoanhSo_JPanel();
-        Jpanel_TK.add(panel_doanhthu);
-        Jpanel_TK.add(panel_doanhso);
+        panel_nvkh = new ThongKeNVKH_Panel();
+//        Jpanel_TK.add(panel_doanhthu);
+//        Jpanel_TK.add(panel_doanhso);
+            Panel_doanhthu.add(panel_doanhthu);
+            Panel_doanhso.add(panel_doanhso);
+            Panel_NVKH.add(panel_nvkh);
     }
 
     /**
@@ -40,151 +45,71 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Jpanel_TieuDeHoaDon = new javax.swing.JPanel();
-        lbl_TieuDeHoaDon = new javax.swing.JLabel();
-        Jpanel_ThaoTac = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        btn_TimKiem = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
-        rdo_XemDoanhThu = new javax.swing.JRadioButton();
-        rdo_XemDoanhSo = new javax.swing.JRadioButton();
-        Jpanel_TK = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jTabbedPane3 = new javax.swing.JTabbedPane();
+        Panel_NVKH = new javax.swing.JPanel();
+        Panel_doanhso = new javax.swing.JPanel();
+        Panel_doanhthu = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(187, 205, 197));
         setMinimumSize(new java.awt.Dimension(1020, 700));
         setPreferredSize(new java.awt.Dimension(1020, 700));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        Jpanel_TieuDeHoaDon.setBackground(new java.awt.Color(187, 205, 197));
-        Jpanel_TieuDeHoaDon.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_TieuDeHoaDon.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        lbl_TieuDeHoaDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_TieuDeHoaDon.setText("THỐNG KÊ");
-        Jpanel_TieuDeHoaDon.add(lbl_TieuDeHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(1186, 10, 330, 30));
-
-        add(Jpanel_TieuDeHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1186, 40));
-
-        Jpanel_ThaoTac.setBackground(new java.awt.Color(187, 205, 197));
-        Jpanel_ThaoTac.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Các thao tác", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
-        Jpanel_ThaoTac.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        jLabel1.setText("Thống kê theo :");
-        Jpanel_ThaoTac.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
-
-        btn_TimKiem.setBackground(new java.awt.Color(0, 51, 51));
-        btn_TimKiem.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
-        btn_TimKiem.setForeground(new java.awt.Color(255, 255, 255));
-        btn_TimKiem.setText("Thống kê");
-        btn_TimKiem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btn_TimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_TimKiemActionPerformed(evt);
-            }
-        });
-        Jpanel_ThaoTac.add(btn_TimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 120, 30));
-
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        jLabel2.setText("Tháng");
-        Jpanel_ThaoTac.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, 49, -1));
-
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        jLabel3.setText("Năm");
-        Jpanel_ThaoTac.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, -1, -1));
-
-        jSpinner1.setFont(new java.awt.Font("Times New Roman", 0, 15)); // NOI18N
-        Jpanel_ThaoTac.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 70, 30));
-
-        jSpinner2.setFont(new java.awt.Font("Times New Roman", 0, 15)); // NOI18N
-        Jpanel_ThaoTac.add(jSpinner2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 70, 30));
-
-        rdo_XemDoanhThu.setBackground(new java.awt.Color(187, 205, 197));
-        rdo_XemDoanhThu.setText("Xem doanh thu");
-        rdo_XemDoanhThu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rdo_XemDoanhThuMouseClicked(evt);
-            }
-        });
-        rdo_XemDoanhThu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdo_XemDoanhThuActionPerformed(evt);
-            }
-        });
-        Jpanel_ThaoTac.add(rdo_XemDoanhThu, new org.netbeans.lib.awtextra.AbsoluteConstraints(727, 65, -1, -1));
-
-        rdo_XemDoanhSo.setBackground(new java.awt.Color(187, 205, 197));
-        rdo_XemDoanhSo.setText("Xem doanh số");
-        rdo_XemDoanhSo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rdo_XemDoanhSoMouseClicked(evt);
-            }
-        });
-        rdo_XemDoanhSo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdo_XemDoanhSoActionPerformed(evt);
-            }
-        });
-        Jpanel_ThaoTac.add(rdo_XemDoanhSo, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 65, -1, -1));
-
-        add(Jpanel_ThaoTac, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 1170, 100));
-
-        javax.swing.GroupLayout Jpanel_TKLayout = new javax.swing.GroupLayout(Jpanel_TK);
-        Jpanel_TK.setLayout(Jpanel_TKLayout);
-        Jpanel_TKLayout.setHorizontalGroup(
-            Jpanel_TKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1170, Short.MAX_VALUE)
+        javax.swing.GroupLayout Panel_NVKHLayout = new javax.swing.GroupLayout(Panel_NVKH);
+        Panel_NVKH.setLayout(Panel_NVKHLayout);
+        Panel_NVKHLayout.setHorizontalGroup(
+            Panel_NVKHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1190, Short.MAX_VALUE)
         );
-        Jpanel_TKLayout.setVerticalGroup(
-            Jpanel_TKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+        Panel_NVKHLayout.setVerticalGroup(
+            Panel_NVKHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        add(Jpanel_TK, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 1170, 590));
+        jTabbedPane3.addTab("Thống Kê", Panel_NVKH);
+
+        javax.swing.GroupLayout Panel_doanhsoLayout = new javax.swing.GroupLayout(Panel_doanhso);
+        Panel_doanhso.setLayout(Panel_doanhsoLayout);
+        Panel_doanhsoLayout.setHorizontalGroup(
+            Panel_doanhsoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1190, Short.MAX_VALUE)
+        );
+        Panel_doanhsoLayout.setVerticalGroup(
+            Panel_doanhsoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 715, Short.MAX_VALUE)
+        );
+
+        jTabbedPane3.addTab("Doanh Số", Panel_doanhso);
+
+        Panel_doanhthu.setPreferredSize(new java.awt.Dimension(1181, 715));
+
+        javax.swing.GroupLayout Panel_doanhthuLayout = new javax.swing.GroupLayout(Panel_doanhthu);
+        Panel_doanhthu.setLayout(Panel_doanhthuLayout);
+        Panel_doanhthuLayout.setHorizontalGroup(
+            Panel_doanhthuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1190, Short.MAX_VALUE)
+        );
+        Panel_doanhthuLayout.setVerticalGroup(
+            Panel_doanhthuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 715, Short.MAX_VALUE)
+        );
+
+        jTabbedPane3.addTab("Doanh Thu", Panel_doanhthu);
+
+        add(jTabbedPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1190, 750));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_TimKiemActionPerformed
-
-    private void rdo_XemDoanhThuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdo_XemDoanhThuMouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_rdo_XemDoanhThuMouseClicked
-
-    private void rdo_XemDoanhSoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdo_XemDoanhSoMouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_rdo_XemDoanhSoMouseClicked
-
-    private void rdo_XemDoanhThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_XemDoanhThuActionPerformed
-       Jpanel_TK.add(panel_doanhthu);
-       panel_doanhso.setVisible(false);
-       panel_doanhthu.setVisible(true);
-    }//GEN-LAST:event_rdo_XemDoanhThuActionPerformed
-
-    private void rdo_XemDoanhSoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_XemDoanhSoActionPerformed
-        Jpanel_TK.add(panel_doanhso);
-        panel_doanhthu.setVisible(false);
-        panel_doanhso.setVisible(true);
-    }//GEN-LAST:event_rdo_XemDoanhSoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Jpanel_TK;
-    private javax.swing.JPanel Jpanel_ThaoTac;
-    private javax.swing.JPanel Jpanel_TieuDeHoaDon;
-    private javax.swing.JButton btn_TimKiem;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JLabel lbl_TieuDeHoaDon;
-    private javax.swing.JRadioButton rdo_XemDoanhSo;
-    private javax.swing.JRadioButton rdo_XemDoanhThu;
+    private javax.swing.JPanel Panel_NVKH;
+    private javax.swing.JPanel Panel_doanhso;
+    private javax.swing.JPanel Panel_doanhthu;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPane3;
     // End of variables declaration//GEN-END:variables
 }
