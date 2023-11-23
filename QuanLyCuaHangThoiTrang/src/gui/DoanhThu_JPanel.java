@@ -45,112 +45,113 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         setBounds(0, 0, 1180, 730);
         setVisible(true);
         tkbus = new ThongKe_bus();
-        
+
         ButtonGroup btnGr = new ButtonGroup();
         btnGr.add(rdo_bdc);
         btnGr.add(rdo_bdd);
-        
-        
-        
-        monthChooser.setLocale(new Locale("vi","VN"));
+
+        monthChooser.setLocale(new Locale("vi", "VN"));
         DocDuLieuLenTable();
         charAt();
     }
 
-    public void DocDuLieuLenTable(){
-        String month = String.valueOf(monthChooser.getMonth()+1);
+    public void DocDuLieuLenTable() {
+        String month = String.valueOf(monthChooser.getMonth() + 1);
         String nam = String.valueOf(spin_nam.getValue());
         System.out.println("Tháng " + month + nam);
         ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
-        for(Object[] tk: ds){
+        for (Object[] tk : ds) {
 //            System.out.println("Thong ke " + tk);
             model.addRow(tk);
         }
     }
-    public void XoaAllData(){
+
+    public void XoaAllData() {
         DefaultTableModel md = (DefaultTableModel) jTable1.getModel();
         md.getDataVector().removeAllElements();
     }
-    public void charAt(){
-            DefaultCategoryDataset barchardata = new DefaultCategoryDataset();
-            try {
-                int countRow = jTable1.getRowCount();
-                 Renderer = new BarRenderer();
-                for(int i=0;i< countRow ;i++){
-                    double value = Double.parseDouble(model.getValueAt(i, 2).toString());
-                    barchardata.setValue(value, "Doanh Thu", model.getValueAt(i, 0).toString());
-                    Renderer.setSeriesPaint(i, Color.BLUE);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+
+    public void charAt() {
+        DefaultCategoryDataset barchardata = new DefaultCategoryDataset();
+        try {
+            int countRow = jTable1.getRowCount();
+            Renderer = new BarRenderer();
+            for (int i = 0; i < countRow; i++) {
+                double value = Double.parseDouble(model.getValueAt(i, 2).toString());
+                barchardata.setValue(value, "Doanh Thu", model.getValueAt(i, 0).toString());
+                Renderer.setSeriesPaint(i, Color.BLUE);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            JFreeChart barchart = ChartFactory.createBarChart("Doanh Thu", "Ngày bán", "Doanh thu", barchardata, PlotOrientation.VERTICAL, false, true, false);
+        JFreeChart barchart = ChartFactory.createBarChart("Doanh Thu", "Ngày bán", "Doanh thu", barchardata, PlotOrientation.VERTICAL, false, true, false);
 
-            CategoryPlot barchst = barchart.getCategoryPlot();
-         barchst.setRangeCrosshairPaint(Color.ORANGE);
+        CategoryPlot barchst = barchart.getCategoryPlot();
+        barchst.setRangeCrosshairPaint(Color.ORANGE);
 
-         // Customization for BarChart
-            CategoryAxis xAxis = barchst.getDomainAxis();
-         xAxis.setLowerMargin(0.02);
-         xAxis.setUpperMargin(0.02);
+        // Customization for BarChart
+        CategoryAxis xAxis = barchst.getDomainAxis();
+        xAxis.setLowerMargin(0.02);
+        xAxis.setUpperMargin(0.02);
 
-            NumberAxis yAxis = (NumberAxis) barchst.getRangeAxis();
-         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        NumberAxis yAxis = (NumberAxis) barchst.getRangeAxis();
+        yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-         // Optional: Use StandardBarPainter to make the bars look smoother
-         Renderer.setBarPainter(new StandardBarPainter());
+        // Optional: Use StandardBarPainter to make the bars look smoother
+        Renderer.setBarPainter(new StandardBarPainter());
 
-         // Set renderer for the plot
-         barchst.setRenderer(Renderer);
+        // Set renderer for the plot
+        barchst.setRenderer(Renderer);
 
-            ChartPanel barPanel = new ChartPanel(barchart);
-         Panel_bieudo.removeAll();
-         Panel_bieudo.setLayout(new BorderLayout());
-         Panel_bieudo.add(barPanel, BorderLayout.CENTER);
-         Panel_bieudo.validate();
+        ChartPanel barPanel = new ChartPanel(barchart);
+        Panel_bieudo.removeAll();
+        Panel_bieudo.setLayout(new BorderLayout());
+        Panel_bieudo.add(barPanel, BorderLayout.CENTER);
+        Panel_bieudo.validate();
     }
+
     public void createLineChart() {
-                DefaultCategoryDataset lineChartData = new DefaultCategoryDataset();
-             try {
-                 int countRow = jTable1.getRowCount();
-                 for (int i = 0; i < countRow; i++) {
-                     double value = Double.parseDouble(model.getValueAt(i, 2).toString());
-                     lineChartData.addValue(value, "Doanh Thu", model.getValueAt(i, 0).toString());
-                 }
-             } catch (Exception e) {
-                 e.printStackTrace();
-             }
+        DefaultCategoryDataset lineChartData = new DefaultCategoryDataset();
+        try {
+            int countRow = jTable1.getRowCount();
+            for (int i = 0; i < countRow; i++) {
+                double value = Double.parseDouble(model.getValueAt(i, 2).toString());
+                lineChartData.addValue(value, "Doanh Thu", model.getValueAt(i, 0).toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-             JFreeChart lineChart = ChartFactory.createLineChart(
-                 "Doanh Thu", // Tiêu đề biểu đồ
-                 "Ngày bán", // Label trục x
-                 "Doanh thu", // Label trục y
-                 lineChartData, // Dữ liệu
-                 PlotOrientation.VERTICAL,
-                 false,
-                 true,
-                 false
-             );
+        JFreeChart lineChart = ChartFactory.createLineChart(
+                "Doanh Thu", // Tiêu đề biểu đồ
+                "Ngày bán", // Label trục x
+                "Doanh thu", // Label trục y
+                lineChartData, // Dữ liệu
+                PlotOrientation.VERTICAL,
+                false,
+                true,
+                false
+        );
 
-             CategoryPlot linePlot = lineChart.getCategoryPlot();
-             linePlot.setRangeCrosshairPaint(Color.ORANGE);
+        CategoryPlot linePlot = lineChart.getCategoryPlot();
+        linePlot.setRangeCrosshairPaint(Color.ORANGE);
 
-             // Customization for LineChart
-             CategoryAxis xAxis = linePlot.getDomainAxis();
-             xAxis.setLowerMargin(0.02);
-             xAxis.setUpperMargin(0.02);
+        // Customization for LineChart
+        CategoryAxis xAxis = linePlot.getDomainAxis();
+        xAxis.setLowerMargin(0.02);
+        xAxis.setUpperMargin(0.02);
 
-             NumberAxis yAxis = (NumberAxis) linePlot.getRangeAxis();
-             yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        NumberAxis yAxis = (NumberAxis) linePlot.getRangeAxis();
+        yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-             ChartPanel linePanel = new ChartPanel(lineChart);
-             Panel_bieudo.removeAll();
-             Panel_bieudo.setLayout(new BorderLayout());
-             Panel_bieudo.add(linePanel, BorderLayout.CENTER);
-             Panel_bieudo.validate();
+        ChartPanel linePanel = new ChartPanel(lineChart);
+        Panel_bieudo.removeAll();
+        Panel_bieudo.setLayout(new BorderLayout());
+        Panel_bieudo.add(linePanel, BorderLayout.CENTER);
+        Panel_bieudo.validate();
 
-}
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -317,86 +318,90 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rdo_bdcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bdcActionPerformed
-       
+
         charAt();
     }//GEN-LAST:event_rdo_bdcActionPerformed
 
     private void monthChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_monthChooserPropertyChange
-       XoaAllData();
+        XoaAllData();
         DocDuLieuLenTable();
-        if(rdo_bdc.isSelected())charAt();
-        else createLineChart();
+        if (rdo_bdc.isSelected())
+            charAt();
+        else
+            createLineChart();
     }//GEN-LAST:event_monthChooserPropertyChange
 
     private void btn_dtnamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dtnamActionPerformed
         // TODO add your handling code here:
-        
-         String nam = String.valueOf(spin_nam.getValue());
-      
-        ArrayList<Object[]> ds = tkbus.getListDoanhThuTrongNam(nam);
-        if(ds != null){
-            XoaAllData();
-            for(Object[] tk: ds){
-            model.addRow(tk);
-             }
-             if(rdo_bdc.isSelected())charAt();
-             else createLineChart();
-        }
-        else JOptionPane.showMessageDialog(null, "Doanh Thu trong năm "+nam+" không có dữ liệu");
 
-        
+        String nam = String.valueOf(spin_nam.getValue());
+
+        ArrayList<Object[]> ds = tkbus.getListDoanhThuTrongNam(nam);
+        if (ds != null) {
+            XoaAllData();
+            for (Object[] tk : ds) {
+                model.addRow(tk);
+            }
+            if (rdo_bdc.isSelected()) {
+                charAt();
+            } else {
+                createLineChart();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Doanh Thu trong năm " + nam + " không có dữ liệu");
+        }
+
+
     }//GEN-LAST:event_btn_dtnamActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
-          XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Khuyến Mãi");
-        XSSFRow row= null;
+        XSSFRow row = null;
         Cell cell = null;
         row = sheet.createRow(3);
-        
-        cell = row.createCell(0,CellType.STRING);
+
+        cell = row.createCell(0, CellType.STRING);
         cell.setCellValue("Ngày / Tháng");
-        
-        cell = row.createCell(1,CellType.STRING);
+
+        cell = row.createCell(1, CellType.STRING);
         cell.setCellValue("Số Lượng sản phẩm bán được");
-        
-        cell = row.createCell(2,CellType.STRING);
+
+        cell = row.createCell(2, CellType.STRING);
         cell.setCellValue("Doanh Thu");
 
-            try {
-                 int rows = jTable1.getRowCount();
-                 
-                 for(int i=0;i<rows;i++ ){
-                row = sheet.createRow(4+i);
+        try {
+            int rows = jTable1.getRowCount();
+
+            for (int i = 0; i < rows; i++) {
+                row = sheet.createRow(4 + i);
                 cell = row.createCell(0, CellType.STRING);
                 cell.setCellValue(model.getValueAt(i, 0).toString());
-                
+
                 cell = row.createCell(1, CellType.NUMERIC);
                 cell.setCellValue(Integer.parseInt(model.getValueAt(i, 1).toString()));
-                
+
                 cell = row.createCell(2, CellType.NUMERIC);
                 cell.setCellValue(Double.parseDouble(model.getValueAt(i, 2).toString()));
-                
-                 }
-                 
-                   File fis = new File("E:\\KMExcel\\thongke.xlsx");
-                    FileOutputStream fisO = new FileOutputStream(fis);
-                    workbook.write(fisO);
-                    fisO.close();
-                    openExcelFile(fis);
 
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-           
 
-            
-        
+            File fis = new File("E:\\KMExcel\\thongke.xlsx");
+            FileOutputStream fisO = new FileOutputStream(fis);
+            workbook.write(fisO);
+            fisO.close();
+            openExcelFile(fis);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }//GEN-LAST:event_button1ActionPerformed
-    
+
     private static void openExcelFile(File file) throws IOException {
-         Desktop desktop = Desktop.getDesktop();
+        Desktop desktop = Desktop.getDesktop();
         if (desktop.isSupported(Desktop.Action.OPEN)) {
             desktop.open(file);
         } else {
@@ -411,19 +416,21 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
 
     private void spin_namPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_spin_namPropertyChange
         // TODO add your handling code here:
-               XoaAllData();
+        XoaAllData();
         DocDuLieuLenTable();
-        if(rdo_bdc.isSelected())charAt();
-        else createLineChart();
+        charAt();
     }//GEN-LAST:event_spin_namPropertyChange
 
     private void btnLamMoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLamMoiMouseClicked
         // TODO add your handling code here:
         XoaAllData();
         DocDuLieuLenTable();
-        if(rdo_bdc.isSelected())charAt();
-        else createLineChart();
-        
+        if (rdo_bdc.isSelected()) {
+            charAt();
+        } else {
+            createLineChart();
+        }
+
     }//GEN-LAST:event_btnLamMoiMouseClicked
 
 
