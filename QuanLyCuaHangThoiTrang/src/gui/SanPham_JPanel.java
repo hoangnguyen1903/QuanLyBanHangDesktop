@@ -20,6 +20,7 @@ import entity.MauSacEnum;
 import entity.ThuongHieuEntity;
 import entity.TinhTrangSPEnum;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -37,7 +38,6 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -62,6 +62,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
     private ThuongHieu_bus thuongHieu_bus;
     private ChatLieu_bus chatLieu_bus;
     private ChuongTrinhKhuyenMai_bus ctkm_bus;
+
     /**
      * Creates new form SanPham_JPanel
      */
@@ -72,7 +73,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         danhMucSanPham_bus = new DanhMucSanPham_bus();
         thuongHieu_bus = new ThuongHieu_bus();
         chatLieu_bus = new ChatLieu_bus();
-        ctkm_bus=new ChuongTrinhKhuyenMai_bus();
+        ctkm_bus = new ChuongTrinhKhuyenMai_bus();
         //----------
         setBounds(0, 0, 1186, 748);
         ImageIcon img_btnTimKiem = new ImageIcon("src//pic//icon//buttonTimKiem.png");
@@ -120,7 +121,10 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         duaDuLieuVaoComboBox(cbo_DanhMuc, danhMucSanPham_bus.getAllDMSP(), "TenDanhMuc");
         duaDuLieuVaoComboBox(cbo_ChatLieu, chatLieu_bus.getAllCL(), "TenChatLieu");
         duaDuLieuVaoComboBox(cbo_ThuongHieu, thuongHieu_bus.getAllTH(), "TenThuongHieu");
+
         duaDuLieuVaoComboBox(cbo_KhuyenMai, ctkm_bus.getallCTKMtheoLoaiKM("GGSP"), "TenCTKM");
+        cbo_KhuyenMai.addItem("Không giảm giá");
+
     }
 
     /**
@@ -469,7 +473,10 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         table_DanhSachSanPham.getColumnModel().getColumn(1).setPreferredWidth(200);
         table_DanhSachSanPham.getColumnModel().getColumn(2).setCellRenderer(new CenterRenderer());
         table_DanhSachSanPham.getColumnModel().getColumn(3).setCellRenderer(new CenterRenderer());
-        table_DanhSachSanPham.getColumnModel().getColumn(11).setCellRenderer(new ImageRenderer());
+        table_DanhSachSanPham.getColumnModel().getColumn(11).setMinWidth(0);
+        table_DanhSachSanPham.getColumnModel().getColumn(11).setMaxWidth(0);
+        table_DanhSachSanPham.getColumnModel().getColumn(11).setWidth(0);
+        table_DanhSachSanPham.getColumnModel().getColumn(11).setPreferredWidth(0);
         table_DanhSachSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 table_DanhSachSanPhamMouseClicked(evt);
@@ -500,15 +507,10 @@ public class SanPham_JPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(panel_ThaoTac, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
-                        .addGap(5, 5, 5))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(panel_ThongTin, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
-                        .addGap(5, 5, 5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(panel_DanhSachSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
-                        .addGap(5, 5, 5))))
+                    .addComponent(panel_ThaoTac, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
+                    .addComponent(panel_ThongTin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
+                    .addComponent(panel_DanhSachSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE))
+                .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -534,11 +536,17 @@ public class SanPham_JPanel extends javax.swing.JPanel {
             String tenChatLieu = chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
             String tenThuongHieu = thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
             String tenDanhMuc = danhMucSanPham_bus.layTenDanhMucTheoMa(sp.getDanhMucSanPham().getMaDanhMuc());
-            String tenCTKM=ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+            String tenCTKM = ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+            String hienThiKM = null;
+            if (tenCTKM != null) {
+                hienThiKM = tenCTKM;
+            } else {
+                hienThiKM = "Không giảm giá";
+            }
             model.addRow(new Object[]{sp.getMaSP(), sp.getTenSP(), sp.getKichThuoc(),
                 sp.getMauSac().toString(), formattedDonGia, sp.getTinhTrang().toString(),
                 sp.getSoLuongTonKho(), tenChatLieu, tenThuongHieu, tenDanhMuc,
-                tenCTKM,sp.getImgUrl()});
+                hienThiKM, sp.getImgUrl()});
         }
     }
 
@@ -553,6 +561,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
             String tenTepAnh = tenAnh.getName();
             duongDanAnh = "src//pic//imageProduct//" + tenTepAnh;
             lbl_AnhSanPham.setIcon(ResizeImageIcon(duongDanAnh));
+            lbl_AnhSanPham.setText(duongDanAnh);
         } else if (kq == JFileChooser.CANCEL_OPTION) {
 
         } else {
@@ -564,8 +573,8 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         themSanPham();
     }//GEN-LAST:event_btn_ThemActionPerformed
-    //Hàm thêm sản phẩm
 
+    //Hàm thêm sản phẩm
     private void themSanPham() {
         if (validata()) {
             String maSP = GenerateID.sinhMa("SP");
@@ -610,7 +619,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
             String maDanhMuc = danhMucSanPham_bus.layMaDanhMucTheoTen(tenDanhMuc);
             DanhMucSanPhamEntity danhMuc = new DanhMucSanPhamEntity(maDanhMuc);
             String tenCTKM = cbo_KhuyenMai.getSelectedItem().toString();
-            String maCTKM=ctkm_bus.layMaKhuyenMaiTheoTen(tenCTKM);
+            String maCTKM = ctkm_bus.layMaKhuyenMaiTheoTen(tenCTKM);
             ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(maCTKM);
             String anh = duongDanAnh;
             if (anh == null || anh.equals(duongDanAnhMacDinh)) {
@@ -619,18 +628,24 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                 SanPhamEntity sp = new SanPhamEntity(maSP, tenSanPham, kichThuoc, mauSac, donGia, soLuongTonKho, tinhTrang, chatLieu, thuongHieu, danhMuc, ctkm, anh);
                 boolean kiemTra = sp_bus.themSP(sp);
                 if (kiemTra) {
-//                    lamMoi();
                     DecimalFormat decimalFormat = new DecimalFormat();
                     String formattedDonGia = decimalFormat.format(sp.getDonGia()) + " VNĐ";
                     String cl = chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
                     String th = thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
                     String dm = danhMucSanPham_bus.layTenDanhMucTheoMa(sp.getDanhMucSanPham().getMaDanhMuc());
-                    String km=ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+                    String km = ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+                    String hienThiKM = null;
+                    if (km != null) {
+                        hienThiKM = km;
+                    } else {
+                        hienThiKM = "Không giảm giá";
+                    }
                     model.addRow(new Object[]{sp.getMaSP(), sp.getTenSP(), sp.getKichThuoc(),
                         sp.getMauSac().toString(), formattedDonGia, sp.getTinhTrang().toString(),
                         sp.getSoLuongTonKho(), cl, th, dm,
-                        km, sp.getImgUrl()});
+                        hienThiKM, sp.getImgUrl()});
                     JOptionPane.showMessageDialog(null, "Thêm thành công");
+                    lamMoi();
                 } else {
                     JOptionPane.showMessageDialog(null, "Thêm không thành công");
                 }
@@ -656,6 +671,8 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         String img = model.getValueAt(row, 11).toString();
         ImageIcon imageIcon = new ImageIcon(new ImageIcon(img).getImage().getScaledInstance(lbl_AnhSanPham.getWidth(), lbl_AnhSanPham.getHeight(), Image.SCALE_SMOOTH));
         lbl_AnhSanPham.setIcon(imageIcon);
+        lbl_AnhSanPham.setText(model.getValueAt(row, 11).toString());
+        btn_Them.setEnabled(false);
     }//GEN-LAST:event_table_DanhSachSanPhamMouseClicked
 
     private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
@@ -664,6 +681,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         timKiemSanPham(dieuKien);
 
     }//GEN-LAST:event_btn_TimKiemActionPerformed
+
     //Hàm tìm kiếm sản phẩm
     private void timKiemSanPham(String dieuKien) {
         String timKiem = txt_MaSanPham_Search.getText().trim();
@@ -678,12 +696,18 @@ public class SanPham_JPanel extends javax.swing.JPanel {
             String tenChatLieu = chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
             String tenThuongHieu = thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
             String tenDanhMuc = danhMucSanPham_bus.layTenDanhMucTheoMa(sp.getDanhMucSanPham().getMaDanhMuc());
-            String km=ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+            String km = ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+            String hienThiKM = null;
+            if (km != null) {
+                hienThiKM = km;
+            } else {
+                hienThiKM = "Không giảm giá";
+            }
             if (matchesSearchTerm(sp, dieuKien)) {
                 model.addRow(new Object[]{sp.getMaSP(), sp.getTenSP(), sp.getKichThuoc(),
                     sp.getMauSac().toString(), formattedDonGia, sp.getTinhTrang().toString(),
                     sp.getSoLuongTonKho(), tenChatLieu, tenThuongHieu, tenDanhMuc,
-                    km, sp.getImgUrl()});
+                    hienThiKM, sp.getImgUrl()});
             }
         }
     }
@@ -692,6 +716,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         lamMoi();
     }//GEN-LAST:event_btn_LamMoiActionPerformed
+
     //Hàm làm mới sản phẩm
     public void lamMoi() {
         txt_MaSanPham.setText("");
@@ -705,12 +730,14 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         cbo_DanhMuc.setSelectedIndex(0);
         cbo_TinhTrang.setSelectedItem("Đang bán");
         txt_MaSanPham_Search.setText("");
-        cbo_KhuyenMai.setSelectedIndex(0);
+        cbo_KhuyenMai.setSelectedItem("Không giảm giá");
         model.setRowCount(0);
         ImageIcon anhMacDinh = new ImageIcon(duongDanAnhMacDinh);
         ImageIcon imageIcon = new ImageIcon(anhMacDinh.getImage().getScaledInstance(lbl_AnhSanPham.getWidth(), lbl_AnhSanPham.getHeight(), Image.SCALE_SMOOTH));
         lbl_AnhSanPham.setIcon(imageIcon);
         duongDanAnh = null;
+        lbl_AnhSanPham.setText("");
+        btn_Them.setEnabled(true);
         loadDuLieuTuDataLenTable();
 
     }
@@ -719,6 +746,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         capNhatSanPham();
     }//GEN-LAST:event_btn_CapNhatActionPerformed
+
     //Hàm cập nhật sản phẩm
     private void capNhatSanPham() {
         int row = table_DanhSachSanPham.getSelectedRow();
@@ -770,9 +798,10 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                         String maDanhMuc = danhMucSanPham_bus.layMaDanhMucTheoTen(tenDanhMuc);
                         DanhMucSanPhamEntity danhMuc = new DanhMucSanPhamEntity(maDanhMuc);
                         String tenCTKM = cbo_KhuyenMai.getSelectedItem().toString();
-                        String maCTKM=ctkm_bus.layMaKhuyenMaiTheoTen(tenCTKM);
+                        String maCTKM = ctkm_bus.layMaKhuyenMaiTheoTen(tenCTKM);
                         ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(maCTKM);
-                        String anh = duongDanAnh;
+                        String anh = lbl_AnhSanPham.getText();
+                        System.out.println(anh);
                         SanPhamEntity sp = new SanPhamEntity(maSP, tenSanPham, kichThuoc, mauSac, donGia, soLuongTonKho, tinhTrang, chatLieu, thuongHieu, danhMuc, ctkm, anh);
                         boolean kq = sp_bus.capNhatSanPham(sp);
                         if (kq) {
@@ -791,7 +820,8 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         xuatExcel();
 //          xuatExcelTable();
     }//GEN-LAST:event_btn_XuatExcelActionPerformed
-    //Hàm xuất excel
+
+    //Hàm xuất excel từ db
     private void xuatExcel() {
         try {
             JFileChooser fileChooser = new JFileChooser("C:\\Users\\MY PC\\OneDrive\\Máy tính");
@@ -838,7 +868,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                     String tenChatLieu = chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
                     String tenThuongHieu = thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
                     String tenDanhMuc = danhMucSanPham_bus.layTenDanhMucTheoMa(sp.getDanhMucSanPham().getMaDanhMuc());
-                    String tenCTKM=ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+                    String tenCTKM = ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
                     row = sheet.createRow(1 + i);
                     row.createCell(0).setCellValue(sp.getMaSP());
                     row.createCell(1).setCellValue(sp.getTenSP());
@@ -857,6 +887,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                 try (FileOutputStream fos = new FileOutputStream(f)) {
                     workbook.write(fos);
                     JOptionPane.showMessageDialog(null, "Xuất file thành công");
+                    openExcelFile(f);
                 }
             }
         } catch (Exception ex) {
@@ -864,6 +895,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         }
     }
 
+    //Hàm xuất excel từ table
     private void xuatExcelTable() {
         try {
             JFileChooser fileChooser = new JFileChooser("C:\\Users\\MY PC\\OneDrive\\Máy tính");
@@ -895,6 +927,9 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                 try (FileOutputStream fos = new FileOutputStream(f)) {
                     wb.write(fos);
                     JOptionPane.showMessageDialog(null, "Xuất file thành công");
+                    System.out.println(f);
+                    openExcelFile(f);
+
                 }
                 wb.close();
             }
@@ -902,10 +937,22 @@ public class SanPham_JPanel extends javax.swing.JPanel {
             ex.printStackTrace();
         }
     }
+
+    //Hàm tự dộng mở file excel sau khi xuất
+    private static void openExcelFile(File file) throws IOException {
+        Desktop desktop = Desktop.getDesktop();
+        if (desktop.isSupported(Desktop.Action.OPEN)) {
+            desktop.open(file);
+        } else {
+            System.out.println("Không thể mở file.");
+        }
+    }
+
     private void btn_KiemTraTonKhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_KiemTraTonKhoActionPerformed
         // TODO add your handling code here:
         kiemTraTonKho();
     }//GEN-LAST:event_btn_KiemTraTonKhoActionPerformed
+
     //Hàm kiểm tra tồn kho
     private void kiemTraTonKho() {
         ArrayList<SanPhamEntity> dsSP = sp_bus.kiemTraTonKho();
@@ -916,10 +963,17 @@ public class SanPham_JPanel extends javax.swing.JPanel {
             String tenChatLieu = chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
             String tenThuongHieu = thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
             String tenDanhMuc = danhMucSanPham_bus.layTenDanhMucTheoMa(sp.getDanhMucSanPham().getMaDanhMuc());
+            String km = ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+            String hienThiKM = null;
+            if (km != null) {
+                hienThiKM = km;
+            } else {
+                hienThiKM = "Không giảm giá";
+            }
             model.addRow(new Object[]{sp.getMaSP(), sp.getTenSP(), sp.getKichThuoc(),
                 sp.getMauSac().toString(), formattedDonGia, sp.getTinhTrang().toString(),
                 sp.getSoLuongTonKho(), tenChatLieu, tenThuongHieu, tenDanhMuc,
-                sp.getChuongTrinhKhuyenMai().getMaCTKM(), sp.getImgUrl()});
+                hienThiKM, sp.getImgUrl()});
         }
     }
 
@@ -927,18 +981,9 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         nhapExcel();
     }//GEN-LAST:event_btn_NhapExcelActionPerformed
-    private boolean containsMaSPInTable(DefaultTableModel model, String maSanPham) {
-        for (int row = 0; row < model.getRowCount(); row++) {
-//            System.out.println("Giá trị mã sản phẩm trong bảng: " + model.getValueAt(row, 0));
-            if (model.getValueAt(row, 0).equals(maSanPham)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     //Hàm nhập file excel
-    public void nhapExcel() {
+    private void nhapExcel() {
         File excelFile;
         FileInputStream excelFIS = null;
         BufferedInputStream excelBIS = null;
@@ -962,8 +1007,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                     XSSFCell excelMaSP = excelRow.getCell(0);
                     // Kiểm tra xem mã sản phẩm đã tồn tại trong tập hợp chưa
                     String maSanPham = excelMaSP.getStringCellValue().trim();
-//                    System.out.println("Giá trị mã sản phẩm từ file Excel: " + maSanPham);
-                    if (!maSanPhamSet.contains(maSanPham) && !containsMaSPInTable(model, maSanPham)) {
+                    if (!maSanPhamSet.contains(maSanPham) && !kiemTraMaSanPhamTontaiTrongTable(model, maSanPham)) {
                         maSanPhamSet.add(maSanPham);
                         XSSFCell excelTenSP = excelRow.getCell(1);
                         XSSFCell excelKichThuoc = excelRow.getCell(2);
@@ -977,11 +1021,17 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                         XSSFCell excelAnh = excelRow.getCell(10);
                         String duongDanAnh = excelAnh.getStringCellValue();
                         XSSFCell excelKhuyenMai = excelRow.getCell(11);
+                        String khuyenMai = "";
+                        if (excelKhuyenMai != null) {
+                            khuyenMai = excelKhuyenMai.getStringCellValue().trim();
+                        } else {
+                            khuyenMai = "Không giảm giá";
+                        }
                         int soLuongTonKho = (int) excelSoLuongTon.getNumericCellValue();
                         double donGia = excelDonGia.getNumericCellValue();
                         DecimalFormat decimalFormat = new DecimalFormat();
                         String formattedDonGia = decimalFormat.format(donGia) + " VNĐ";
-                        model.addRow(new Object[]{maSanPham, excelTenSP, excelKichThuoc, excelMauSac, formattedDonGia, excelTinhTrang, soLuongTonKho, excelChatLieu, excelThuongHieu, excelDanhMuc, excelKhuyenMai, duongDanAnh});
+                        model.addRow(new Object[]{maSanPham, excelTenSP, excelKichThuoc, excelMauSac, formattedDonGia, excelTinhTrang, soLuongTonKho, excelChatLieu, excelThuongHieu, excelDanhMuc, khuyenMai, duongDanAnh});
 //                        System.out.println("Đường dẫn ảnh từ Excel: " + duongDanAnh);
                     } else {
 //                        System.out.println("Mã sản phẩm đã tồn tại: " + maSanPham);
@@ -1010,7 +1060,11 @@ public class SanPham_JPanel extends javax.swing.JPanel {
 
     private void btn_LuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LuuActionPerformed
         // TODO add your handling code here:
-
+        luu();
+    }//GEN-LAST:event_btn_LuuActionPerformed
+    
+    //Hàm lưu dữ liệu từ table vào db
+    private void luu() {
         for (int i = 0; i < model.getRowCount(); i++) {
             String maSP = model.getValueAt(i, 0).toString();
             String tenSP = model.getValueAt(i, 1).toString();
@@ -1054,7 +1108,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
             String maDanhMuc = danhMucSanPham_bus.layMaDanhMucTheoTen(tenDanhMuc);
             DanhMucSanPhamEntity danhMuc = new DanhMucSanPhamEntity(maDanhMuc);
             String tenCTKM = model.getValueAt(i, 10).toString();
-            String maCTKM=ctkm_bus.layMaKhuyenMaiTheoTen(tenCTKM);
+            String maCTKM = ctkm_bus.layMaKhuyenMaiTheoTen(tenCTKM);
             ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(maCTKM);
             String anh = model.getValueAt(i, 11).toString();
             SanPhamEntity sp = new SanPhamEntity(maSP, tenSP, kichThuoc, mauSac, donGia, soLuongTonKho, tinhTrang, chatLieu, thuongHieu, danhMuc, ctkm, anh);
@@ -1065,7 +1119,15 @@ public class SanPham_JPanel extends javax.swing.JPanel {
             }
         }
         JOptionPane.showMessageDialog(null, "Lưu thành công");
-    }//GEN-LAST:event_btn_LuuActionPerformed
+    }
+
+    //    Hàm set kích thước icon theo lbl_AnhSanPham
+    private ImageIcon ResizeImageIcon(String ImagePath) {
+        ImageIcon myIcon = new ImageIcon(ImagePath);
+        Image img = myIcon.getImage().getScaledInstance(lbl_AnhSanPham.getWidth(), lbl_AnhSanPham.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon image = new ImageIcon(img);
+        return image;
+    }
 
     //Hàm kiểm tra sản phẩm có chứa tiêu chí tìm kiếm không
     private boolean matchesSearchTerm(SanPhamEntity sanPham, String search) {
@@ -1096,7 +1158,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                 return true;
             }
         }
-         if (sanPham.getChuongTrinhKhuyenMai() != null && sanPham.getChuongTrinhKhuyenMai().getMaCTKM() != null) {
+        if (sanPham.getChuongTrinhKhuyenMai() != null && sanPham.getChuongTrinhKhuyenMai().getMaCTKM() != null) {
             String tenCTKM = ctkm_bus.layTenKhuyenMaiTheoMa(sanPham.getChuongTrinhKhuyenMai().getMaCTKM());
             if (tenCTKM.contains(search)) {
                 return true;
@@ -1119,13 +1181,16 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         comboBox.setModel(model);
     }
 
-    //Hàm set kích thước icon theo lbl_AnhSanPham
-    private ImageIcon ResizeImageIcon(String ImagePath) {
-        ImageIcon myIcon = new ImageIcon(ImagePath);
-        Image img = myIcon.getImage().getScaledInstance(lbl_AnhSanPham.getWidth(), lbl_AnhSanPham.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon image = new ImageIcon(img);
-        return image;
+    //Hàm kiểm tra mã sản phẩm đã có trong table hay chưa
+    private boolean kiemTraMaSanPhamTontaiTrongTable(DefaultTableModel model, String maSanPham) {
+        for (int row = 0; row < model.getRowCount(); row++) {
+            if (model.getValueAt(row, 0).equals(maSanPham)) {
+                return true;
+            }
+        }
+        return false;
     }
+
     //Hàm kiểm tra ảnh null 
 //    private void kiemTraAnhNull(int row) {
 //        String img = sp_bus.getAllSanPham().get(row).getImgUrl();
@@ -1138,16 +1203,16 @@ public class SanPham_JPanel extends javax.swing.JPanel {
 //        }
 //        lbl_AnhSanPham.setIcon(imageIcon);
 //    }
-
-    //Hàm regex
+    
+    //Hàm kiểm tra regex
     private boolean validata() {
         String tenSP = txt_TenSanPham.getText().trim();
         String donGia = txt_DonGia.getText().trim();
-        if (tenSP.isBlank() || donGia.isBlank() ) {
+        if (tenSP.isBlank() || donGia.isBlank()) {
             JOptionPane.showMessageDialog(null, "Không được để trống");
             return false;
         }
-        
+
         if (!donGia.matches("^[1-9]\\d*")) {
             JOptionPane.showMessageDialog(null, "Đơn giá phải lớn hơn 0, không được nhập chữ");
             txt_DonGia.requestFocus();
@@ -1165,26 +1230,6 @@ public class SanPham_JPanel extends javax.swing.JPanel {
 
     }
 
-    //Load ảnh lên table
-    private class ImageRenderer extends DefaultTableCellRenderer {
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            if (value instanceof String) {
-                String imagePath = (String) value;
-                ImageIcon icon = new ImageIcon(imagePath);
-                Image img = icon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-                icon.setImage(img);
-                setIcon(icon);
-                setText(null);
-                TableColumn tb = table_DanhSachSanPham.getColumnModel().getColumn(11);
-                tb.setMaxWidth(40);
-                tb.setMinWidth(40);
-                table_DanhSachSanPham.setRowHeight(40);
-            }
-            return this;
-        }
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_CapNhat;
     private javax.swing.JButton btn_ChonAnh;
@@ -1230,9 +1275,8 @@ public class SanPham_JPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 }
 
-//CĂn giữa cột trong table
+//Căn giữa cột trong table
 class CenterRenderer extends DefaultTableCellRenderer {
-
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         ((JLabel) c).setHorizontalAlignment(SwingConstants.CENTER);
