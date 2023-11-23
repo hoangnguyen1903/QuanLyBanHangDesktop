@@ -5,7 +5,7 @@ body {
 }
 
 header {
-    background-color: #333;
+    background-color: #003333;
     color: #fff;
     text-align: center;
     padding: 20px;
@@ -23,7 +23,7 @@ header {
 }
 
 .sitebar {
-    background-color: #333;
+    background-color: #003333;
     width: 25%;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -91,6 +91,7 @@ div a {
     overflow-x: hidden;
     padding: 5px;
     padding-left: 15px;
+    background-color: #bbcdc5;
 }
 
 #additional-list {

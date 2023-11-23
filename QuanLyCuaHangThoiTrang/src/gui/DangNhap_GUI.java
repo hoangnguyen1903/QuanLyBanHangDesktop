@@ -263,6 +263,7 @@ public class DangNhap_GUI extends javax.swing.JFrame {
                 tc.setMa(nv.getMaNV());
                 tc.setChucvu(nv.getChucVu().toString());
                 tc.setGioitnh(nv.getGioiTinh().toString());
+                tc.setSdt(nv.getSoDienThoai());
                 this.setVisible(false);
                 gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
                 trangChu_GUI.setVisible(true);
