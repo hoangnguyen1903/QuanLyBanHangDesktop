@@ -118,27 +118,33 @@ public class ThongKe_dao implements ThongKe_Interface {
         try {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
-            String sql = "SELECT \n"
-                    + "    ngayLapHD AS NgayBan,\n"
-                    + "    COUNT(DISTINCT cthd.maSP) AS 'SoSanPhamBanDuoc',\n"
-                    + "    SUM(cthd.thanhTien) AS 'DoanhThuTrongNgay'\n"
-                    + "FROM \n"
-                    + "    HoaDon hd\n"
-                    + "JOIN \n"
-                    + "    ChiTietHoaDon cthd ON hd.maHD = cthd.maHD\n"
-                    + "WHERE \n"
-                    + "    YEAR(ngayLapHD) = ? AND MONTH(ngayLapHD) = ?\n"
-                    + "GROUP BY \n"
-                    + "    ngayLapHD;";
+            String sql = "SELECT \n" +
+                            "    hoadon.ngayLapHD AS NgayBan, \n" +
+                            "    COALESCE(SUM(ChiTietDoiTra.thanhTien),0) AS TongTienDoiTra, \n" +
+                            "    COALESCE(SUM(ChiTietHoaDon.thanhTien),0) AS TongTienHoaDon,\n" +
+                            "	(COALESCE(SUM(ChiTietHoaDon.thanhTien),0) - COALESCE(SUM(ChiTietDoiTra.thanhTien),0)) AS DoanhThuTrongNgay\n" +
+                            "FROM \n" +
+                            "    HoaDon\n" +
+                            "JOIN \n" +
+                            "    ChiTietHoaDon ON HoaDon.maHD = chitiethoadon.maHD\n" +
+                            "LEFT JOIN \n" +
+                            "    ChiTietDoiTra ON ChiTietHoaDon.maSP = ChiTietDoiTra.maSP\n" +
+                            "LEFT JOIN \n" +
+                            "    DoiTra ON ChiTietDoiTra.maDT = DoiTra.maDT\n" +
+                            "	WHERE \n" +
+                            "    YEAR(ngayLapHD) = ? AND MONTH(ngayLapHD) = ?\n" +
+                            "GROUP BY \n" +
+                            "    HoaDon.ngayLapHD";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, nam);
             stmt.setString(2, thang);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Date ngay = rs.getDate("NgayBan");
-                int soluong = rs.getInt("SoSanPhamBanDuoc");
+                double ttDT = rs.getInt("TongTienDoiTra");
+                double ttHD = rs.getDouble("TongTienHoaDon");
                 double doanhthu = rs.getDouble("DoanhThuTrongNgay");
-                Object[] row = {ngay, soluong, doanhthu};
+                Object[] row = {ngay, ttDT,ttHD, doanhthu};
                 ds.add(row);
 
             }
@@ -154,27 +160,33 @@ public class ThongKe_dao implements ThongKe_Interface {
         try {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
-            String sql = "	SELECT \n"
-                    + "    MONTH(ngayLapHD) AS Thang,\n"
-                    + "    COUNT(DISTINCT cthd.maSP) AS 'SoSanPhamBanDuoc',\n"
-                    + "    SUM(cthd.thanhTien) AS 'DoanhThuTrongThang'\n"
-                    + "FROM \n"
-                    + "    HoaDon hd\n"
-                    + "JOIN \n"
-                    + "    ChiTietHoaDon cthd ON hd.maHD = cthd.maHD\n"
-                    + "WHERE \n"
-                    + "    YEAR(ngayLapHD) = ? \n"
-                    + "GROUP BY \n"
-                    + "    MONTH(ngayLapHD);";
+            String sql = "SELECT \n" +
+                        "    MONTH(ngayLapHD) AS Thang,\n" +
+                        "    COALESCE(SUM(ChiTietDoiTra.thanhTien),0) AS TongTienDoiTra, \n" +
+                        "    COALESCE(SUM(ChiTietHoaDon.thanhTien),0) AS TongTienHoaDon,\n" +
+                        "	(COALESCE(SUM(ChiTietHoaDon.thanhTien),0) - COALESCE(SUM(ChiTietDoiTra.thanhTien),0))	AS  DoanhThuTrongNgay\n" +
+                        "FROM \n" +
+                        "    HoaDon\n" +
+                        "JOIN \n" +
+                        "    ChiTietHoaDon ON HoaDon.maHD = chitiethoadon.maHD\n" +
+                        "LEFT JOIN \n" +
+                        "    ChiTietDoiTra ON ChiTietHoaDon.maSP = ChiTietDoiTra.maSP\n" +
+                        "LEFT JOIN \n" +
+                        "    DoiTra ON ChiTietDoiTra.maDT = DoiTra.maDT\n" +
+                        "	WHERE \n" +
+                        "    YEAR(ngayLapHD) = ? \n" +
+                        "GROUP BY \n" +
+                        "     MONTH(ngayLapHD) ";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, nam);
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 int thang = rs.getInt("Thang");
-                int soluong = rs.getInt("SoSanPhamBanDuoc");
-                double doanhthu = rs.getDouble("DoanhThuTrongThang");
-                Object[] row = {thang, soluong, doanhthu};
+                double ttDT = rs.getDouble("TongTienDoiTra");
+                double ttHD = rs.getDouble("TongTienHoaDon");
+                double doanhthu = rs.getDouble("DoanhThuTrongNgay");
+                Object[] row = {thang, ttDT,ttHD, doanhthu};
                 ds.add(row);
 
             }

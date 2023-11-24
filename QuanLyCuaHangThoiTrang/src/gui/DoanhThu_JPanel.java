@@ -30,12 +30,16 @@ import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class DoanhThu_JPanel extends javax.swing.JPanel {
 
     private final ThongKe_bus tkbus;
     private DefaultTableModel model;
     private BarRenderer Renderer;
+        // Định dạng số tiền sang VND
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
     /**
      * Creates new form DoanhThu_JPanel
@@ -60,10 +64,39 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         String nam = String.valueOf(spin_nam.getValue());
         System.out.println("Tháng " + month + nam);
         ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
-        for (Object[] tk : ds) {
+        if(ds.isEmpty()) JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
+        else for (Object[] tk : ds) {
 //            System.out.println("Thong ke " + tk);
             model.addRow(tk);
         }
+        ChuyenDuLieuSoTrongTableThanhVND();
+        TongDoanhThu();
+        
+    }
+    private void ChuyenDuLieuSoTrongTableThanhVND(){
+         NumberFormat formatter = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
+        int Crow = jTable1.getRowCount();
+        for (int i=0;i<Crow;i++){
+            jTable1.setValueAt(formatter.format(jTable1.getValueAt(i, 1)), i, 1);
+             jTable1.setValueAt(formatter.format(jTable1.getValueAt(i, 2)), i, 2);
+              jTable1.setValueAt(formatter.format(jTable1.getValueAt(i, 3)), i, 3);
+        }
+    }
+    private void TongDoanhThu(){
+        String Tong;
+        double Sum =0;
+        try {
+            int Crow = jTable1.getRowCount();
+            for (int i=0;i<Crow;i++){
+                Sum+= Double.parseDouble(model.getValueAt(i, 3).toString().replace(".", ""));
+            }
+           
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+          Tong = currencyFormatter.format(Sum);
+         
+        lblTongDoanhThu.setText(Tong);
     }
 
     public void XoaAllData() {
@@ -77,7 +110,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
             int countRow = jTable1.getRowCount();
             Renderer = new BarRenderer();
             for (int i = 0; i < countRow; i++) {
-                double value = Double.parseDouble(model.getValueAt(i, 2).toString());
+                double value = Double.parseDouble(model.getValueAt(i, 3).toString().replace(".", ""));
                 barchardata.setValue(value, "Doanh Thu", model.getValueAt(i, 0).toString());
                 Renderer.setSeriesPaint(i, Color.BLUE);
             }
@@ -116,7 +149,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         try {
             int countRow = jTable1.getRowCount();
             for (int i = 0; i < countRow; i++) {
-                double value = Double.parseDouble(model.getValueAt(i, 2).toString());
+                double value = Double.parseDouble(model.getValueAt(i, 3).toString().replace(".", ""));
                 lineChartData.addValue(value, "Doanh Thu", model.getValueAt(i, 0).toString());
             }
         } catch (Exception e) {
@@ -171,6 +204,8 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        lblTongDoanhThu = new javax.swing.JLabel();
         Panel_bieudo = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(187, 205, 197));
@@ -254,7 +289,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         });
         jPanel5.add(btn_dtnam, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 40, -1, -1));
 
-        btnLamMoi.setBackground(new java.awt.Color(187, 205, 197));
+        btnLamMoi.setBackground(new java.awt.Color(0, 51, 51));
         btnLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLamMoi.setForeground(new java.awt.Color(255, 255, 255));
         btnLamMoi.setText("Làm Mới");
@@ -270,33 +305,29 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         jPanel6.setBackground(new java.awt.Color(187, 205, 197));
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel6.setPreferredSize(new java.awt.Dimension(1167, 598));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable1.setModel(model  = new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Ngày/Tháng", "Số Sản Phẩm Bán", "Doanh Thu"
+                "Ngày/Tháng", "Tổng Tiền Đổi Trả","Tổng Tiền Hóa Đơn", "Doanh Thu"
             }
         ));
         jScrollPane2.setViewportView(jTable1);
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jPanel6.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 7, 476, 490));
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("TỔNG:");
+        jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 100, 40));
+
+        lblTongDoanhThu.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lblTongDoanhThu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTongDoanhThu.setText("jLabel5");
+        jPanel6.add(lblTongDoanhThu, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 506, 180, 40));
 
         add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 145, 490, 580));
 
@@ -350,14 +381,15 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(null, "Doanh Thu trong năm " + nam + " không có dữ liệu");
         }
-
+        ChuyenDuLieuSoTrongTableThanhVND();
+        TongDoanhThu();
 
     }//GEN-LAST:event_btn_dtnamActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
         XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet("Khuyến Mãi");
+        XSSFSheet sheet = workbook.createSheet("Doanh Thu");
         XSSFRow row = null;
         Cell cell = null;
         row = sheet.createRow(3);
@@ -366,9 +398,12 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         cell.setCellValue("Ngày / Tháng");
 
         cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Số Lượng sản phẩm bán được");
-
+        cell.setCellValue("Tổng Tiền Đổi Trả");
+        
         cell = row.createCell(2, CellType.STRING);
+        cell.setCellValue("Tổng Tiền Hóa Đơn");
+        
+        cell = row.createCell(3, CellType.STRING);
         cell.setCellValue("Doanh Thu");
 
         try {
@@ -380,10 +415,13 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
                 cell.setCellValue(model.getValueAt(i, 0).toString());
 
                 cell = row.createCell(1, CellType.NUMERIC);
-                cell.setCellValue(Integer.parseInt(model.getValueAt(i, 1).toString()));
+                cell.setCellValue(Double.parseDouble(model.getValueAt(i, 1).toString().replace(".", "")));
 
                 cell = row.createCell(2, CellType.NUMERIC);
-                cell.setCellValue(Double.parseDouble(model.getValueAt(i, 2).toString()));
+                cell.setCellValue(Double.parseDouble(model.getValueAt(i, 2).toString().replace(".", "")));
+                
+                cell = row.createCell(3, CellType.NUMERIC);
+                cell.setCellValue(Double.parseDouble(model.getValueAt(i, 3).toString().replace(".", "")));
 
             }
 
@@ -442,10 +480,12 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblTongDoanhThu;
     private com.toedter.calendar.JMonthChooser monthChooser;
     private javax.swing.JRadioButton rdo_bdc;
     private javax.swing.JRadioButton rdo_bdd;
