@@ -25,6 +25,4 @@ public class ChiTietDoiTra_bus implements ChiTietDoiTra_Interface{
     public ArrayList<ChiTietDoiTraEntity> getAllCTDTTheoMaDT(String ma) {
         return ctdt_dao.getAllCTDTTheoMaDT(ma);
     }
-    
-    
 }

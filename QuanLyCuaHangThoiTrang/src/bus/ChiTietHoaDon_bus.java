@@ -57,4 +57,9 @@ public class ChiTietHoaDon_bus implements ChiTietHoaDon_Interface{
     public ArrayList<ChiTietHoaDonEntity> getAllCTHDTheoMaHD(String maHD) {
         return cthd_dao.getAllCTHDTheoMaHD(maHD);
     }
+
+    @Override
+    public int getSoLuongCTHD(String maSP) {
+        return cthd_dao.getSoLuongCTHD(maSP);
+    }
 }

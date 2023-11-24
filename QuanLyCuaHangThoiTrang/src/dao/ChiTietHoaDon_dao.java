@@ -50,7 +50,9 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface {
                 int sl = rs.getInt("soLuong");
                 double giaban = rs.getDouble("giaBan");
                 double thanhtien = rs.getDouble("thanhTien");
-                ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity(sp, hd, sl, giaban, thanhtien);
+                double giaGoc = rs.getDouble("giaGoc");
+                
+                ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity(sp, hd, sl, giaGoc,giaban, thanhtien);
                 dscthd.add(cthd);
             }
         } catch (Exception e) {
@@ -214,13 +216,14 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
 
-            String sql = "Insert into ChiTietHoaDon(maSP, maHD, soLuong, giaBan, thanhTien) values (?, ?, ?, ?, ?)";
+            String sql = "Insert into ChiTietHoaDon(maSP, maHD, soLuong, giaGoc, giaBan, thanhTien) values (?, ?, ?, ?, ?, ?)";
             statement = con.prepareStatement(sql);
             statement.setString(1, cthd.getSanPham().getMaSP());
             statement.setString(2, cthd.getHoaDon().getMaHD());
             statement.setInt(3, cthd.getSoLuong());
-            statement.setDouble(4, cthd.getGiaBan());
-            statement.setDouble(5, cthd.getThanhTien());
+            statement.setDouble(4, cthd.getGiaGoc());
+            statement.setDouble(5, cthd.getGiaBan());
+            statement.setDouble(6, cthd.getThanhTien());
 
             int ketQua = statement.executeUpdate();
 
@@ -305,8 +308,9 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface {
                 int soLuong = rs.getInt("soLuong");
                 double giaBan = rs.getDouble("giaBan");
                 double thanhTien = rs.getDouble("thanhTien");
-
-                ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity(sp, hd, soLuong, giaBan, thanhTien);
+                double giaGoc = rs.getDouble("giaGoc");
+                
+                ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity(sp, hd, soLuong, giaGoc, giaBan, thanhTien);
 
                 cthdList.add(cthd);
             }
@@ -314,6 +318,42 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(HoaDon_dao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+    
+    @Override
+    public int getSoLuongCTHD(String maSP) {
+        try {
+            ConnectDB.getInstance().connect();
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDon_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement statement = null;
+
+        try {
+            String sql = "Select tongSoLuong=sum(cthd.soLuong) from ChiTietHoaDon as cthd inner join HoaDon as hd on cthd.maHD=hd.maHD where cthd.maSP=? and hd.tinhTrang=N'Chưa thanh toán' ";
+            statement = con.prepareStatement(sql);
+            statement.setString(1, maSP);
+
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                int tongSL = rs.getInt("tongSoLuong");
+                
+                return tongSL;
+            }
+            return 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         } finally {
             if (con != null) {
                 try {
@@ -368,7 +408,9 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface {
                 int sl = rs.getInt("soLuong");
                 double giaban = rs.getDouble("giaBan");
                 double thanhtien = rs.getDouble("thanhTien");
-                ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity(sp, hd, sl, giaban, thanhtien);
+                double giagoc = rs.getDouble("giaGoc");
+                
+                ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity(sp, hd, sl, giagoc, giaban, thanhtien);
                 dscthd.add(cthd);
 
             }
