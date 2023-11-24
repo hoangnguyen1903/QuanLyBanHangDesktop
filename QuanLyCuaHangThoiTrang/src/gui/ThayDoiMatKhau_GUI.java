@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import util.MD5Encode;
+import util.ToanCuc;
 
 /**
  *
@@ -28,6 +29,8 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
         initComponents();
         String a = "<HTML><u>Quên mật khẩu?</u></HTML>";
         setLocationRelativeTo(null);
+        ToanCuc tc = new  ToanCuc();
+        jtf_TenTaiKhoan.setText(tc.getSdt());
     }
 
     /**

@@ -33,4 +33,8 @@ public class ConnectDB {
 	public static Connection getConnection() {
 		return con;
 	}
+
+    public void closeConnection() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

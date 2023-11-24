@@ -243,6 +243,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel2.setText("Tên sản phẩm");
 
+        lbl_TenSanPham.setBackground(new java.awt.Color(255, 255, 255));
         lbl_TenSanPham.setFont(new java.awt.Font("Times New Roman", 2, 20)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N

@@ -532,9 +532,8 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         Jpanel_Menu.setBackground(new java.awt.Color(0, 51, 51));
         Jpanel_Menu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
         Jpanel_Menu.setMinimumSize(new java.awt.Dimension(180, 672));
-        Jpanel_Menu.setPreferredSize(new java.awt.Dimension(180, 748));
+        Jpanel_Menu.setPreferredSize(new java.awt.Dimension(180, 768));
         Jpanel_Menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Jpanel_Users.setBackground(new java.awt.Color(0, 51, 51));
@@ -702,7 +701,7 @@ public class TrangChu_GUI extends javax.swing.JFrame {
 
         Jpanel_Menu.add(Jpanel_Time, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 180, 18));
 
-        getContentPane().add(Jpanel_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 748));
+        getContentPane().add(Jpanel_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 750));
 
         Jpanel_Main.setBackground(new java.awt.Color(204, 204, 255));
         Jpanel_Main.setPreferredSize(new java.awt.Dimension(1355, 843));
@@ -715,10 +714,10 @@ public class TrangChu_GUI extends javax.swing.JFrame {
         );
         Jpanel_MainLayout.setVerticalGroup(
             Jpanel_MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 748, Short.MAX_VALUE)
+            .addGap(0, 750, Short.MAX_VALUE)
         );
 
-        getContentPane().add(Jpanel_Main, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1186, 748));
+        getContentPane().add(Jpanel_Main, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1186, 750));
 
         jMenu1.setText("Hệ Thống");
         jMenu1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
