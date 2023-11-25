@@ -119,10 +119,12 @@ public class MatHangNhap_dao implements MatHangNhap_Interface {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             PreparedStatement ps = null;
-            String sql = "update MatHangNhap set soLuongNhap=? where maMHN=?";
+            String sql = "update MatHangNhap set maNCC=?, soLuongNhap=?, ngayNhap=? where maMHN=?";
             ps = con.prepareStatement(sql);
-            ps.setInt(1, mhn.getSoLuongNhap());
-            ps.setString(2, mhn.getMaMHN());
+            ps.setString(1, mhn.getNhaCungCap().getMaNCC());
+            ps.setInt(2, mhn.getSoLuongNhap());
+            ps.setDate(3, Date.valueOf(mhn.getNgayNhap()));
+            ps.setString(4, mhn.getMaMHN());
             ps.executeUpdate();
             ps.close();
             ConnectDB.getInstance().disconnect();
@@ -131,5 +133,29 @@ public class MatHangNhap_dao implements MatHangNhap_Interface {
             Logger.getLogger(NhaCungCap_dao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    @Override
+    public boolean kiemTraMaMatHangNhapTonTai(String maMHN) {
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+            String sql = "SELECT COUNT(*) FROM MatHangNhap WHERE maMHN =?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, maMHN);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int sl = rs.getInt(1);
+                return sl > 0;
+            }
+            ps.close();
+            rs.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(MatHangNhap_dao.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return false;
     }
 }

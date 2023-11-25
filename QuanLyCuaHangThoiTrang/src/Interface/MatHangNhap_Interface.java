@@ -13,8 +13,14 @@ import java.util.ArrayList;
  * @author Tran Hien Vinh
  */
 public interface MatHangNhap_Interface {
+
     public ArrayList<MatHangNhapEntity> getAllMatHangNhap();
+
     public boolean nhapHang(MatHangNhapEntity mhn);
+
     public ArrayList<MatHangNhapEntity> timKiemMHN(LocalDate ngayNhap);
+
     public boolean capNhapMatHangNhap(MatHangNhapEntity mhn);
+
+    public boolean kiemTraMaMatHangNhapTonTai(String maMHN);
 }
