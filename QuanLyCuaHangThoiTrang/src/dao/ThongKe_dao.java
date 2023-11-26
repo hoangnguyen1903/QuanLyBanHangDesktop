@@ -4,8 +4,14 @@ import Interface.ThongKe_Interface;
 import java.sql.*;
 import connectDB.ConnectDB;
 import java.util.ArrayList;
+import util.ConvertDoubleToMoney;
 
 public class ThongKe_dao implements ThongKe_Interface {
+    private ConvertDoubleToMoney convert;
+
+    public ThongKe_dao() {
+        this.convert = new ConvertDoubleToMoney();
+    }
 
     @Override
     public ArrayList<Object[]> getListThongKeDoanhThu() {
@@ -177,6 +183,71 @@ public class ThongKe_dao implements ThongKe_Interface {
                 Object[] row = {thang, soluong, doanhthu};
                 ds.add(row);
 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
+    }
+
+    @Override
+    public ArrayList<Object[]> getListTop5NhanVienDoanhThuCaoNhat(String thang, String nam) {
+        ArrayList<Object[]> ds = new ArrayList<Object[]>();
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+           String sql = """
+                        SELECT TOP 5
+                            	NV.maNV, NV.hoTen, SUM(tongTien) AS tongDoanhThu
+                            FROM HoaDon AS HD  JOIN NhanVien AS NV ON HD.maNV = NV.maNV
+                            WHERE MONTH(ngayLapHD) = ? AND YEAR(ngayLapHD) = ?
+                            GROUP BY
+                            NV.maNV, NV.hoTen
+                            ORDER BY
+                            tongDoanhThu DESC """; // Sử dụng ? để thay thế giá trị của thangNam
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, thang);
+            stmt.setString(2, nam);      
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String maNV = rs.getString("maNV");
+                String hoTen = rs.getString("hoTen");
+                String tongDT = rs.getString("tongDoanhThu");
+                Object[] row = {maNV, hoTen , convert.toStringMoney(tongDT)};
+                ds.add(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
+    }
+    
+
+    @Override
+    public ArrayList<Object[]> getListTop5KhachHangMuaHangNhieuNhat(String thang, String nam) {
+        ArrayList<Object[]> ds = new ArrayList<Object[]>();
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+           String sql = """
+                        SELECT TOP 5
+                                KH.maKH, KH.hoTen, SUM(tienThanhToan) AS tongDoanhThu
+                            FROM HoaDon AS HD  JOIN KhachHang AS KH ON HD.maKH = KH.maKH
+                            WHERE MONTH(ngayLapHD) = ? AND YEAR(ngayLapHD) = ?
+                            GROUP BY
+                            KH.maKH, KH.hoTen
+                            ORDER BY
+                            tongDoanhThu DESC """; // Sử dụng ? để thay thế giá trị của thangNam
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, thang);
+            stmt.setString(2, nam);      
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String maKH = rs.getString("maKH");
+                String hoTen = rs.getString("hoTen");
+                String tongDT = rs.getString("tongDoanhThu");
+                Object[] row = {maKH, hoTen ,convert.toStringMoney(tongDT)};
+                ds.add(row);
             }
         } catch (Exception e) {
             e.printStackTrace();

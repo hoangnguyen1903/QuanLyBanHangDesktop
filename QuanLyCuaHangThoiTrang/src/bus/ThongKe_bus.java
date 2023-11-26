@@ -32,4 +32,14 @@ public class ThongKe_bus implements ThongKe_Interface {
     public ArrayList<Object[]> getListThongKeDoanhSoTheoThangNam(String thangNam,String sort) {
         return tk_dao.getListThongKeDoanhSoTheoThangNam(thangNam, sort);
     }
+
+    @Override
+    public ArrayList<Object[]> getListTop5NhanVienDoanhThuCaoNhat(String thang, String nam) {
+        return tk_dao.getListTop5NhanVienDoanhThuCaoNhat(thang, nam);
+    }
+
+    @Override
+    public ArrayList<Object[]> getListTop5KhachHangMuaHangNhieuNhat(String thang, String nam) {
+        return tk_dao.getListTop5KhachHangMuaHangNhieuNhat(thang, nam);
+    }
 }
