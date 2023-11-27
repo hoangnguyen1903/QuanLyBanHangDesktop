@@ -37,6 +37,11 @@ public class ChiTietHoaDon_bus implements ChiTietHoaDon_Interface{
     public boolean themChiTietHoaDon(ChiTietHoaDonEntity cthd) {
         return cthd_dao.themChiTietHoaDon(cthd);
     }
+    
+    @Override
+    public boolean xoaCTHDTheoMaHoaDon(String maHD) {
+        return cthd_dao.xoaCTHDTheoMaHoaDon(maHD);
+    }
 
     @Override
     public int soluongSP(String maHD, String maSP) {
@@ -51,5 +56,10 @@ public class ChiTietHoaDon_bus implements ChiTietHoaDon_Interface{
     @Override
     public ArrayList<ChiTietHoaDonEntity> getAllCTHDTheoMaHD(String maHD) {
         return cthd_dao.getAllCTHDTheoMaHD(maHD);
+    }
+
+    @Override
+    public int getSoLuongCTHD(String maSP) {
+        return cthd_dao.getSoLuongCTHD(maSP);
     }
 }

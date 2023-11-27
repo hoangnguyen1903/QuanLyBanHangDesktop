@@ -10,21 +10,38 @@ import bus.SanPham_bus;
 import entity.MatHangNhapEntity;
 import entity.NhaCungCapEntity;
 import entity.SanPhamEntity;
-import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Image;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import util.GenerateID;
 
 /**
@@ -43,7 +60,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
      */
     public PhieuNhap_JPanel() {
         initComponents();
-        //-------------
+        //Khỏi tạo
         mhn_bus = new MatHangNhap_bus();
         ncc_bus = new NhaCungCap_bus();
         sp_bus = new SanPham_bus();
@@ -66,8 +83,9 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         Image scaled_btn_CapNhat = img_btn_CapNhat.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
         img_btn_CapNhat = new ImageIcon(scaled_btn_CapNhat);
         btn_CapNhat.setIcon(img_btn_CapNhat);
+
         loadDuLieuTuDataLenTable();
-        duaDuLieuVaoComboBox(cbo_MaNhaCungCap, ncc_bus.layDSNCCDangNhap(), "MaNCC");
+        duaDuLieuVaoComboBox(cbo_MaNhaCungCap, ncc_bus.layDSNCCDangNhap(), "TenNCC");
     }
 
     /**
@@ -99,10 +117,13 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         btn_NhapHang = new javax.swing.JButton();
         btn_CapNhat = new javax.swing.JButton();
         jdc_NgayNhap_Search = new com.toedter.calendar.JDateChooser();
+        btn_NhapExcel = new javax.swing.JButton();
+        btn_XuatExcel = new javax.swing.JButton();
+        btn_Luu = new javax.swing.JButton();
         panel_DanhSachPhieuNhapHang = new javax.swing.JPanel();
         scroll_TablePhieuNhapHang = new javax.swing.JScrollPane();
         Object[][] data = {};
-        String[] columnNames = {"Mã mặt hàng nhập","Mã sản phẩm", "Mã nhà cung cấp", "Số lượng", "Ngày nhập"};
+        String[] columnNames = {"Mã mặt hàng nhập","Mã sản phẩm", "Tên nhà cung cấp", "Số lượng", "Ngày nhập"};
         model=new DefaultTableModel(data, columnNames){
             @Override
             public boolean isCellEditable(int row, int column){
@@ -128,22 +149,22 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         lbl_MaMatHangNhap.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         lbl_MaMatHangNhap.setText("Mã mặt hàng nhập");
         lbl_MaMatHangNhap.setPreferredSize(new java.awt.Dimension(85, 15));
-        panel_ThongTin.add(lbl_MaMatHangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 20, 120, 20));
+        panel_ThongTin.add(lbl_MaMatHangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 120, 20));
 
         lbl_MaNhaCungCap.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         lbl_MaNhaCungCap.setText("Mã nhà cung cấp");
         lbl_MaNhaCungCap.setPreferredSize(new java.awt.Dimension(85, 15));
-        panel_ThongTin.add(lbl_MaNhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 49, 120, 30));
+        panel_ThongTin.add(lbl_MaNhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 120, 30));
 
         txt_MaMatHangNhap.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txt_MaMatHangNhap.setPreferredSize(new java.awt.Dimension(68, 26));
         txt_MaMatHangNhap.setEditable(false);
-        panel_ThongTin.add(txt_MaMatHangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 200, 25));
+        panel_ThongTin.add(txt_MaMatHangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 200, 30));
 
         lbl_NgayNhap.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         lbl_NgayNhap.setText("Ngày nhập");
         lbl_NgayNhap.setPreferredSize(new java.awt.Dimension(85, 15));
-        panel_ThongTin.add(lbl_NgayNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, -1, 20));
+        panel_ThongTin.add(lbl_NgayNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, -1, 30));
 
         lbl_SoLuong.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         lbl_SoLuong.setText("Số lượng");
@@ -153,22 +174,27 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         panel_ThongTin.add(lbl_SoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 20, 70, 26));
 
         cbo_MaNhaCungCap.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panel_ThongTin.add(cbo_MaNhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 200, 25));
+        panel_ThongTin.add(cbo_MaNhaCungCap, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 200, 30));
 
         jdc_NgayNhap.setDate(new Date());
         jdc_NgayNhap.setLocale(new Locale("vi","VN"));
-        jdc_NgayNhap.setSelectableDateRange(new Date(), null);
-        panel_ThongTin.add(jdc_NgayNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, 200, 25));
+        //jdc_NgayNhap.setSelectableDateRange(new Date(), null);
+        //jdc_NgayNhap.setMinSelectableDate(new Date());
+        jdc_NgayNhap.setMaxSelectableDate(new Date());
+        jdc_NgayNhap.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        panel_ThongTin.add(jdc_NgayNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 200, 30));
 
         spinner_SoLuong.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panel_ThongTin.add(spinner_SoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 20, 108, 25));
+        SpinnerNumberModel modelSpinner = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
+        spinner_SoLuong.setModel(modelSpinner);
+        panel_ThongTin.add(spinner_SoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 20, 108, 30));
 
         txt_An.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txt_An.setText("jTextField1");
-        panel_ThongTin.add(txt_An, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 200, 25));
+        panel_ThongTin.add(txt_An, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 200, 30));
 
         txt_MaSanPham.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panel_ThongTin.add(txt_MaSanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 200, 25));
+        panel_ThongTin.add(txt_MaSanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 200, 30));
 
         lbl_MaSanPham.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         lbl_MaSanPham.setText("Mã sản phẩm");
@@ -234,6 +260,46 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
 
         jdc_NgayNhap_Search.setDate(new Date());
         jdc_NgayNhap_Search.setLocale(new Locale("vi","VN"));
+        jdc_NgayNhap_Search.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        btn_NhapExcel.setBackground(new java.awt.Color(0, 51, 51));
+        btn_NhapExcel.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
+        btn_NhapExcel.setForeground(java.awt.Color.white);
+        btn_NhapExcel.setText("Nhập Excel");
+        btn_NhapExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_NhapExcel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btn_NhapExcel.setPreferredSize(new java.awt.Dimension(90, 31));
+        btn_NhapExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_NhapExcelActionPerformed(evt);
+            }
+        });
+
+        btn_XuatExcel.setBackground(new java.awt.Color(0, 51, 51));
+        btn_XuatExcel.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
+        btn_XuatExcel.setForeground(java.awt.Color.white);
+        btn_XuatExcel.setText("Xuất Excel");
+        btn_XuatExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_XuatExcel.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btn_XuatExcel.setPreferredSize(new java.awt.Dimension(90, 31));
+        btn_XuatExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_XuatExcelActionPerformed(evt);
+            }
+        });
+
+        btn_Luu.setBackground(new java.awt.Color(0, 51, 51));
+        btn_Luu.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
+        btn_Luu.setForeground(java.awt.Color.white);
+        btn_Luu.setText("Lưu");
+        btn_Luu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_Luu.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btn_Luu.setPreferredSize(new java.awt.Dimension(90, 31));
+        btn_Luu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_LuuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel_ThaoTacLayout = new javax.swing.GroupLayout(panel_ThaoTac);
         panel_ThaoTac.setLayout(panel_ThaoTacLayout);
@@ -242,32 +308,43 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
             .addGroup(panel_ThaoTacLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(lbl_NgayNhap_Search)
-                .addGap(69, 69, 69)
-                .addComponent(jdc_NgayNhap_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(60, 60, 60)
+                .addComponent(jdc_NgayNhap_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
                 .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_LamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_NhapHang, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_NhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_XuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_Luu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panel_ThaoTacLayout.setVerticalGroup(
             panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_ThaoTacLayout.createSequentialGroup()
-                .addGap(1, 1, 1)
                 .addGroup(panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(jdc_NgayNhap_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panel_ThaoTacLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(lbl_NgayNhap_Search))
-                    .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panel_ThaoTacLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jdc_NgayNhap_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_NhapHang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_LamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btn_NhapHang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_NhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_XuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_Luu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(6, 6, 6))
         );
 
         panel_DanhSachPhieuNhapHang.setBackground(new java.awt.Color(187, 205, 197));
@@ -293,7 +370,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         );
         panel_DanhSachPhieuNhapHangLayout.setVerticalGroup(
             panel_DanhSachPhieuNhapHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scroll_TablePhieuNhapHang, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+            .addComponent(scroll_TablePhieuNhapHang, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -305,8 +382,8 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panel_ThongTin, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
-                    .addComponent(panel_ThaoTac, javax.swing.GroupLayout.DEFAULT_SIZE, 1345, Short.MAX_VALUE)
-                    .addComponent(panel_DanhSachPhieuNhapHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panel_DanhSachPhieuNhapHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_ThaoTac, javax.swing.GroupLayout.DEFAULT_SIZE, 1345, Short.MAX_VALUE))
                 .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
@@ -315,17 +392,20 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(lbl_TieuDe, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panel_ThongTin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panel_ThongTin, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel_ThaoTac, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel_DanhSachPhieuNhapHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-     private void loadDuLieuTuDataLenTable() {
+
+    //Hàn load dữ liệu từ database lên table
+    private void loadDuLieuTuDataLenTable() {
         ArrayList<MatHangNhapEntity> dsMHN = mhn_bus.getAllMatHangNhap();
         for (MatHangNhapEntity mhn : dsMHN) {
-            model.addRow(new Object[]{mhn.getMaMHN(), mhn.getSanPham().getMaSP(), mhn.getNhaCungCap().getMaNCC(), mhn.getSoLuongNhap(), mhn.getNgayNhap()});
+            String tenNCC = ncc_bus.layTenNhaCungCapTheoMa(mhn.getNhaCungCap().getMaNCC());
+            model.addRow(new Object[]{mhn.getMaMHN(), mhn.getSanPham().getMaSP(), tenNCC, mhn.getSoLuongNhap(), mhn.getNgayNhap()});
         }
     }
 
@@ -342,6 +422,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         }
         comboBox.setModel(model);
     }
+
     private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
         // TODO add your handling code here:
         Date date = jdc_NgayNhap_Search.getDate();
@@ -350,64 +431,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btn_TimKiemActionPerformed
 
-    private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
-        // TODO add your handling code here:
-        lamMoi();
-    }//GEN-LAST:event_btn_LamMoiActionPerformed
-
-    private void btn_NhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NhapHangActionPerformed
-        // TODO add your handling code here:
-        nhapHang();
-    }//GEN-LAST:event_btn_NhapHangActionPerformed
-
-    private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CapNhatActionPerformed
-        // TODO add your handling code here:
-        capNhatMatHangNhap();
-    }//GEN-LAST:event_btn_CapNhatActionPerformed
-
-    private void table_PhieuNhapHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_PhieuNhapHangMouseClicked
-        // TODO add your handling code here:
-        int row = table_PhieuNhapHang.getSelectedRow();
-        txt_MaMatHangNhap.setText(model.getValueAt(row, 0).toString());
-        txt_MaMatHangNhap.setEditable(false);
-        cbo_MaNhaCungCap.setSelectedItem(model.getValueAt(row, 2).toString());
-        txt_MaSanPham.setText(model.getValueAt(row, 1).toString());
-        txt_MaSanPham.setEditable(false);
-        spinner_SoLuong.setValue(model.getValueAt(row, 3));
-        LocalDate ngayNhap = (LocalDate) model.getValueAt(row, 4);
-        Date chuyenDoi = Date.from(ngayNhap.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        jdc_NgayNhap.setDate(chuyenDoi);
-        cbo_MaNhaCungCap.setEnabled(false);
-        panel_ThaoTac.remove(cbo_MaNhaCungCap);
-        txt_An.setText(model.getValueAt(row, 2).toString());
-        txt_An.setEditable(false);
-    }//GEN-LAST:event_table_PhieuNhapHangMouseClicked
-
-    private void nhapHang() {
-        if (validata()) {
-            String maMHN = GenerateID.sinhMa("MHN");
-            String maSP = txt_MaSanPham.getText().trim();
-            String maNCC = cbo_MaNhaCungCap.getSelectedItem().toString();
-            int soLuongNhap = (int) spinner_SoLuong.getValue();
-            Date ngayNhap_Date = jdc_NgayNhap.getDate();
-            LocalDate ngayNhap_LocalDate = ngayNhap_Date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            SanPhamEntity sp = new SanPhamEntity(maSP);
-            NhaCungCapEntity ncc = new NhaCungCapEntity(maNCC);
-            MatHangNhapEntity mhn = new MatHangNhapEntity(maMHN, ncc, sp, soLuongNhap, ngayNhap_LocalDate);
-            boolean kiemTra = mhn_bus.nhapHang(mhn);
-            if (kiemTra) {
-                int soLuongHienTai = sp_bus.laySoLuongTonKhoTheoMaSP(maSP);
-                int soLuongMoi = soLuongHienTai + soLuongNhap;
-                sp_bus.capNhatSoLuong(maSP, soLuongMoi);
-                model.addRow(new Object[]{mhn.getSanPham().getMaSP(), mhn.getNhaCungCap().getMaNCC(), mhn.getSoLuongNhap(), mhn.getNgayNhap()});
-                lamMoi();
-                JOptionPane.showMessageDialog(null, "Thêm thành công");
-            } else {
-                JOptionPane.showMessageDialog(null, "Thêm không thành công");
-            }
-        }
-    }
-
+    //Hàm tìm kiếm theo ngày
     private void timKiemTheoNgay(LocalDate ngayTimKiem) {
         model.setRowCount(0);
         ArrayList<MatHangNhapEntity> dsMHN = mhn_bus.timKiemMHN(ngayTimKiem);
@@ -416,11 +440,18 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
             loadDuLieuTuDataLenTable();
         } else {
             for (MatHangNhapEntity mhn : dsMHN) {
-                model.addRow(new Object[]{mhn.getMaMHN(), mhn.getSanPham().getMaSP(), mhn.getNhaCungCap().getMaNCC(), mhn.getSoLuongNhap(), mhn.getNgayNhap()});
+                String tenNCC = ncc_bus.layTenNhaCungCapTheoMa(mhn.getNhaCungCap().getMaNCC());
+                model.addRow(new Object[]{mhn.getMaMHN(), mhn.getSanPham().getMaSP(), tenNCC, mhn.getSoLuongNhap(), mhn.getNgayNhap()});
             }
         }
     }
 
+    private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
+        // TODO add your handling code here:
+        lamMoi();
+    }//GEN-LAST:event_btn_LamMoiActionPerformed
+
+    //Hàm làm mới
     private void lamMoi() {
         txt_MaMatHangNhap.setText("");
         cbo_MaNhaCungCap.setSelectedIndex(0);
@@ -431,19 +462,49 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         jdc_NgayNhap_Search.setDate(new Date());
         model.setRowCount(0);
         loadDuLieuTuDataLenTable();
-        cbo_MaNhaCungCap.setEnabled(true);
+//        cbo_MaNhaCungCap.setEnabled(true);
+        btn_NhapHang.setEnabled(true);
     }
 
-    public int laySoLuongNhapBanDau(String maMHN) {
-        ArrayList<MatHangNhapEntity> dsMHN = mhn_bus.getAllMatHangNhap();
-        for (MatHangNhapEntity mhn : dsMHN) {
-            if (mhn.getMaMHN().equals(maMHN)) {
-                return mhn.getSoLuongNhap();
+    private void btn_NhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NhapHangActionPerformed
+        // TODO add your handling code here:
+        nhapHang();
+    }//GEN-LAST:event_btn_NhapHangActionPerformed
+
+    //Hàm nhập hàng
+    private void nhapHang() {
+        if (validata()) {
+            String maMHN = GenerateID.sinhMa("MHN");
+            String maSP = txt_MaSanPham.getText().trim();
+            String tenNCC = cbo_MaNhaCungCap.getSelectedItem().toString();
+            int soLuongNhap = (int) spinner_SoLuong.getValue();
+            Date ngayNhap_Date = jdc_NgayNhap.getDate();
+            LocalDate ngayNhap_LocalDate = ngayNhap_Date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            SanPhamEntity sp = new SanPhamEntity(maSP);
+            String maNCC = ncc_bus.layMaNhaCungCapTheoTen(tenNCC);
+            NhaCungCapEntity ncc = new NhaCungCapEntity(maNCC);
+            MatHangNhapEntity mhn = new MatHangNhapEntity(maMHN, ncc, sp, soLuongNhap, ngayNhap_LocalDate);
+            boolean kiemTra = mhn_bus.nhapHang(mhn);
+            if (kiemTra) {
+                int soLuongHienTai = sp_bus.laySoLuongTonKhoTheoMaSP(maSP);
+                int soLuongMoi = soLuongHienTai + soLuongNhap;
+                sp_bus.capNhatSoLuong(maSP, soLuongMoi);
+                String nCC = ncc_bus.layTenNhaCungCapTheoMa(mhn.getNhaCungCap().getMaNCC());
+                model.addRow(new Object[]{mhn.getSanPham().getMaSP(), nCC, mhn.getSoLuongNhap(), mhn.getNgayNhap()});
+                lamMoi();
+                JOptionPane.showMessageDialog(null, "Thêm thành công");
+            } else {
+                JOptionPane.showMessageDialog(null, "Thêm không thành công");
             }
         }
-        return -1;
     }
 
+    private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CapNhatActionPerformed
+        // TODO add your handling code here:
+        capNhatMatHangNhap();
+    }//GEN-LAST:event_btn_CapNhatActionPerformed
+
+    //Hàm cập nhập mặt hàng nhập
     private void capNhatMatHangNhap() {
         int row = table_PhieuNhapHang.getSelectedRow();
         if (row == -1) {
@@ -457,13 +518,14 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
                         int soLuongNhapBanDau = laySoLuongNhapBanDau(maMHN);
                         if (soLuongNhapBanDau != -1) {
                             String maSP = txt_MaSanPham.getText().trim();
-                            String maNCC = cbo_MaNhaCungCap.getSelectedItem().toString();
+                            String tenNCC = cbo_MaNhaCungCap.getSelectedItem().toString();
                             int soLuongHT = sp_bus.laySoLuongTonKhoTheoMaSP(txt_MaSanPham.getText().trim());
                             int soLuongThayDoi = soLuongNhapBanDau - soLuongNhapMoi;
                             int soLuongMoiCapNhat = soLuongHT - soLuongThayDoi;
                             Date ngayNhap_Date = jdc_NgayNhap.getDate();
                             LocalDate ngayNhap_LocalDate = ngayNhap_Date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                             SanPhamEntity sp = new SanPhamEntity(maSP);
+                            String maNCC = ncc_bus.layMaNhaCungCapTheoTen(tenNCC);
                             NhaCungCapEntity ncc = new NhaCungCapEntity(maNCC);
                             MatHangNhapEntity mhn = new MatHangNhapEntity(maMHN, ncc, sp, soLuongNhapMoi, ngayNhap_LocalDate);
                             boolean kq = mhn_bus.capNhapMatHangNhap(mhn);
@@ -483,6 +545,231 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         }
     }
 
+    private void table_PhieuNhapHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_PhieuNhapHangMouseClicked
+        // TODO add your handling code here:
+        int row = table_PhieuNhapHang.getSelectedRow();
+        txt_MaMatHangNhap.setText(model.getValueAt(row, 0).toString());
+        txt_MaMatHangNhap.setEditable(false);
+        txt_MaSanPham.setText(model.getValueAt(row, 1).toString());
+        cbo_MaNhaCungCap.setSelectedItem(model.getValueAt(row, 2).toString());
+        txt_MaSanPham.setEditable(false);
+        spinner_SoLuong.setValue(model.getValueAt(row, 3));
+        LocalDate ngayNhap = (LocalDate) model.getValueAt(row, 4);
+        Date chuyenDoi = Date.from(ngayNhap.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        jdc_NgayNhap.setDate(chuyenDoi);
+//        cbo_MaNhaCungCap.setEnabled(false);
+//        panel_ThaoTac.remove(cbo_MaNhaCungCap);
+//        txt_An.setText(model.getValueAt(row, 2).toString());
+//        txt_An.setEditable(false);
+        btn_NhapHang.setEnabled(false);
+    }//GEN-LAST:event_table_PhieuNhapHangMouseClicked
+
+    private void btn_XuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XuatExcelActionPerformed
+        // TODO add your handling code here:
+        xuatExcel();
+    }//GEN-LAST:event_btn_XuatExcelActionPerformed
+
+    private void btn_NhapExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NhapExcelActionPerformed
+        // TODO add your handling code here:
+        nhapExcel();
+    }//GEN-LAST:event_btn_NhapExcelActionPerformed
+
+    private void btn_LuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LuuActionPerformed
+        // TODO add your handling code here:
+        luu();
+    }//GEN-LAST:event_btn_LuuActionPerformed
+    //Hàm lưu dữ liệu từ table vào db
+    private void luu() {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String maMHN = model.getValueAt(i, 0).toString();
+            String maSP = model.getValueAt(i, 1).toString();
+            String tenNCC = model.getValueAt(i, 2).toString();
+            String maNCC = ncc_bus.layMaNhaCungCapTheoTen(tenNCC);
+            NhaCungCapEntity ncc = new NhaCungCapEntity(maNCC);
+            SanPhamEntity sp = new SanPhamEntity(maSP);
+            int soLuongNhapMoi = Integer.parseInt(model.getValueAt(i, 3).toString());
+            int soLuongNhapBanDau = laySoLuongNhapBanDau(maMHN);
+            int soLuongHT = sp_bus.laySoLuongTonKhoTheoMaSP(maSP);
+            int soLuongThayDoi = soLuongNhapBanDau - soLuongNhapMoi;
+            int soLuongMoiCapNhat = soLuongHT - soLuongThayDoi;
+            LocalDate ngayNhap = (LocalDate) model.getValueAt(i, 4);
+            MatHangNhapEntity mhn = new MatHangNhapEntity(maMHN, ncc, sp, soLuongNhapMoi, ngayNhap);
+            if (!mhn_bus.kiemTraMaMatHangNhapTonTai(maMHN)) {
+                mhn_bus.nhapHang(mhn);
+                int soLuongHienTai = sp_bus.laySoLuongTonKhoTheoMaSP(maSP);
+                int soLuongMoi = soLuongHienTai + soLuongNhapMoi;
+                sp_bus.capNhatSoLuong(maSP, soLuongMoi);
+            } else {
+                mhn_bus.capNhapMatHangNhap(mhn);
+                sp_bus.capNhatSoLuong(maSP, soLuongMoiCapNhat);
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Lưu thành công");
+    }
+
+    //Hàm nhập file excel
+    private void nhapExcel() {
+        File excelFile;
+        FileInputStream excelFIS = null;
+        BufferedInputStream excelBIS = null;
+        XSSFWorkbook excelImportToJTable = null;
+        String defaultCurrentDirectoryPath = "C:\\Users\\MY PC\\OneDrive\\Máy tính";
+        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
+        excelFileChooser.setDialogTitle("Chọn file excel");
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
+        excelFileChooser.setFileFilter(fnef);
+        int excelChooser = excelFileChooser.showOpenDialog(null);
+        if (excelChooser == JFileChooser.APPROVE_OPTION) {
+            Set<Object> maMHNSet = new HashSet<>();
+            try {
+                excelFile = excelFileChooser.getSelectedFile();
+                excelFIS = new FileInputStream(excelFile);
+                excelBIS = new BufferedInputStream(excelFIS);
+                excelImportToJTable = new XSSFWorkbook(excelBIS);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                XSSFSheet excelSheet = excelImportToJTable.getSheetAt(0);
+
+                for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
+                    XSSFRow excelRow = excelSheet.getRow(row);
+                    XSSFCell excelMaMHN = excelRow.getCell(0);
+                    // Kiểm tra xem mã mặt hàng nhập đã tồn tại trong tập hợp chưa
+                    String maMHN = excelMaMHN.getStringCellValue().trim();
+                    int existingRow = -1;
+                    // Kiểm tra xem mã mặt hàng nhập đã tồn tại trong bảng chưa
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        if (maMHN.equals(model.getValueAt(i, 0).toString())) {
+                            existingRow = i;
+                            break;
+                        }
+                    }
+
+                    if (existingRow != -1) {
+                        // Mặt hàng đã tồn tại, cập nhật các giá trị khác
+                        XSSFCell excelTenNCC = excelRow.getCell(1);
+                        XSSFCell excelMaSP = excelRow.getCell(2);
+                        XSSFCell excelSoLuongNhap = excelRow.getCell(3);
+                        XSSFCell excelNgayNhap = excelRow.getCell(4);
+                        int soLuongNhap = (int) excelSoLuongNhap.getNumericCellValue();
+                        LocalDate ngayNhap = LocalDate.parse(excelNgayNhap.getStringCellValue(), formatter);
+                        model.setValueAt(excelMaSP.getStringCellValue(), existingRow, 1);
+                        model.setValueAt(excelTenNCC.getStringCellValue(), existingRow, 2);
+                        model.setValueAt(soLuongNhap, existingRow, 3);
+                        model.setValueAt(ngayNhap, existingRow, 4);
+                    } else {
+                        maMHNSet.add(maMHN);
+                        XSSFCell excelTenNCC = excelRow.getCell(1);
+                        XSSFCell excelMaSP = excelRow.getCell(2);
+                        XSSFCell excelSoLuongNhap = excelRow.getCell(3);
+                        XSSFCell excelNgayNhap = excelRow.getCell(4);
+                        int soLuongNhap = (int) excelSoLuongNhap.getNumericCellValue();
+                        LocalDate ngayNhap = LocalDate.parse(excelNgayNhap.getStringCellValue(), formatter);
+
+                        model.addRow(new Object[]{maMHN, excelMaSP, excelTenNCC, soLuongNhap, ngayNhap});
+                    }
+                }
+                JOptionPane.showMessageDialog(null, "Nhập thành công");
+            } catch (IOException iOException) {
+                JOptionPane.showMessageDialog(null, iOException.getMessage());
+            } finally {
+                try {
+                    if (excelFIS != null) {
+                        excelFIS.close();
+                    }
+                    if (excelBIS != null) {
+                        excelBIS.close();
+                    }
+                    if (excelImportToJTable != null) {
+                        excelImportToJTable.close();
+                    }
+                } catch (IOException iOException) {
+                    JOptionPane.showMessageDialog(null, iOException.getMessage());
+                }
+            }
+        }
+    }
+
+    //Hàm kiểm tra mã sản phẩm đã có trong table hay chưa
+    private boolean kiemTraMaMHNTontaiTrongTable(DefaultTableModel model, String maMHN) {
+        for (int row = 0; row < model.getRowCount(); row++) {
+            if (model.getValueAt(row, 0).equals(maMHN)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Hàm xuất excel
+    private void xuatExcel() {
+        try {
+            JFileChooser fileChooser = new JFileChooser("C:\\Users\\MY PC\\OneDrive\\Máy tính");
+            fileChooser.setDialogTitle("Chọn nơi lưu file");
+            int chon = fileChooser.showSaveDialog(null);
+            if (chon == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                String filePath = selectedFile.getAbsolutePath();
+                if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                    filePath += ".xlsx";
+                }
+                XSSFWorkbook workbook = new XSSFWorkbook();
+                XSSFSheet sheet = workbook.createSheet("Danh sách phiếu nhập hàng");
+                XSSFRow row = null;
+                Cell cell = null;
+                row = sheet.createRow(0);
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellValue("Mã mặt hàng nhập");
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellValue("Nhà cung cấp");
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellValue("Mã sản phẩm");
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellValue("Số lượng nhập");
+                cell = row.createCell(4, CellType.STRING);
+                cell.setCellValue("Ngày nhập");
+                ArrayList<MatHangNhapEntity> listItem = mhn_bus.getAllMatHangNhap();
+                for (int i = 0; i < listItem.size(); i++) {
+                    MatHangNhapEntity mhn = listItem.get(i);
+                    String tenNCC = ncc_bus.layTenNhaCungCapTheoMa(mhn.getNhaCungCap().getMaNCC());
+                    row = sheet.createRow(1 + i);
+                    row.createCell(0).setCellValue(mhn.getMaMHN());
+                    row.createCell(1).setCellValue(tenNCC);
+                    row.createCell(2).setCellValue(mhn.getSanPham().getMaSP());
+                    row.createCell(3).setCellValue(mhn.getSoLuongNhap());
+                    row.createCell(4).setCellValue(mhn.getNgayNhap().toString());
+                }
+                File f = new File(filePath);
+                try (FileOutputStream fos = new FileOutputStream(f)) {
+                    workbook.write(fos);
+                    JOptionPane.showMessageDialog(null, "Xuất file thành công");
+                    openExcelFile(f);
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //Hàm tự dộng mở file excel sau khi xuất
+    private static void openExcelFile(File file) throws IOException {
+        Desktop desktop = Desktop.getDesktop();
+        if (desktop.isSupported(Desktop.Action.OPEN)) {
+            desktop.open(file);
+        } else {
+            System.out.println("Không thể mở file.");
+        }
+    }
+
+    //Hàm lấy số lượng tồn kho của sản phẩm nhập ban đầu
+    public int laySoLuongNhapBanDau(String maMHN) {
+        ArrayList<MatHangNhapEntity> dsMHN = mhn_bus.getAllMatHangNhap();
+        for (MatHangNhapEntity mhn : dsMHN) {
+            if (mhn.getMaMHN().equals(maMHN)) {
+                return mhn.getSoLuongNhap();
+            }
+        }
+        return -1;
+    }
+
+    //Hàm kiểm tra regex
     private boolean validata() {
         String maSP = txt_MaSanPham.getText().trim();
         ArrayList<SanPhamEntity> ketQuaTimKiem = sp_bus.timSanPham(maSP);
@@ -512,11 +799,15 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         }
         return true;
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_CapNhat;
     private javax.swing.JButton btn_LamMoi;
+    private javax.swing.JButton btn_Luu;
+    private javax.swing.JButton btn_NhapExcel;
     private javax.swing.JButton btn_NhapHang;
     private javax.swing.JButton btn_TimKiem;
+    private javax.swing.JButton btn_XuatExcel;
     private javax.swing.JComboBox<String> cbo_MaNhaCungCap;
     private com.toedter.calendar.JDateChooser jdc_NgayNhap;
     private com.toedter.calendar.JDateChooser jdc_NgayNhap_Search;

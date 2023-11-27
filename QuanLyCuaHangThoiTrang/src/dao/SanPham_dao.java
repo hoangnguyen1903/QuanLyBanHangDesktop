@@ -29,6 +29,7 @@ import util.ConvertStringToEnum;
  */
 public class SanPham_dao implements SanPham_Interface {
 
+
     @Override
     public ArrayList<SanPhamEntity> getAllSanPham() {
         ArrayList<SanPhamEntity> dsSanPham = new ArrayList<SanPhamEntity>();
@@ -283,6 +284,7 @@ public class SanPham_dao implements SanPham_Interface {
         return dsSP;
     }
 
+    // Nguyen Huy Hoang
     @Override
     public SanPhamEntity timKiemSanPham(String ma) {
         PreparedStatement statement = null;
@@ -291,13 +293,13 @@ public class SanPham_dao implements SanPham_Interface {
             Connection con = ConnectDB.getConnection();
 
             String sql = "Select sp.*, dm.tenDanhMuc, cl.tenChatLieu, cl.xuatXu, th.tenThuongHieu from SanPham as sp inner join DanhMucSanPham as dm on sp.maDanhMuc=dm.maDanhMuc"
-                    + " inner join ThuongHieu as th on sp.maThuongHieu=th.maThuongHieu inner join ChatLieu as cl on sp.maChatLieu=cl.maChatLieu where maSP=? ";
+                    + " inner join ThuongHieu as th on sp.maThuongHieu=th.maThuongHieu inner join ChatLieu as cl on sp.maChatLieu=cl.maChatLieu where maSP=?";
             statement = con.prepareStatement(sql);
             statement.setString(1, ma);
 
             ResultSet rs = statement.executeQuery();
             SanPhamEntity sanPham = null;
-            while (rs.next()) {
+            if (rs.next()) {
                 String maSP = rs.getString("maSP");
                 String tenSP = rs.getString("tenSP");
                 String kichThuoc = rs.getString("kichThuoc");
@@ -320,8 +322,20 @@ public class SanPham_dao implements SanPham_Interface {
                 String tenDanhMuc = rs.getString("tenDanhMuc");
                 DanhMucSanPhamEntity danhMucSanPham = new DanhMucSanPhamEntity(maDanhMuc, tenDanhMuc);
                 String maCTKM = rs.getString("maCTKM");
-                ChuongTrinhKhuyenMaiEntity chuongTrinhKhuyenMai = new ChuongTrinhKhuyenMaiEntity(maCTKM);
-
+                ChuongTrinhKhuyenMaiEntity chuongTrinhKhuyenMai = null;
+                if(maCTKM != null) {
+                    chuongTrinhKhuyenMai = new ChuongTrinhKhuyenMaiEntity(maCTKM);
+                    String sqlKM = "Select giamGia from ChuongTrinhKhuyenMai where maCTKM=? and maLoaiCTKM='GGSP'";
+                    statement = con.prepareStatement(sqlKM);
+                    statement.setString(1, maCTKM);
+                    
+                    rs = statement.executeQuery();
+                    if(rs.next()) {
+                        int giamGia = rs.getInt("giamGia");
+                        chuongTrinhKhuyenMai.setGiamGia(giamGia);
+                    }
+                }
+                
                 ConvertStringToEnum convertToEnum = new ConvertStringToEnum();
 
                 sanPham = new SanPhamEntity(maSP, tenSP, convertToEnum.KichThuoctoEnum(kichThuoc), convertToEnum.MauSactoEnum(mauSac), donGia, soLuongTonKho, convertToEnum.TinhTrangSPToEnum(tinhTrang), chatLieu, thuongHieu, danhMucSanPham, chuongTrinhKhuyenMai, imgUrl);
@@ -330,6 +344,38 @@ public class SanPham_dao implements SanPham_Interface {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        } finally {
+            try {
+                statement.close();
+                ConnectDB.getInstance().disconnect();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    @Override
+    public boolean capNhatSoLuongTonSauKhiTaoHD(String maSP, int soLuong) {
+        PreparedStatement statement = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+
+            String sql = "Update SanPham set soLuongTonKho=soLuongTonKho-? where maSP=?";
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, soLuong);
+            statement.setString(2, maSP);
+
+            int rs = statement.executeUpdate();
+            SanPhamEntity sanPham = null;
+            if (rs < 1) {
+                
+                return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         } finally {
             try {
                 statement.close();
@@ -406,4 +452,5 @@ public class SanPham_dao implements SanPham_Interface {
         }
         return false;
     }
+
 }

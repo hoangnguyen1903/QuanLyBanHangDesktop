@@ -39,5 +39,15 @@ public class NhaCungCap_bus implements NhaCungCap_Interface{
     public ArrayList<NhaCungCapEntity> layDSNCCDangNhap() {
         return ncc_dao.layDSNCCDangNhap();
     }
+
+    @Override
+    public String layTenNhaCungCapTheoMa(String maNhaCungCap) {
+        return ncc_dao.layTenNhaCungCapTheoMa(maNhaCungCap);
+    }
+
+    @Override
+    public String layMaNhaCungCapTheoTen(String tenNhaCungCap) {
+        return ncc_dao.layMaNhaCungCapTheoTen(tenNhaCungCap);
+    }
     
 }

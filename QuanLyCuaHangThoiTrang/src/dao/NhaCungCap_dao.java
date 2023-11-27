@@ -157,7 +157,7 @@ public class NhaCungCap_dao implements NhaCungCap_Interface {
                 String tenNCC = rs.getString("tenNCC");
                 String soDienThoai = rs.getString("soDienThoai");
                 String diaChi = rs.getString("diaChi");
-                NhaCungCapEntity ncc=new NhaCungCapEntity(maNCC, tenNCC, diaChi, soDienThoai, TinhTrangNCCEnum.DANGNHAP);
+                NhaCungCapEntity ncc = new NhaCungCapEntity(maNCC, tenNCC, diaChi, soDienThoai, TinhTrangNCCEnum.DANGNHAP);
                 dsNCC.add(ncc);
             }
             ps.close();
@@ -167,5 +167,58 @@ public class NhaCungCap_dao implements NhaCungCap_Interface {
             Logger.getLogger(NhaCungCap_dao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return dsNCC;
+    }
+
+    @Override
+    public String layTenNhaCungCapTheoMa(String maNhaCungCap) {
+        String tenNCC = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+
+            String sql = "SELECT tenNCC FROM NhaCungCap WHERE maNCC = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, maNhaCungCap);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                tenNCC = rs.getString("tenNCC");
+            }
+
+            ps.close();
+            rs.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(NhaCungCap_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tenNCC;
+    }
+
+    @Override
+    public String layMaNhaCungCapTheoTen(String tenNhaCungCap) {
+        String maNCC = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+            String sql = "SELECT maNCC FROM NhaCungCap WHERE tenNCC = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, tenNhaCungCap);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                maNCC = rs.getString("maNCC");
+            }
+
+            ps.close();
+            rs.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(NhaCungCap_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return maNCC;
     }
 }

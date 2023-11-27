@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -142,12 +143,14 @@ public class TaiKhoan_dao implements TaiKhoanInterface{
         }
         Connection con = ConnectDB.getConnection();
         PreparedStatement statement = null;
+        Timestamp timestamp = new Timestamp(new Date().getTime());
         try {
-            statement = con.prepareStatement("INSERT INTO TaiKhoan(tenTaiKhoan, matKhau) "
-                    + " values(?,?)");
+            statement = con.prepareStatement("INSERT INTO TaiKhoan(tenTaiKhoan, matKhau, thoiGianDNGN, tinhTrang) "
+                    + " values(?,?,?,?)");
             statement.setString(1, tk.getTenTaiKhoan());
             statement.setString(2, tk.getMatKhau());
-
+            statement.setTimestamp(3, timestamp);
+            statement.setString(4, tk.getTinhTrang().toString());
             n = statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

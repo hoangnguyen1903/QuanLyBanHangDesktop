@@ -35,5 +35,10 @@ public class MatHangNhap_bus implements MatHangNhap_Interface{
     public boolean capNhapMatHangNhap(MatHangNhapEntity mhm) {
         return mhn_dao.capNhapMatHangNhap(mhm);
     }  
+
+    @Override
+    public boolean kiemTraMaMatHangNhapTonTai(String maMHN) {
+        return mhn_dao.kiemTraMaMatHangNhapTonTai(maMHN);
+    }
     
 }

@@ -2,7 +2,6 @@
 package demo;
 
 import gui.DangNhap_GUI;
-import gui.TrangChu_GUI;
 
 /**
  *

@@ -86,12 +86,11 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
             String maHD = lbl_MaHoaDon.getText();
             ArrayList<SanPhamEntity> allSP = new ArrayList<SanPhamEntity>(); // Danh sách tất cả sản phẩm
              allSP = cthdbus.getSanPhamTheoMaHD(maHD);
-             System.out.println(allSP);
             for(SanPhamEntity sp: allSP){
                 listCTHD = cthdbus.getCTHDTheoMaHDvaMaSP(maHD, sp.getMaSP());
                 for(ChiTietHoaDonEntity ct: listCTHD){
                     System.out.println(sl);
-                addRows(new Object[]{sp.getTenSP(),sp.getKichThuoc(),sp.getMauSac(),ct.getSoLuong(),ct.getGiaBan(),ct.getThanhTien()});
+                addRows(new Object[]{sp.getTenSP(),sp.getKichThuoc(),sp.getMauSac(),ct.getSoLuong(), ct.getGiaGoc() ,ct.getGiaBan(),ct.getThanhTien()});
                 }
             }
            TongTien();
@@ -119,7 +118,7 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
         try {
             int row = table.getRowCount();
             for (int i = 0; i < row ; i++) {
-                tt += Double.parseDouble(table.getValueAt(i, 5).toString());
+                tt += Double.parseDouble(table.getValueAt(i, 6).toString());
             }
             lblTongTien.setText(tt+" đ");
         } catch (Exception e) {

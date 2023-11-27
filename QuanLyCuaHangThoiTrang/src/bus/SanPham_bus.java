@@ -52,12 +52,16 @@ public class SanPham_bus implements SanPham_Interface{
     @Override
     public boolean capNhatSoLuong(String maSP, int soLuongNhap) {
         return sp_dao.capNhatSoLuong(maSP, soLuongNhap);
-
     }
 
     @Override
     public boolean kiemTraMaSanPhamTonTai(String maSP) {
         return sp_dao.kiemTraMaSanPhamTonTai(maSP);
+    }
+
+    @Override
+    public boolean capNhatSoLuongTonSauKhiTaoHD(String maSP, int soLuong) {
+        return sp_dao.capNhatSoLuongTonSauKhiTaoHD(maSP, soLuong);
     }
     
 }

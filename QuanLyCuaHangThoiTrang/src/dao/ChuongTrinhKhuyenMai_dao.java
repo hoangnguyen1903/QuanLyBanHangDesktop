@@ -238,7 +238,7 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
         PreparedStatement statement = null;
         
         try {
-            String sql = "Select top 1 * from ChuongTrinhKhuyenMai where getdate() between ngayBatDau and ngayKetThuc and soTienToiThieu <= ? order by giamGia desc";
+            String sql = "Select top 1 * from ChuongTrinhKhuyenMai where getdate() between ngayBatDau and ngayKetThuc and soTienToiThieu <= ? and maLoaiCTKM='GGHD' order by giamGia desc";
             statement = con.prepareStatement(sql);
             statement.setDouble(1, tongTien);
             
@@ -248,11 +248,14 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
                 String maCTKM = rs.getString("maCTKM");
                 String tenCTKM = rs.getString("tenCTKM");
                 double soTienToiThieu = rs.getDouble("soTienToiThieu");
+                double soTienToiDa = rs.getDouble("soTienToiDa");
                 int giamGia = rs.getInt("giamGia");
                 Date ngayBatDau = rs.getDate("ngayBatDau");
                 Date ngayKetThuc = rs.getDate("ngayKetThuc");
+                String tinhTrang = rs.getString("tinhTrang");
+                LoaiKhuyenMaiEntity loaiKM = new LoaiKhuyenMaiEntity(rs.getString("maLoaiCTKM"));
                 
-                ctkm = new ChuongTrinhKhuyenMaiEntity(maCTKM, tenCTKM, soTienToiThieu, giamGia, ngayBatDau, ngayKetThuc);
+                ctkm = new ChuongTrinhKhuyenMaiEntity(maCTKM, tenCTKM, loaiKM, soTienToiThieu, soTienToiDa, giamGia, ngayBatDau, ngayKetThuc, tinhTrang);
             }
             
             return ctkm;
@@ -277,7 +280,7 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             PreparedStatement stmt = null;
-            String sql = "select * from ChuongTrinhKhuyenMai where maLoaiCTKM = ?";
+            String sql = "select * from ChuongTrinhKhuyenMai where maLoaiCTKM = ? and tinhTrang=N'Còn'";
             stmt =con.prepareStatement(sql);
             stmt.setString(1, ma);
             ResultSet rs = stmt.executeQuery();
@@ -301,5 +304,58 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
         }
         return dsctkm;
     }
- 
+
+ @Override
+    public String layTenKhuyenMaiTheoMa(String maDanhMuc) {
+        String tenDanhMuc = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+
+            String sql = "SELECT tenCTKM FROM ChuongTrinhKhuyenMai WHERE maCTKM = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, maDanhMuc);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                tenDanhMuc = rs.getString("tenCTKM");
+            }
+
+            ps.close();
+            rs.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucSanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return tenDanhMuc;
+    }
+
+    @Override
+    public String layMaKhuyenMaiTheoTen(String tenDanhMuc) {
+        String maDanhMuc = null;
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+            String sql = "SELECT maCTKM FROM ChuongTrinhKhuyenMai WHERE tenCTKM = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, tenDanhMuc);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                maDanhMuc = rs.getString("maCTKM");
+            }
+
+            ps.close();
+            rs.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(DanhMucSanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return maDanhMuc;
+    }
+
 }

@@ -4,8 +4,13 @@ import bus.ChuongTrinhKhuyenMai_bus;
 import connectDB.ConnectDB;
 import entity.ChuongTrinhKhuyenMaiEntity;
 import entity.LoaiKhuyenMaiEntity;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Image;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -24,6 +29,11 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumnModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -393,6 +403,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         rdo_sp = new javax.swing.JRadioButton();
         rdo_hd = new javax.swing.JRadioButton();
         txtLoaiKM = new javax.swing.JTextField();
+        btn_Xuat = new java.awt.Button();
         JPanel_ThaoTac = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtTimMaCTKM = new javax.swing.JTextField();
@@ -452,6 +463,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         JPanel_ThongTinCTKM.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 110, 30));
 
         dateNgayKetThuc.setDateFormatString("dd-MM-yyyy");
+        dateNgayKetThuc.setSelectableDateRange(new Date(), null);
         dateNgayKetThuc.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 dateNgayKetThucPropertyChange(evt);
@@ -474,6 +486,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         JPanel_ThongTinCTKM.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, 100, 30));
 
         dateNgayBatDau.setDateFormatString("dd-MM-yyyy");
+        dateNgayBatDau.setSelectableDateRange(new Date(), null);
         dateNgayBatDau.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 dateNgayBatDauPropertyChange(evt);
@@ -526,6 +539,26 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         txtLoaiKM.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         txtLoaiKM.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         JPanel_ThongTinCTKM.add(txtLoaiKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, 170, 30));
+
+        btn_Xuat.setBackground(new java.awt.Color(255, 255, 255));
+        btn_Xuat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_Xuat.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        btn_Xuat.setLabel("Xuất");
+        btn_Xuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_XuatMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_XuatMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_XuatMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_XuatMouseReleased(evt);
+            }
+        });
+        JPanel_ThongTinCTKM.add(btn_Xuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 40, 80, -1));
 
         add(JPanel_ThongTinCTKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 1160, 150));
 
@@ -739,7 +772,13 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
 
     private void dateNgayBatDauPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateNgayBatDauPropertyChange
         // TODO add your handling code here:
+        
         if(dateNgayKetThuc.getDate() !=null && dateNgayBatDau.getDate() !=null){
+//            Date datenow = new Date();
+//            if(!datenow.before(dateNgayBatDau.getDate())){
+//                JOptionPane.showMessageDialog(null, "Ngày bắt đầu phải bắt đầu từ ngày hiện tại");
+//                dateNgayBatDau.setDate(null);
+//            }
             if(!dateNgayBatDau.getDate().before(dateNgayKetThuc.getDate())){
                 JOptionPane.showMessageDialog(null, "Ngày bắt đầu phải đứng trước ngày kết thúc");
                 dateNgayBatDau.setDate(null);
@@ -756,6 +795,152 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_dateNgayKetThucPropertyChange
 
+    private void btn_XuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_XuatMouseClicked
+        btn_Xuat.setBackground(Color.CYAN);        
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Khuyến Mãi");
+        XSSFRow row= null;
+        Cell cell = null;
+        row = sheet.createRow(3);
+        
+        cell = row.createCell(0,CellType.STRING);
+        cell.setCellValue("Mã Chương Trình");
+        
+        cell = row.createCell(1,CellType.STRING);
+        cell.setCellValue("Loại Khuyến Mãi");
+        
+        cell = row.createCell(2,CellType.STRING);
+        cell.setCellValue("Tên Chương Trình");
+        
+        if(txtLoaiKM.getText().equals("GGHD")){
+        cell = row.createCell(3,CellType.STRING);
+        cell.setCellValue("Số tiền tối thiểu");
+        
+        cell = row.createCell(4,CellType.STRING);
+        cell.setCellValue("Số tiền tối đa");
+        
+        cell = row.createCell(5,CellType.STRING);
+        cell.setCellValue("Giảm giá");
+        
+        cell = row.createCell(6,CellType.STRING);
+        cell.setCellValue("Ngày bắt đầu ");
+        
+        cell = row.createCell(7,CellType.STRING);
+        cell.setCellValue("Ngày Kết Thúc");
+        
+        cell = row.createCell(8,CellType.STRING);
+        cell.setCellValue("Tình Trạng");
+        }else{
+        cell = row.createCell(3,CellType.STRING);
+        cell.setCellValue("Giảm giá");
+        
+        cell = row.createCell(4,CellType.STRING);
+        cell.setCellValue("Ngày bắt đầu ");
+        
+        cell = row.createCell(5,CellType.STRING);
+        cell.setCellValue("Ngày Kết Thúc");
+        
+        cell = row.createCell(6,CellType.STRING);
+        cell.setCellValue("Tình Trạng");
+        }
+        
+        
+        ArrayList<ChuongTrinhKhuyenMaiEntity> dsCTKMHD = null;
+        if(txtLoaiKM.getText().equals("GGHD"))dsCTKMHD = ctkmbus.getallCTKMtheoLoaiKM("GGHD");
+        else dsCTKMHD = ctkmbus.getallCTKMtheoLoaiKM("GGSP");
+        
+        int i =0;
+        if(dsCTKMHD != null ){
+            for (ChuongTrinhKhuyenMaiEntity kmhd: dsCTKMHD){
+                i++;
+                row = sheet.createRow(3+i);
+                
+                cell = row.createCell(0,CellType.STRING);
+                cell.setCellValue(kmhd.getMaCTKM());
+                
+                cell = row.createCell(1,CellType.STRING);
+                cell.setCellValue(kmhd.getMaLoaiKM().getMaLoaiKM());
+                
+                cell = row.createCell(2,CellType.STRING);
+                cell.setCellValue(kmhd.getTenCTKM());
+                
+                if(txtLoaiKM.getText().equals("GGHD")){
+                    cell = row.createCell(3,CellType.NUMERIC);
+                   cell.setCellValue(kmhd.getSoTienToiThieu());
+
+                   cell = row.createCell(4,CellType.NUMERIC);
+                   cell.setCellValue(kmhd.getSoTienToiDa());
+
+                   cell = row.createCell(5,CellType.NUMERIC);
+                   cell.setCellValue(kmhd.getGiamGia());
+
+                   cell = row.createCell(6,CellType.STRING);
+                   cell.setCellValue(kmhd.getNgayBatDau().toString());
+
+                   cell = row.createCell(7,CellType.STRING);
+                   cell.setCellValue(kmhd.getNgayKetThuc().toString());
+
+                   cell = row.createCell(8,CellType.STRING);
+                   cell.setCellValue(kmhd.getTinhTrang());
+                }else{
+                
+                cell = row.createCell(3,CellType.NUMERIC);
+                cell.setCellValue(kmhd.getGiamGia());
+                
+                cell = row.createCell(4,CellType.STRING);
+                cell.setCellValue(kmhd.getNgayBatDau().toString());
+                
+                cell = row.createCell(5,CellType.STRING);
+                cell.setCellValue(kmhd.getNgayKetThuc().toString());
+                
+                cell = row.createCell(6,CellType.STRING);
+                cell.setCellValue(kmhd.getTinhTrang());
+                }
+ 
+                
+                // Save file 
+                
+                    File fis = new File("E:\\KMExcel\\khuyenmai.xlsx");
+                    try {
+                    FileOutputStream fisO = new FileOutputStream(fis);
+                    workbook.write(fisO);
+                    fisO.close();
+                        openExcelFile(fis);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                
+            }
+        }
+        
+    }//GEN-LAST:event_btn_XuatMouseClicked
+    // Mở file
+    
+     private static void openExcelFile(File file) throws IOException {
+         Desktop desktop = Desktop.getDesktop();
+        if (desktop.isSupported(Desktop.Action.OPEN)) {
+            desktop.open(file);
+        } else {
+            // Xử lý nếu không thể mở file
+            System.out.println("Không thể mở file.");
+        }
+    }
+    
+    private void btn_XuatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_XuatMouseEntered
+        // TODO add your handling code here:
+        btn_Xuat.setBackground(Color.WHITE);  
+    }//GEN-LAST:event_btn_XuatMouseEntered
+
+    private void btn_XuatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_XuatMouseExited
+        // TODO add your handling code here:
+        btn_Xuat.setBackground(Color.WHITE);  
+    }//GEN-LAST:event_btn_XuatMouseExited
+
+    private void btn_XuatMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_XuatMouseReleased
+        // TODO add your handling code here:
+        btn_Xuat.setBackground(Color.WHITE);  
+    }//GEN-LAST:event_btn_XuatMouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanel_Table;
@@ -765,6 +950,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
     private javax.swing.JButton btn_LamMoi;
     private javax.swing.JButton btn_Them;
     private javax.swing.JButton btn_TimKiem;
+    private java.awt.Button btn_Xuat;
     private com.toedter.calendar.JDateChooser dateNgayBatDau;
     private com.toedter.calendar.JDateChooser dateNgayKetThuc;
     private javax.swing.JLabel jLabel1;
