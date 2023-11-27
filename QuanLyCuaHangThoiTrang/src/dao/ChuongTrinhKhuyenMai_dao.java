@@ -176,7 +176,8 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
                 stmt.setInt(5, ctkm.getGiamGia());
                 stmt.setDate(6, (Date) ctkm.getNgayBatDau());
                 stmt.setDate(7,(Date)ctkm.getNgayKetThuc());
-                stmt.setString(8, ctkm.getTinhTrang());
+                 java.util.Date datenow = new java.util.Date();
+                 stmt.setString(8, ctkm.getTinhTrang());
                 stmt.setString(9, ctkm.getMaCTKM());
             }
             else {
@@ -185,11 +186,12 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
                 stmt.setString(2,ctkm.getMaLoaiKM().getMaLoaiKM());
 //                stmt.setDouble(3, ctkm.getSoTienToiDa());
 //                stmt.setDouble(4, ctkm.getSoTienToiThieu());
-                stmt.setInt(5, ctkm.getGiamGia());
-                stmt.setDate(6, (Date) ctkm.getNgayBatDau());
-                stmt.setDate(7,(Date)ctkm.getNgayKetThuc());
-                stmt.setString(8, ctkm.getTinhTrang());
-                stmt.setString(9, ctkm.getMaCTKM());
+                stmt.setInt(3, ctkm.getGiamGia());
+                stmt.setDate(4, (Date) ctkm.getNgayBatDau());
+                stmt.setDate(5,(Date)ctkm.getNgayKetThuc());
+                 java.util.Date datenow = new java.util.Date();
+                 stmt.setString(6, ctkm.getTinhTrang());
+                stmt.setString(7, ctkm.getMaCTKM());
             }
             
 
@@ -356,6 +358,43 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
         }
 
         return maDanhMuc;
+    }
+
+    @Override
+    public ChuongTrinhKhuyenMaiEntity getKMTheoma(String ma) {
+        ChuongTrinhKhuyenMaiEntity dsctkm = new ChuongTrinhKhuyenMaiEntity();
+        try {
+            ConnectDB.getInstance().connect();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChuongTrinhKhuyenMai_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement stmt = null;
+        try {
+            String sql = "SELECT * FROM ChuongTrinhKhuyenMai WHERE maCTKM = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, ma);
+//            stmt.setString(2, maLoai);
+            ResultSet  rs = stmt.executeQuery();
+            while (rs.next()){
+                 String maKM = rs.getString("maCTKM");
+                String ten = rs.getString("tenCTKM");
+                String maLoaiKM = rs.getString("maLoaiCTKM");
+                LoaiKhuyenMaiEntity lkm = new LoaiKhuyenMaiEntity(maLoaiKM);
+                double sotienTT = rs.getDouble("soTienToiThieu");
+                double sotienTD = rs.getDouble("soTienToiDa");
+                int giamgia = rs.getInt("giamGia");
+                Date ngaybatdau = rs.getDate("ngayBatDau");
+                Date ngayketthuc = rs.getDate("ngayKetThuc");
+                String tinhTrang = rs.getString("tinhTrang");
+//                ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(ma, ten, sotienTT, giamgia, ngaybatdau, ngayketthuc);
+                 dsctkm = new ChuongTrinhKhuyenMaiEntity(maKM, ten, lkm, sotienTT, sotienTD, giamgia, ngaybatdau, ngayketthuc, tinhTrang);
+               
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dsctkm;
     }
 
 }

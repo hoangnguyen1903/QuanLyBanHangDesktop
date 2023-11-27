@@ -2,16 +2,22 @@
 package gui;
 
 import bus.ChiTietHoaDon_bus;
+import bus.ChuongTrinhKhuyenMai_bus;
+import bus.KhachHang_bus;
 import bus.SanPham_bus;
 import connectDB.ConnectDB;
 import entity.ChiTietHoaDonEntity;
+import entity.ChuongTrinhKhuyenMaiEntity;
+import entity.KhachHangEntity;
 import entity.SanPhamEntity;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -44,7 +50,10 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
     private DefaultTableModel model;
     private SanPham_bus spbus;
     private HoaDon_JPanel HDPanel;
-
+    private KhachHang_bus khbus;
+    private ChuongTrinhKhuyenMai_bus kmbus;
+       // Định dạng số tiền sang VND
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
     /**
      * Creates new form ChiTietHoaDon_GUI
@@ -63,9 +72,26 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
        else {
            System.out.println(" MÃ hoá đơn" + hdtc.getMaHD());
         lbl_MaHoaDon.setText(hdtc.getMaHD());
-        lbl_MaKhachHang.setText(hdtc.getMaKH());
+//        lbl_MaKhachHang.setText(hdtc.getMaKH());
+        // Lấy thôn tin khách hàng
+        khbus = new KhachHang_bus();
+         KhachHangEntity kh  = new KhachHangEntity();
+         if(!hdtc.getMaKH().equals("")) {
+             kh = khbus.getKHTheoMa(hdtc.getMaKH());
+              lbl_MaKhachHang.setText(kh.getHoTen());
+                lbl_SDT.setText(kh.getSoDienThoai());
+         }
+
         lbl_MaNhanVien.setText(hdtc.getMaNV());
         lbl_NgayLapHoaDon.setText(hdtc.getNgayLap());
+       // Lấy Khuyến Mãi
+        kmbus = new ChuongTrinhKhuyenMai_bus();
+          if(!hdtc.getMaKM().equals("")){
+               ChuongTrinhKhuyenMaiEntity km = kmbus.getKMTheoma(hdtc.getMaKM());
+               if(km.getMaLoaiKM().equals("GGHD")) lbl_TextKM.setText("Khuyến mãi hóa đơn");
+               else  lbl_TextKM.setText("Khuyến mãi sản phẩm");
+               lbl_KhuyenMai.setText(km.getGiamGia()+"%");
+          }
        }
         lbl_IConExit.addMouseListener(new MouseAdapter(){
             @Override
@@ -90,10 +116,11 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
                 listCTHD = cthdbus.getCTHDTheoMaHDvaMaSP(maHD, sp.getMaSP());
                 for(ChiTietHoaDonEntity ct: listCTHD){
                     System.out.println(sl);
-                addRows(new Object[]{sp.getTenSP(),sp.getKichThuoc(),sp.getMauSac(),ct.getSoLuong(), ct.getGiaGoc() ,ct.getGiaBan(),ct.getThanhTien()});
+                addRows(new Object[]{sp.getMaSP(),sp.getTenSP(),sp.getKichThuoc(),sp.getMauSac(),ct.getSoLuong(), ct.getGiaGoc() ,ct.getGiaBan(),ct.getThanhTien()});
                 }
             }
-           TongTien();
+           lblTongTien.setText(TongTien(5));
+           lbl_TienThanhToan.setText(TongTien(7));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn hoá đơn cần xem !");
             e.printStackTrace();
@@ -107,23 +134,21 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
         model.addRow(row);
    } 
     public boolean getHD(String maHD,String maKH,String maNV,String ngayLap ){
-//        lbl_MaHoaDon.setText(maHD);
-//        lbl_MaKhachHang.setText(maKH);
-//        lbl_MaNhanVien.setText(maNV);
-//        lbl_NgayLapHoaDon.setText(ngayLap);
+
         return false;
     }
-    public void TongTien(){
+    public String TongTien(int col){
         double tt =0;
         try {
             int row = table.getRowCount();
             for (int i = 0; i < row ; i++) {
-                tt += Double.parseDouble(table.getValueAt(i, 6).toString());
+                tt += Double.parseDouble(table.getValueAt(i, col).toString());
             }
-            lblTongTien.setText(tt+" đ");
+//            lblTongTien.setText(tt+" đ");
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return currencyFormatter.format(tt) + "";
     }
        
     @SuppressWarnings("unchecked")
@@ -145,12 +170,14 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         lblTongTien = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        lbl_TextKM = new javax.swing.JLabel();
+        lbl_KhuyenMai = new javax.swing.JLabel();
         btn_XacNhan = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        lbl_SDT = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lbl_TienThanhToan = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -180,75 +207,72 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
         jLabel1.setText("THÔNG TIN CHI TIẾT HÓA ĐƠN");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 70));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jLabel2.setText("Mã Khách Hàng");
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel2.setText("Tên Khách Hàng");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 90, 30));
 
-        lbl_MaKhachHang.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        lbl_MaKhachHang.setText("KH20202278");
-        jPanel2.add(lbl_MaKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 110, 30));
+        lbl_MaKhachHang.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jPanel2.add(lbl_MaKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 110, 30));
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel4.setText("Mã Hóa Đơn");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 90, 30));
 
-        lbl_MaHoaDon.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_MaHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         lbl_MaHoaDon.setText("HD120923091230");
-        jPanel2.add(lbl_MaHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 110, 30));
+        jPanel2.add(lbl_MaHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 110, 30));
 
-        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel6.setText("Mã Nhân Viên");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 110, 30));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, 110, 30));
 
-        lbl_MaNhanVien.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_MaNhanVien.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         lbl_MaNhanVien.setText("NV29097654");
-        jPanel2.add(lbl_MaNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 160, 110, 30));
+        jPanel2.add(lbl_MaNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, 110, 30));
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel8.setText("Ngày Lập Hóa Đơn");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, 110, 30));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 110, 110, 30));
 
-        lbl_NgayLapHoaDon.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_NgayLapHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         lbl_NgayLapHoaDon.setText("21/10/2023");
-        jPanel2.add(lbl_NgayLapHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 110, 110, 30));
+        jPanel2.add(lbl_NgayLapHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 110, 110, 30));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Tên Sản Phẩm", "Kích Thước", "Màu Sắc", "Số Lượng", "Giá bán", "Thành tiền"
+                "Mã Sản Phẩm", "Tên Sản Phẩm", "Kích Thước", "Màu Sắc", "Số Lượng", "Giá Gốc", "Giá bán", "Thành tiền"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         table.setRowHeight(30);
         table.getColumnModel().getColumn(0).setPreferredWidth(200);
         jScrollPane1.setViewportView(table);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 760, 240));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jLabel3.setText("Tổng Tiền");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, 80, 30));
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel3.setText("Tổng tiền giá gốc");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, 110, 30));
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jLabel5.setText("0");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 570, 100, 30));
+        lblTongTien.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jPanel2.add(lblTongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 490, 100, 30));
 
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jLabel7.setText("Thuế VAT");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 570, 80, 30));
+        lbl_TextKM.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_TextKM.setText("Khuyến Mãi");
+        jPanel2.add(lbl_TextKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 530, 120, 30));
 
-        lblTongTien.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        lblTongTien.setText("1000.000.000");
-        jPanel2.add(lblTongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 490, 100, 30));
-
-        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jLabel10.setText("Khuyến Mãi");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 530, 80, 30));
-
-        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jLabel11.setText("0");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 530, 100, 30));
+        lbl_KhuyenMai.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jPanel2.add(lbl_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 530, 100, 30));
 
         btn_XacNhan.setBackground(new java.awt.Color(0, 51, 51));
         btn_XacNhan.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
@@ -260,6 +284,18 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btn_XacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 620, 100, 30));
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel9.setText("Số Điện Thoại");
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 170, -1, -1));
+
+        lbl_SDT.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jPanel2.add(lbl_SDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 90, 30));
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel5.setText("Tiền phải  thanh toán");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 490, 130, -1));
+        jPanel2.add(lbl_TienThanhToan, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 480, 140, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 800, 680));
 
@@ -299,25 +335,27 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_XacNhan;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTongTien;
     private javax.swing.JLabel lbl_IConExit;
+    private javax.swing.JLabel lbl_KhuyenMai;
     private javax.swing.JLabel lbl_MaHoaDon;
     private javax.swing.JLabel lbl_MaKhachHang;
     private javax.swing.JLabel lbl_MaNhanVien;
     private javax.swing.JLabel lbl_NgayLapHoaDon;
+    private javax.swing.JLabel lbl_SDT;
+    private javax.swing.JLabel lbl_TextKM;
+    private javax.swing.JLabel lbl_TienThanhToan;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

@@ -48,5 +48,10 @@ public class KhachHang_bus implements KhachHang_Interface {
     public KhachHangEntity timKiemTheoSDT(String sdt) {
         return khachHangDAO.timKiemTheoSDT(sdt);
     }
+
+    @Override
+    public KhachHangEntity getKHTheoMa(String ma) {
+       return khachHangDAO.getKHTheoMa(ma);
+    }
     
 }

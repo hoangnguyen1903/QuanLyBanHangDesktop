@@ -37,7 +37,7 @@ public class ChiTietHoaDon_dao implements ChiTietHoaDon_Interface {
         ArrayList<ChiTietHoaDonEntity> dscthd = new ArrayList<ChiTietHoaDonEntity>();
         Connection con = null; // Khởi tạo biến kết nối
         try {
-            ConnectDB.getInstance();
+            ConnectDB.getInstance().connect();
             con = ConnectDB.getConnection(); // Gán kết nối từ ConnectDB
             String sql = "Select * from ChiTietHoaDon";
             Statement stmt = con.createStatement();

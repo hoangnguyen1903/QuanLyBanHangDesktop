@@ -15,7 +15,7 @@ import util.HoaDon_toancuc;
 
 public class HoaDon_JPanel extends javax.swing.JPanel {
 
-    private final HoaDon_bus hdbus;
+    private  HoaDon_bus hdbus;
 
     /**
      * Creates new form HoaDon_JPanel
@@ -56,7 +56,7 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
        ArrayList<HoaDonEntity> listHD = hdbus.getallHoaDon();
        for (HoaDonEntity hd : listHD){
 
-           addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getNgayLapHD(),hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan()});
+           addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getNgayLapHD(),hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan(),hd.getTinhTrang().toString()});
        }
    }
    public void addRows (Object[] row){
@@ -124,6 +124,12 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
             }
         });
         Jpanel_ThaoTac.add(txt_MaHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 200, 25));
+
+        dateNgayLap.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateNgayLapPropertyChange(evt);
+            }
+        });
         Jpanel_ThaoTac.add(dateNgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 200, 25));
 
         btn_TimKiem.setBackground(new java.awt.Color(0, 51, 51));
@@ -173,11 +179,11 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã Hóa Đơn", "Mã Khách Hàng", "Mã Nhân Viên", "Mã CTKM", "Ngày Lập Hóa Đơn", "Tiền Khuyến Mãi", "Tổng Tiền", "Tiền Thanh Toán"
+                "Mã Hóa Đơn", "Mã Khách Hàng", "Mã Nhân Viên", "Mã CTKM", "Ngày Lập Hóa Đơn", "Tiền Khuyến Mãi", "Tổng Tiền", "Tiền Thanh Toán", "Tình Trạng"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -207,52 +213,32 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
         try {
              int row = jTable1.getSelectedRow();
             String maHD = jTable1.getValueAt(row, 0).toString();
-            String maKH = jTable1.getValueAt(row, 1).toString();
+            String maKH = "";
+            if (jTable1.getValueAt(row, 1) != null)  maKH  = jTable1.getValueAt(row, 1).toString();
             String maNV = jTable1.getValueAt(row, 2).toString();
-            String ngayLap = jTable1.getValueAt(row, 6).toString();
+            String ngayLap = jTable1.getValueAt(row, 4).toString();
+            
+            String maKM = "";
+            if(jTable1.getValueAt(row, 3) != null){
+               maKM = jTable1.getValueAt(row, 3).toString();
+            }
             System.out.println(maHD + " "+ maKH + " " + maNV+ " " + ngayLap);
             HoaDon_toancuc hdtc = new HoaDon_toancuc();
             hdtc.setMaHD(maHD);
             hdtc.setMaKH(maKH);
             hdtc.setMaNV(maNV);
             hdtc.setNgayLap(ngayLap);
+            hdtc.setMaKM(maKM);
             ChiTietHoaDon_GUI cthd = new ChiTietHoaDon_GUI();
             cthd.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn hoá đơn cần xem !");
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btn_XemChiTietActionPerformed
 
     private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
-//        if(!txt_MaHoaDon.getText().equals("") && dateNgayLap.getDate() ==null){
-//  
-//            HoaDonEntity hd = new HoaDonEntity();
-//            try {
-//                 hd = hdbus.getHoaDonTheoMaHD(txt_MaHoaDon.getText());
-//                XoahetDuLieuTrenTable();
-//                addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getThueVAT(),hd.getTienTT(),hd.getNgayLapHD()});
-//            
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn này !");
-//            }
-//        
-//        }
-//        else if(txt_MaHoaDon.equals("") && dateNgayLap.getDate() !=null){
-//            ArrayList<HoaDonEntity> ds = new ArrayList<HoaDonEntity>();
-//            try {
-//                ds = hdbus.getHoaDonTheoNgayLap((Date)dateNgayLap.getDate());
-//                XoahetDuLieuTrenTable();
-//                for (HoaDonEntity hd: ds){
-//                    
-//                    addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getThueVAT(),hd.getTienTT(),hd.getNgayLapHD()});
-//                }
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn này !");
-//            }
-//        }
-//        else if(txt_MaHoaDon.getText().equals("") && dateNgayLap.getDate() == null){
-//            JOptionPane.showMessageDialog(null, "Vui lòng nhập dữ liệu Hoá đơn cần tìm !");
-//        }
+
         XoahetDuLieuTrenTable();
         DocDuLieuTuSQLvaoTable();
         if (!txt_MaHoaDon.getText().isEmpty() && dateNgayLap.getDate() == null) {
@@ -283,6 +269,38 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_btn_TimKiemActionPerformed
+
+    private void dateNgayLapPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateNgayLapPropertyChange
+        // TODO add your handling code here:
+          XoahetDuLieuTrenTable();
+//        DocDuLieuTuSQLvaoTable();
+         ArrayList<HoaDonEntity> ds = new ArrayList<HoaDonEntity>();
+            try {
+                if(dateNgayLap.getDate()!= null){
+                    java.sql.Date ngaylap = new java.sql.Date(dateNgayLap.getDate().getTime());
+                System.out.println("ngay lập " +ngaylap);
+                ds = hdbus.getHoaDonTheoNgayLap(ngaylap);
+                        if(ds.isEmpty())  {
+                            JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn này !");
+                            DocDuLieuTuSQLvaoTable();
+                        }
+                        else {
+                            XoahetDuLieuTrenTable();
+                        for (HoaDonEntity hd : ds) {
+                            addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getNgayLapHD(),hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan()});
+                        }
+                        }
+                        }
+                else {
+                    hdbus = new HoaDon_bus();
+                    DocDuLieuTuSQLvaoTable();
+                }
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Không tìm thấy hoá đơn này !");
+                e.printStackTrace();
+            }
+    }//GEN-LAST:event_dateNgayLapPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

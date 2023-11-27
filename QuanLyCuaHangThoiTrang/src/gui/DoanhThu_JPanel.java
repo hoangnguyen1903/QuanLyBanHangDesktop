@@ -32,6 +32,7 @@ import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import java.text.NumberFormat;
 import java.util.Locale;
+import javax.swing.JFileChooser;
 
 public class DoanhThu_JPanel extends javax.swing.JPanel {
 
@@ -46,7 +47,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
      */
     public DoanhThu_JPanel() {
         initComponents();
-        setBounds(0, 0, 1180, 730);
+        setBounds(0, 0, 1180, 710);
         setVisible(true);
         tkbus = new ThongKe_bus();
 
@@ -329,7 +330,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         lblTongDoanhThu.setText("jLabel5");
         jPanel6.add(lblTongDoanhThu, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 506, 180, 40));
 
-        add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 145, 490, 580));
+        add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 145, 490, 550));
 
         Panel_bieudo.setBackground(new java.awt.Color(187, 205, 197));
         Panel_bieudo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -342,10 +343,10 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         );
         Panel_bieudoLayout.setVerticalGroup(
             Panel_bieudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 578, Short.MAX_VALUE)
+            .addGap(0, 548, Short.MAX_VALUE)
         );
 
-        add(Panel_bieudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 145, 670, 580));
+        add(Panel_bieudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 145, 670, 550));
     }// </editor-fold>//GEN-END:initComponents
 
     private void rdo_bdcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bdcActionPerformed
@@ -388,6 +389,15 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
+         JFileChooser fileChooser = new JFileChooser("C:\\Users\\MY PC\\OneDrive\\Máy tính");
+            fileChooser.setDialogTitle("Chọn nơi lưu file");
+            int chon = fileChooser.showSaveDialog(null);
+         if (chon == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                String filePath = selectedFile.getAbsolutePath();
+                if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                    filePath += ".xlsx";
+                }
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Doanh Thu");
         XSSFRow row = null;
@@ -425,15 +435,21 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
 
             }
 
-            File fis = new File("E:\\KMExcel\\thongke.xlsx");
-            FileOutputStream fisO = new FileOutputStream(fis);
+            File fis = new File(filePath);
+            try {
+             FileOutputStream fisO = new FileOutputStream(fis);
             workbook.write(fisO);
-            fisO.close();
+            JOptionPane.showMessageDialog(null, "Xuất file thành công");
+           // fisO.close();
             openExcelFile(fis);
-
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        
         } catch (Exception e) {
             e.printStackTrace();
         }
+         }
 
 
     }//GEN-LAST:event_button1ActionPerformed

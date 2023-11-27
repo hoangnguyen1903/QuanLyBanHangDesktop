@@ -49,7 +49,7 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
 
     public DoanhSo_JPanel() {
         initComponents();
-        setBounds(0, 0, 1183, 730);
+          setBounds(0, 0, 1183, 710);
         setVisible(true);
         tkbus = new ThongKe_bus();
         DocDuLieuLenTable();
@@ -320,7 +320,7 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
         );
         paneldoanhsoLayout.setVerticalGroup(
             paneldoanhsoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 458, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jtb_sp.setModel(model = new javax.swing.table.DefaultTableModel(
