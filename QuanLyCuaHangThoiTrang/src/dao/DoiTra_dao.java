@@ -142,8 +142,7 @@ public class DoiTra_dao implements DoiTra_Interface{
         PreparedStatement statement = null;
         try {
 
-            String sql = "Select dt.*, kh.hoTen, kh.soDienThoai from DoiTra as dt inner join HoaDon as hd on dt.maHD=hd.maHD"
-                    + " inner join KhachHang as kh on kh.maKH=hd.maKH where maDT=?";
+            String sql = "Select dt.*, hd.maKH from DoiTra as dt inner join HoaDon as hd on dt.maHD=hd.maHD where maDT=?";
             statement = con.prepareStatement(sql);
             statement.setString(1, ma);
 
@@ -154,16 +153,28 @@ public class DoiTra_dao implements DoiTra_Interface{
                 String maDT = rs.getString("maDT");
                 String maHD = rs.getString("maHD");
                 HoaDonEntity hd = new HoaDonEntity(maHD);
+                String maKH = rs.getString("maKH");
                 KhachHangEntity kh = new KhachHangEntity();
-                kh.setHoTen(rs.getString("hoTen"));
-                kh.setSoDienThoai(rs.getString("soDienThoai"));
+                if(maKH != null) {
+                    kh.setMaKH(maKH);
+                    String sql_kh = "Select hoTen, soDienThoai from KhachHang where maKH=?";
+                    statement = con.prepareStatement(sql_kh);
+                    statement.setString(1, maKH);
+                    
+                    rs = statement.executeQuery();
+                    if(rs.next()) {
+                        
+                        kh.setHoTen(rs.getString("hoTen"));
+                        kh.setSoDienThoai(rs.getString("soDienThoai"));
+                    }
+                    
+                }
                 hd.setKhachHang(kh);
                 String maNV = rs.getString("maNV");
                 NhanVienEntity nv = new NhanVienEntity(maNV);
                 Date thoiGian = rs.getDate("thoiGianDoiTra");
                 String hinhThuc = rs.getString("hinhThucDoiTra");
                 double tongTien = rs.getDouble("tongTien");
-                
                 
                 ConvertStringToEnum toEnum = new ConvertStringToEnum();
                 

@@ -10,6 +10,7 @@ import entity.ChiTietDoiTraEntity;
 import entity.DoiTraEntity;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import util.ConvertDoubleToMoney;
 
 /**
  *
@@ -21,6 +22,7 @@ public class ChiTietDoiTra_GUI extends javax.swing.JFrame {
     private DefaultTableModel tableModel;
     private DoiTra_bus dt_bus = new DoiTra_bus();
     private ChiTietDoiTra_bus ctdt_bus = new ChiTietDoiTra_bus();
+    private ConvertDoubleToMoney convert = new ConvertDoubleToMoney();
     
     public ChiTietDoiTra_GUI(String maDT) {
         this.maDT = maDT;
@@ -37,15 +39,20 @@ public class ChiTietDoiTra_GUI extends javax.swing.JFrame {
         if(dt != null) {
             lbl_MaDoiTra.setText(dt.getMaDT());
             lbl_MaNhanVien.setText(dt.getNhanVien().getMaNV());
-            lbl_TenKhachHang.setText(dt.getHoaDon().getKhachHang().getHoTen());
-            lbl_SoDienThoai.setText(dt.getHoaDon().getKhachHang().getSoDienThoai());
+            if(dt.getHoaDon().getKhachHang() != null) {
+                lbl_TenKhachHang.setText(dt.getHoaDon().getKhachHang().getHoTen());
+                lbl_SoDienThoai.setText(dt.getHoaDon().getKhachHang().getSoDienThoai());
+            } else {
+                lbl_TenKhachHang.setText("");
+                lbl_SoDienThoai.setText("");
+            }
             lbl_NgayLap.setText(dt.getThoiGianDoiTra().toString());
             lbl_HinhThuc.setText(dt.getHinhThucDoiTra().toString());
-            lbl_TienHoanTra.setText(dt.getTongTien()+"");
+            lbl_TienHoanTra.setText(convert.toMoney(dt.getTongTien()));
             
             ArrayList<ChiTietDoiTraEntity> ctdtList = ctdt_bus.getAllCTDTTheoMaDT(maDT);
             for (ChiTietDoiTraEntity ctdt : ctdtList) {
-                String[] data = {ctdt.getSanPham().getMaSP(), ctdt.getSanPham().getTenSP(), ctdt.getSanPham().getKichThuoc().toString(), ctdt.getSanPham().getMauSac().toString(), ctdt.getSoLuong()+"", ctdt.getGiaBan()+"", ctdt.getThanhTien()+""};
+                String[] data = {ctdt.getSanPham().getMaSP(), ctdt.getSanPham().getTenSP(), ctdt.getSanPham().getKichThuoc().toString(), ctdt.getSanPham().getMauSac().toString(), ctdt.getSoLuong()+"", convert.toMoney(ctdt.getGiaBan()), convert.toMoney(ctdt.getThanhTien())};
                 tableModel.addRow(data);
             }
         }

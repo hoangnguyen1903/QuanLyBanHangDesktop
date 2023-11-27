@@ -134,7 +134,7 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         }
     }
 
-    public void charAt() {
+     public void charAt() {
         DefaultCategoryDataset barchardata = new DefaultCategoryDataset();
         
         try {

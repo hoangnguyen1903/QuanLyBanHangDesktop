@@ -12,10 +12,18 @@ import entity.KhachHangEntity;
 import entity.NhanVienEntity;
 import entity.SanPhamEntity;
 import java.awt.Image;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import util.ConvertDoubleToMoney;
@@ -99,7 +107,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
         img_btnTinh = new ImageIcon(scaled_btnTinh);
         btn_Tinh.setIcon(img_btnTinh);
         
-        String[] cols_GioHang = {"Mã sản phẩm", "Tên sản phẩm", "Kích thước", "Màu sắc", "Số lượng", "Giá bán", "Thành tiền"};
+        String[] cols_GioHang = {"Mã sản phẩm", "Tên sản phẩm", "Kích thước", "Màu sắc", "Số lượng", "Giá gốc", "Giá bán", "Thành tiền"};
         tableModel_GioHang = new DefaultTableModel(cols_GioHang, 0);
         table_GioHang.setModel(tableModel_GioHang);
         
@@ -111,6 +119,40 @@ public class BanHang_JPanel extends javax.swing.JPanel {
         spinnerModel = new SpinnerNumberModel(0, 0, 100, 1);
         spinner_SoLuong.setModel(spinnerModel);
         spinner_SoLuong.setEnabled(false);
+        
+        JComponent editor = spinner_SoLuong.getEditor();
+            if(editor instanceof JSpinner.DefaultEditor) {
+                JTextField textField = ((JSpinner.DefaultEditor) editor).getTextField();
+
+                textField.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        char typedChar = e.getKeyChar();
+                        if (!Character.isDigit(typedChar)) {                        
+                            e.consume(); 
+                        }
+                    }
+                    
+                     @Override
+                    public void keyReleased(KeyEvent e) {
+                         try {
+                             int val = Integer.parseInt(textField.getText());
+                             spinnerModel.setValue(val);
+                         } catch (NumberFormatException evt) {
+                             JOptionPane.showMessageDialog(null, "Số lượng nhập phải là chữ số!");
+                         }
+                    }
+                });
+
+                textField.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        kiemTraSoLuongNhap();
+                    }
+                });
+            }
+        
+        importHoaDon();
     }
 
     @SuppressWarnings("unchecked")
@@ -927,7 +969,6 @@ public class BanHang_JPanel extends javax.swing.JPanel {
         spinner_SoLuong.setEnabled(true);
     }//GEN-LAST:event_table_GioHangMouseClicked
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_CapNhatSoLuong;
     private javax.swing.JButton btn_LamMoi;
@@ -1022,8 +1063,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
                 lbl_KhuyenMaiSP.setText("0");
             }
             spinner_SoLuong.setEnabled(true);
-            spinnerModel.setMinimum(1);
-            spinnerModel.setValue(1);
+            spinnerModel.setMinimum(0);
             spinnerModel.setMaximum(sanPham.getSoLuongTonKho());
         } else {
             JOptionPane.showMessageDialog(this, "Mã sản phẩm không tồn tại!");
@@ -1048,6 +1088,26 @@ public class BanHang_JPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Khách hàng không tồn tại !");
         }
     }
+    
+    public boolean kiemTraSoLuongNhap() {
+        Object val = spinner_SoLuong.getValue();
+
+        if(val instanceof Number) {
+            int sl = ((Number) val).intValue();
+            Object slMax = spinnerModel.getMaximum();
+            if(sl <= 0) {
+                JOptionPane.showMessageDialog(null, "Số lượng nhập lớn hơn 0");
+                return false;
+            } else if(sl > ((int) slMax)) {
+                JOptionPane.showMessageDialog(null, "Số lượng nhập nhỏ hơn hoặc bằng "+slMax);
+                return false;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Số lượng nhập phải là chữ số!");
+            return false;
+        }
+        return true;
+    }
 
     public void themVaoGioHang() {
         String maSP = txt_MaSanPham.getText().trim();
@@ -1062,6 +1122,8 @@ public class BanHang_JPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Sản phẩm chưa được tìm thấy !");
             return;
         }
+        
+        if(!kiemTraSoLuongNhap()) return;
   
         for (ChiTietHoaDonEntity chiTietHD : cthdList) {
             if(chiTietHD.getSanPham().getMaSP().equals(maSP)) {
@@ -1082,8 +1144,9 @@ public class BanHang_JPanel extends javax.swing.JPanel {
 
         ChiTietHoaDonEntity cthd = new ChiTietHoaDonEntity();
         cthd.setSanPham(sanPham);
-        cthd.setGiaBan();
         cthd.setSoLuong(soLuong);
+        cthd.setGiaGoc();
+        cthd.setGiaBan();
         cthd.setThanhTien();
         cthdList.add(cthd);   
         
@@ -1107,7 +1170,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
     private void importGioHang() {
         tableModel_GioHang.setRowCount(0);
         for (ChiTietHoaDonEntity cthd : cthdList) {
-            String[] data = {cthd.getSanPham().getMaSP(), cthd.getSanPham().getTenSP(), cthd.getSanPham().getKichThuoc().toString(), cthd.getSanPham().getMauSac().toString(), cthd.getSoLuong()+"", convert.toMoney(cthd.getGiaBan()), convert.toMoney(cthd.getThanhTien())};
+            String[] data = {cthd.getSanPham().getMaSP(), cthd.getSanPham().getTenSP(), cthd.getSanPham().getKichThuoc().toString(), cthd.getSanPham().getMauSac().toString(), cthd.getSoLuong()+"", convert.toMoney(cthd.getGiaGoc()),convert.toMoney(cthd.getGiaBan()), convert.toMoney(cthd.getThanhTien())};
             tableModel_GioHang.addRow(data);
         }
     }
@@ -1140,6 +1203,8 @@ public class BanHang_JPanel extends javax.swing.JPanel {
             return;
         }
         
+        if(!kiemTraSoLuongNhap()) return;
+        
         int soLuong = (int) spinnerModel.getValue();
         String maSP = tableModel_GioHang.getValueAt(row, 0).toString();
         for (ChiTietHoaDonEntity cthd : cthdList) {
@@ -1148,20 +1213,20 @@ public class BanHang_JPanel extends javax.swing.JPanel {
                 cthd.setThanhTien();
                 
                 tableModel_GioHang.setValueAt(soLuong, row, 4);
-                tableModel_GioHang.setValueAt(convert.toMoney(cthd.getThanhTien()), row, 6);
+                tableModel_GioHang.setValueAt(convert.toMoney(cthd.getThanhTien()), row, 7);
                 break;
             }
         }
         tinhTienGioHang();
         table_GioHang.clearSelection();
-        spinnerModel.setValue(0);
+        spinnerModel.setValue(1);
         spinner_SoLuong.setEnabled(false);
     }
     
     public void tinhTienGioHang() {
         double tongTien=0;
         for(int i = 0; i <= table_GioHang.getRowCount() -1; i++) {
-               double thanhTien = convert.toDouble(table_GioHang.getValueAt(i, 6).toString());
+               double thanhTien = convert.toDouble(table_GioHang.getValueAt(i, 7).toString());
                tongTien+=thanhTien;
         }
         lbl_TongTien.setText(convert.toMoney(tongTien));
@@ -1201,7 +1266,8 @@ public class BanHang_JPanel extends javax.swing.JPanel {
         // Nhan Vien
         NhanVienEntity nhanVien = new NhanVienEntity(tc.getMa());
         hoaDon.setNhanVien(nhanVien);
-        hoaDon.setNgayLapHD(new java.sql.Date(new Date().getTime()));
+        LocalDate now = LocalDate.now();
+        hoaDon.setNgayLapHD(java.sql.Date.valueOf(now));
         
         for (ChiTietHoaDonEntity cthd : cthdList) {
             cthd.setHoaDon(hoaDon);
@@ -1247,20 +1313,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Lưu tạm bắt buộc khách hàng tồn tại!");
             return;
         }
-        int rowHD = table_HoaDon.getSelectedRow();
-        if(rowHD >= 0) {
-            String maHD = tableModel_HoaDon.getValueAt(rowHD, 0).toString();
-            ArrayList<HoaDonEntity> luuTamList = hd_bus.timKiemHoaDonChuaThanhToan(soDienThoai);
-            for (HoaDonEntity hd : luuTamList) {
-                if(hd.getMaHD().equals(maHD)) {
-                    JOptionPane.showMessageDialog(this, "Hoá đơn lưu tạm đã tồn tại!");
-                    return;
-                }
-            }
-        }
         
-        GenerateID generateID = new GenerateID();
-        hoaDon.setMaHD(generateID.sinhMa("HD"));
         // Nhan Vien
         NhanVienEntity nhanVien = new NhanVienEntity(tc.getMa());
         hoaDon.setNhanVien(nhanVien);
@@ -1270,12 +1323,42 @@ public class BanHang_JPanel extends javax.swing.JPanel {
             cthd.setHoaDon(hoaDon);
         }
         
+        int rowHD = table_HoaDon.getSelectedRow();
+        if(rowHD >= 0) {
+            String maHD = tableModel_HoaDon.getValueAt(rowHD, 0).toString();
+            ArrayList<HoaDonEntity> luuTamList = hd_bus.timKiemHoaDonChuaThanhToan(soDienThoai);
+            for (HoaDonEntity hd : luuTamList) {
+                if(hd.getMaHD().equals(maHD)) {
+                    boolean kq = hd_bus.capNhatHoaDonLuuTam(hoaDon, cthdList);
+                    if(kq) { 
+                        JOptionPane.showMessageDialog(this, "Cập nhật hoá đơn lưu tạm thành công!");
+                        lamMoi();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Cập nhật hoá đơn lưu tạm thất bại!");
+                    }
+                    return;
+                }
+            }
+        }
+        
+        GenerateID generateID = new GenerateID();
+        hoaDon.setMaHD(generateID.sinhMa("HD"));
+
         boolean kq = hd_bus.luuTamHoaDon(hoaDon, cthdList);
         if(kq) {
             JOptionPane.showMessageDialog(this, "Lưu tạm thành công !");
             lamMoi();
         } else {
             JOptionPane.showMessageDialog(this, "Lưu tạm thất bại !");
+        }
+    }
+    
+    public void importHoaDon() {
+        tableModel_HoaDon.setRowCount(0);
+        hdList = hd_bus.getAllHDChuaThanhToan();
+        for (HoaDonEntity hd : hdList) {
+            String[] data = {hd.getMaHD(), hd.getKhachHang().getMaKH(), hd.getNhanVien().getMaNV(), hd.getChuongTrinhKM().getMaCTKM(), hd.getNgayLapHD().toString(), convert.toMoney(hd.getTienKhuyenMai()), convert.toMoney(hd.getTongTien()), convert.toMoney(hd.getTienThanhToan()), hd.getTinhTrang().toString()};
+            tableModel_HoaDon.addRow(data);
         }
     }
     
@@ -1291,10 +1374,11 @@ public class BanHang_JPanel extends javax.swing.JPanel {
         lbl_DanhMuc.setText("");
         lbl_DonGia.setText("");
         lbl_KhuyenMaiSP.setText("");
-        spinnerModel.setValue(0);
+        spinnerModel.setValue(1);
         spinner_SoLuong.setEnabled(false);
         
         tableModel_GioHang.setRowCount(0);
+        importHoaDon();
         hoaDon = new HoaDonEntity();
         cthdList = new ArrayList<ChiTietHoaDonEntity>();
         
@@ -1369,8 +1453,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
             }
         }
         
-        txt_SoDienThoai.setText(txt_SoDienThoaiKH.getText().trim());
-        hoaDon.getKhachHang().setSoDienThoai(txt_SoDienThoaiKH.getText().trim());
+        txt_SoDienThoai.setText(hoaDon.getKhachHang().getSoDienThoai());
         lbl_MaKhachHang.setText(hoaDon.getKhachHang().getMaKH());
         lbl_TenKhachHang.setText(hoaDon.getKhachHang().getHoTen());
         lbl_GioiTinh.setText(hoaDon.getKhachHang().getGioiTinh().toString());

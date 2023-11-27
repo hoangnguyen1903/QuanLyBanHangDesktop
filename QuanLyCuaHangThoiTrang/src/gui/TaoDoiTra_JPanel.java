@@ -4,6 +4,7 @@
  */
 package gui;
 
+import bus.ChiTietDoiTra_bus;
 import bus.ChiTietHoaDon_bus;
 import bus.DoiTra_bus;
 import bus.HoaDon_bus;
@@ -15,11 +16,18 @@ import entity.HoaDonEntity;
 import entity.NhanVienEntity;
 import entity.SanPhamEntity;
 import java.awt.Image;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.time.LocalDate;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import util.ConvertDoubleToMoney;
@@ -56,10 +64,20 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
         img_btnTimKiemHoaDon = new ImageIcon(scaled_btnTimKiemHoaDon);
         btn_TimKiemHoaDon.setIcon(img_btnTimKiemHoaDon);
         
-//        ImageIcon img_btnTimKiemSanPham = new ImageIcon("src//pic//icon//buttonTimKiem.png");
-//        Image scaled_btnTimKiemSanPham = img_btnTimKiemSanPham.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
-//        img_btnTimKiemSanPham = new ImageIcon(scaled_btnTimKiemSanPham);
-//        btn_TimKiemSanPham.setIcon(img_btnTimKiemSanPham);
+        ImageIcon img_btnThemVaoGio = new ImageIcon("src//pic//icon//buttonThem.png");
+        Image scaled_btnThemVaoGio = img_btnThemVaoGio.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        img_btnThemVaoGio = new ImageIcon(scaled_btnThemVaoGio);
+        btn_ThemVaoGio.setIcon(img_btnThemVaoGio);
+        
+        ImageIcon img_btnCapNhatSoLuong = new ImageIcon("src//pic//icon//buttonCapNhat.png");
+        Image scaled_btnCapNhatSoLuong = img_btnCapNhatSoLuong.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        img_btnCapNhatSoLuong = new ImageIcon(scaled_btnCapNhatSoLuong);
+        btn_CapNhatSoLuong.setIcon(img_btnCapNhatSoLuong);
+        
+        ImageIcon img_btnXoaKhoiGio = new ImageIcon("src//pic//icon//buttonXoa.png");
+        Image scaled_btnXoaKhoiGio = img_btnXoaKhoiGio.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        img_btnXoaKhoiGio = new ImageIcon(scaled_btnXoaKhoiGio);
+        btn_XoaKhoiGio.setIcon(img_btnXoaKhoiGio);
         
         ImageIcon img_btnTaoDoiTra = new ImageIcon("src//pic//icon//buttonThem.png");
         Image scaled_btnTaoDoiTra = img_btnTaoDoiTra.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
@@ -72,16 +90,50 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
         btn_LamMoi.setIcon(img_btnLamMoi); 
         
         // Table
-        String[] cols = {"Mã", "Tên sản phẩm", "Kích thước", "Màu sắc", "Số lượng", "Giá bán", "Thành tiền"};
-        tableModel_HoaDon = new DefaultTableModel(cols, 0);
+        String[] cols_hd = {"Mã", "Tên sản phẩm", "Kích thước", "Màu sắc", "Số lượng", "Giá gốc","Giá bán", "Thành tiền"};
+        tableModel_HoaDon = new DefaultTableModel(cols_hd, 0);
         table_HoaDon.setModel(tableModel_HoaDon);
         
-        tableModel_GioHang = new DefaultTableModel(cols, 0);
+        String[] cols_gh = {"Mã", "Tên sản phẩm", "Kích thước", "Màu sắc", "Số lượng","Giá bán", "Thành tiền"};
+        tableModel_GioHang = new DefaultTableModel(cols_gh, 0);
         table_GioHang.setModel(tableModel_GioHang);
         
-        spinnerModel = new SpinnerNumberModel(0, 0, 20, 1);
+        // Spinner
+        spinnerModel = new SpinnerNumberModel(0, 0, 100, 1);
         spinner_SoLuong.setModel(spinnerModel);
+        spinner_SoLuong.setEnabled(false);
         
+        JComponent editor = spinner_SoLuong.getEditor();
+            if(editor instanceof JSpinner.DefaultEditor) {
+                JTextField textField = ((JSpinner.DefaultEditor) editor).getTextField();
+
+                textField.addKeyListener(new KeyAdapter() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        char typedChar = e.getKeyChar();
+                        if (!Character.isDigit(typedChar)) {                        
+                            e.consume(); 
+                        }
+                    }
+                    
+                     @Override
+                    public void keyReleased(KeyEvent e) {
+                         try {
+                             int val = Integer.parseInt(textField.getText());
+                             spinnerModel.setValue(val);
+                         } catch (NumberFormatException evt) {
+                             JOptionPane.showMessageDialog(null, "Số lượng nhập phải là chữ số!");
+                         }
+                    }
+                });
+
+                textField.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        kiemTraSoLuongNhap();
+                    }
+                });
+            }
     }
 
     /**
@@ -560,6 +612,7 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
         table_GioHang.clearSelection();
         int row = table_HoaDon.getSelectedRow();
         int sl = Integer.parseInt(table_HoaDon.getValueAt(row, 4).toString());
+        spinner_SoLuong.setEnabled(true);
         spinnerModel.setValue(sl);
         spinnerModel.setMinimum(0);
         spinnerModel.setMaximum(sl);
@@ -641,9 +694,12 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
                 return;
             }
             
-            lbl_MaKhachHang.setText(hoaDon.getMaHD());
-            lbl_TenKhachHang.setText(hoaDon.getKhachHang().getHoTen());
-            lbl_SoDienThoai.setText(hoaDon.getKhachHang().getSoDienThoai());
+            if(hoaDon.getKhachHang() != null) {
+                lbl_MaKhachHang.setText(hoaDon.getKhachHang().getMaKH());
+                lbl_TenKhachHang.setText(hoaDon.getKhachHang().getHoTen());
+                lbl_SoDienThoai.setText(hoaDon.getKhachHang().getSoDienThoai());
+            }
+            
             lbl_NgayLap.setText(hoaDon.getNgayLapHD().toString());
             lbl_TongTien.setText(convert.toMoney(hoaDon.getTongTien()));
             lbl_TienKhuyenMai.setText(convert.toMoney(hoaDon.getTienKhuyenMai()));
@@ -653,7 +709,7 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
                 tableModel_HoaDon.setRowCount(0);
                 for (ChiTietHoaDonEntity cthd : cthdList) {
                     String[] data = {cthd.getSanPham().getMaSP(), cthd.getSanPham().getTenSP(), cthd.getSanPham().getKichThuoc().toString(), cthd.getSanPham().getMauSac().toString(), 
-                    cthd.getSoLuong()+"", convert.toMoney(cthd.getGiaBan()), convert.toMoney(cthd.getThanhTien())};
+                    cthd.getSoLuong()+"", convert.toMoney(cthd.getGiaGoc()), convert.toMoney(cthd.getGiaBan()), convert.toMoney(cthd.getThanhTien())};
                     tableModel_HoaDon.addRow(data);
                 }
             }
@@ -662,12 +718,34 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
         }
     }
     
+    public boolean kiemTraSoLuongNhap() {
+        Object val = spinner_SoLuong.getValue();
+
+        if(val instanceof Number) {
+            int sl = ((Number) val).intValue();
+            Object slMax = spinnerModel.getMaximum();
+            if(sl <= 0) {
+                JOptionPane.showMessageDialog(null, "Số lượng nhập lớn hơn 0");
+                return false;
+            } else if(sl > ((int) slMax)) {
+                JOptionPane.showMessageDialog(null, "Số lượng nhập nhỏ hơn hoặc bằng "+slMax);
+                return false;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Số lượng nhập phải là chữ số!");
+            return false;
+        }
+        return true;
+    }
+    
     public void themVaoGioHang() {
         int row = table_HoaDon.getSelectedRow();
         if(row < 0) {
             JOptionPane.showMessageDialog(this, "Sản phẩm đổi trả trong hoá đơn chưa được chọn!");
             return;
         }
+        
+        if(!kiemTraSoLuongNhap()) return;
         
         String maSP = tableModel_HoaDon.getValueAt(row, 0).toString();
         for (int i = 0; i < table_GioHang.getRowCount(); i++) {
@@ -707,8 +785,27 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
     }
     
     public void capNhatSoLuong() {
-        int sl = Integer.parseInt(spinnerModel.getValue().toString());
         int row = table_GioHang.getSelectedRow();
+        if(row < 0) {
+            JOptionPane.showMessageDialog(this, "Sản phẩm trong giỏ hàng chưa được chọn!");
+            return;
+        }
+        if(!kiemTraSoLuongNhap()) return;
+        int sl = Integer.parseInt(spinnerModel.getValue().toString());
+        String maSP = tableModel_GioHang.getValueAt(row, 0).toString();
+        // Xu ly so luong
+        int soLuongMax = Integer.parseInt(spinnerModel.getMaximum().toString());
+        String maHD = txt_MaHoaDon.getText().trim();
+        int tongSoLuong = dt_bus.getTongSoLuongSPDoiTra(maHD, maSP);
+        int soLuongConLai = soLuongMax - tongSoLuong;
+        if(soLuongConLai == 0) {
+            JOptionPane.showMessageDialog(this, "Sản phẩm này đã được hoàn trả hết số lượng!");
+            return;
+        }
+        if(soLuongConLai < sl) {
+            JOptionPane.showMessageDialog(this, "Số lượng hoàn trả của sản phẩm này tối đa là "+soLuongConLai);
+            return;
+        }
         table_GioHang.setValueAt(sl, row, 4);
         double giaBan = convert.toDouble(table_GioHang.getValueAt(row, 5).toString());
         table_GioHang.setValueAt(convert.toMoney(giaBan*sl), row, 6);
@@ -802,6 +899,7 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
         lbl_TienKhuyenMai.setText("");
         lbl_TienThanhToan.setText("");
         spinner_SoLuong.setValue(0);
+        spinner_SoLuong.setEnabled(false);
         
         tableModel_HoaDon.setRowCount(0);
         tableModel_GioHang.setRowCount(0);

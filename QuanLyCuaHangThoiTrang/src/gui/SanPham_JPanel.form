@@ -117,7 +117,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="110" y="20" width="200" height="25"/>
+              <AbsoluteConstraints x="110" y="20" width="200" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -129,7 +129,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="110" y="70" width="200" height="25"/>
+              <AbsoluteConstraints x="110" y="70" width="200" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -182,7 +182,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="450" y="20" width="200" height="25"/>
+              <AbsoluteConstraints x="450" y="20" width="200" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -216,7 +216,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="450" y="70" width="200" height="25"/>
+              <AbsoluteConstraints x="450" y="70" width="200" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -261,7 +261,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="110" y="120" width="200" height="25"/>
+              <AbsoluteConstraints x="110" y="120" width="200" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -318,7 +318,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="110" y="170" width="200" height="25"/>
+              <AbsoluteConstraints x="110" y="170" width="200" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -358,7 +358,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="450" y="120" width="200" height="25"/>
+              <AbsoluteConstraints x="450" y="120" width="200" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -392,7 +392,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="450" y="170" width="200" height="25"/>
+              <AbsoluteConstraints x="450" y="170" width="200" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -443,7 +443,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="770" y="20" width="200" height="25"/>
+              <AbsoluteConstraints x="770" y="20" width="200" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -461,7 +461,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="770" y="70" width="200" height="25"/>
+              <AbsoluteConstraints x="770" y="70" width="200" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -492,7 +492,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="770" y="120" width="200" height="25"/>
+              <AbsoluteConstraints x="770" y="120" width="200" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -813,7 +813,7 @@
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable()"/>
                 <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="Object[][] data={};&#xa;String[] columnNames={&quot;M&#xe3;&quot;,&quot;T&#xea;n s&#x1ea3;n ph&#x1ea9;m&quot;, &quot;K&#xed;ch th&#x1b0;&#x1edb;c&quot;, &quot;M&#xe0;u s&#x1eaf;c&quot;, &quot;&#x110;&#x1a1;n gi&#xe1;&quot;, &quot;T&#xec;nh tr&#x1ea1;ng&quot;, &quot;S&#x1ed1; l&#x1b0;&#x1ee3;ng&quot;, &quot;Ch&#x1ea5;t li&#x1ec7;u&quot;, &quot;Th&#x1b0;&#x1a1;ng hi&#x1ec7;u&quot;, &quot;Danh m&#x1ee5;c&quot;, &quot;Khuy&#x1ebf;n m&#xe3;i&quot;, &quot;&#x1ea2;nh&quot;};&#xa;model=new DefaultTableModel(data, columnNames){&#xa;@Override&#xa;public boolean isCellEditable(int row, int column){&#xa;    return false;&#xa;}&#xa;};"/>
                 <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="private DefaultTableModel model;"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="table_DanhSachSanPham.getColumnModel().getColumn(0).setPreferredWidth(100);&#xa;table_DanhSachSanPham.getColumnModel().getColumn(1).setPreferredWidth(200);&#xa;table_DanhSachSanPham.getColumnModel().getColumn(2).setCellRenderer(new CenterRenderer());&#xa;table_DanhSachSanPham.getColumnModel().getColumn(3).setCellRenderer(new CenterRenderer());&#xa;table_DanhSachSanPham.getColumnModel().getColumn(11).setCellRenderer(new ImageRenderer());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="table_DanhSachSanPham.getColumnModel().getColumn(0).setPreferredWidth(100);&#xa;table_DanhSachSanPham.getColumnModel().getColumn(1).setPreferredWidth(200);&#xa;table_DanhSachSanPham.getColumnModel().getColumn(2).setCellRenderer(new CenterRenderer());&#xa;table_DanhSachSanPham.getColumnModel().getColumn(3).setCellRenderer(new CenterRenderer());&#xa;table_DanhSachSanPham.getColumnModel().getColumn(11).setMinWidth(0);&#xa;table_DanhSachSanPham.getColumnModel().getColumn(11).setMaxWidth(0);&#xa;table_DanhSachSanPham.getColumnModel().getColumn(11).setWidth(0);&#xa;table_DanhSachSanPham.getColumnModel().getColumn(11).setPreferredWidth(0);"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JTableHeader tableHeader=table_DanhSachSanPham.getTableHeader();&#xa;tableHeader.setFont(new Font(&quot;Times New Roman&quot;, Font.BOLD, 13));"/>
               </AuxValues>
             </Component>

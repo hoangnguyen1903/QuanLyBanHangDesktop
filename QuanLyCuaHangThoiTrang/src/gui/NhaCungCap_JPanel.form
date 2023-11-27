@@ -28,9 +28,9 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="panel_DanhSachNhaCungCap" pref="1010" max="32767" attributes="0"/>
-                  <Component id="panel_ThaoTac" alignment="0" pref="1010" max="32767" attributes="0"/>
-                  <Component id="panel_ThongTin" pref="1010" max="32767" attributes="0"/>
+                  <Component id="panel_DanhSachNhaCungCap" pref="1054" max="32767" attributes="0"/>
+                  <Component id="panel_ThaoTac" alignment="0" pref="1054" max="32767" attributes="0"/>
+                  <Component id="panel_ThongTin" pref="1054" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
           </Group>
@@ -42,11 +42,12 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lbl_TieuDe" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="panel_ThongTin" min="-2" max="-2" attributes="0"/>
+              <Component id="panel_ThongTin" min="-2" pref="103" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="panel_ThaoTac" min="-2" pref="59" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-              <Component id="panel_DanhSachNhaCungCap" pref="499" max="32767" attributes="0"/>
+              <Component id="panel_DanhSachNhaCungCap" pref="477" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -78,29 +79,30 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Component id="lbl_MaNhaCungCap" min="-2" pref="120" max="-2" attributes="0"/>
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                           <Component id="txt_MaNhaCungCap" min="-2" pref="200" max="-2" attributes="0"/>
-                          <EmptySpace min="38" pref="38" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="lbl_SoDienThoai" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="txt_SoDienThoai" min="-2" pref="200" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Component id="lbl_TenNhaCungCap" min="-2" pref="120" max="-2" attributes="0"/>
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                           <Component id="txt_TenNhaCungCap" min="-2" pref="200" max="-2" attributes="0"/>
-                          <EmptySpace min="38" pref="38" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="lbl_DiaChi" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="txt_DiaChi" min="-2" pref="200" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="lbl_TinhTrang" min="-2" pref="97" max="-2" attributes="0"/>
-                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+                  <Component id="lbl_TinhTrang" min="-2" pref="85" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="cbo_TinhTrang" min="-2" pref="200" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -114,38 +116,35 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                          <Component id="txt_MaNhaCungCap" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="txt_MaNhaCungCap" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
-                          <Component id="lbl_SoDienThoai" min="-2" pref="20" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                          <Component id="txt_SoDienThoai" min="-2" pref="25" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="lbl_TinhTrang" min="-2" pref="26" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                          <Component id="cbo_TinhTrang" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbl_TinhTrang" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="cbo_TinhTrang" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="txt_SoDienThoai" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="lbl_SoDienThoai" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lbl_TenNhaCungCap" min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
-                          <Component id="txt_TenNhaCungCap" min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lbl_TenNhaCungCap" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                                  <Component id="txt_TenNhaCungCap" min="-2" pref="30" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
-                          <Component id="lbl_DiaChi" min="-2" pref="26" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
-                          <Component id="txt_DiaChi" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txt_DiaChi" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="lbl_DiaChi" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
+                  <EmptySpace pref="11" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -312,7 +311,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
-                          <Component id="txt_MaNhaCungCap_Search" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="txt_MaNhaCungCap_Search" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
@@ -489,7 +488,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="srcoll_TableNhaCungCap" alignment="1" pref="525" max="32767" attributes="0"/>
+              <Component id="srcoll_TableNhaCungCap" alignment="0" pref="455" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

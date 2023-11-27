@@ -8,8 +8,11 @@ import bus.ChiTietDoiTra_bus;
 import bus.DoiTra_bus;
 import entity.ChiTietDoiTraEntity;
 import entity.DoiTraEntity;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import util.ConvertDoubleToMoney;
+import util.ExportToPDF;
 
 /**
  *
@@ -21,6 +24,7 @@ public class ThongTinDoiTra_GUI extends javax.swing.JFrame {
     private DefaultTableModel tableModel;
     private DoiTra_bus dt_bus = new DoiTra_bus();
     private ChiTietDoiTra_bus ctdt_bus = new ChiTietDoiTra_bus();
+    private ConvertDoubleToMoney convert = new ConvertDoubleToMoney();
     
     public ThongTinDoiTra_GUI(String maDT) {
         this.maDT = maDT;
@@ -37,15 +41,20 @@ public class ThongTinDoiTra_GUI extends javax.swing.JFrame {
         if(dt != null) {
             lbl_MaDoiTra.setText(dt.getMaDT());
             lbl_MaNhanVien.setText(dt.getNhanVien().getMaNV());
-            lbl_TenKhachHang.setText(dt.getHoaDon().getKhachHang().getHoTen());
-            lbl_SoDienThoai.setText(dt.getHoaDon().getKhachHang().getSoDienThoai());
+            if(dt.getHoaDon().getKhachHang() != null) {
+                lbl_TenKhachHang.setText(dt.getHoaDon().getKhachHang().getHoTen());
+                lbl_SoDienThoai.setText(dt.getHoaDon().getKhachHang().getSoDienThoai());
+            } else {
+                lbl_TenKhachHang.setText("");
+                lbl_SoDienThoai.setText("");
+            }
             lbl_NgayLap.setText(dt.getThoiGianDoiTra().toString());
             lbl_HinhThuc.setText(dt.getHinhThucDoiTra().toString());
-            lbl_TienHoanTra.setText(dt.getTongTien()+"");
+            lbl_TienHoanTra.setText(convert.toMoney(dt.getTongTien()));
             
             ArrayList<ChiTietDoiTraEntity> ctdtList = ctdt_bus.getAllCTDTTheoMaDT(maDT);
             for (ChiTietDoiTraEntity ctdt : ctdtList) {
-                String[] data = {ctdt.getSanPham().getMaSP(), ctdt.getSanPham().getTenSP(), ctdt.getSanPham().getKichThuoc().toString(), ctdt.getSanPham().getMauSac().toString(), ctdt.getSoLuong()+"", ctdt.getGiaBan()+"", ctdt.getThanhTien()+""};
+                String[] data = {ctdt.getSanPham().getMaSP(), ctdt.getSanPham().getTenSP(), ctdt.getSanPham().getKichThuoc().toString(), ctdt.getSanPham().getMauSac().toString(), ctdt.getSoLuong()+"", convert.toMoney(ctdt.getGiaBan()), convert.toMoney(ctdt.getThanhTien())};
                 tableModel.addRow(data);
             }
         }
@@ -64,7 +73,7 @@ public class ThongTinDoiTra_GUI extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         lbl_HinhThuc = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        btn_InHoaDon = new javax.swing.JButton();
+        btn_XuatHoaDon = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -107,6 +116,7 @@ public class ThongTinDoiTra_GUI extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        table_DoiTra.setEnabled(false);
         jScrollPane1.setViewportView(table_DoiTra);
         if (table_DoiTra.getColumnModel().getColumnCount() > 0) {
             table_DoiTra.getColumnModel().getColumn(1).setPreferredWidth(200);
@@ -140,16 +150,16 @@ public class ThongTinDoiTra_GUI extends javax.swing.JFrame {
         jLabel22.setText("Cảm ơn quý khách đã mua hàng tại cửa hàng của chúng tôi ! Hẹn gặp lại lần sau !");
         getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 560, 811, -1));
 
-        btn_InHoaDon.setBackground(new java.awt.Color(0, 51, 51));
-        btn_InHoaDon.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
-        btn_InHoaDon.setForeground(new java.awt.Color(255, 255, 255));
-        btn_InHoaDon.setText("In hoá đơn");
-        btn_InHoaDon.addActionListener(new java.awt.event.ActionListener() {
+        btn_XuatHoaDon.setBackground(new java.awt.Color(0, 51, 51));
+        btn_XuatHoaDon.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
+        btn_XuatHoaDon.setForeground(new java.awt.Color(255, 255, 255));
+        btn_XuatHoaDon.setText("Xuất hoá đơn");
+        btn_XuatHoaDon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_InHoaDonActionPerformed(evt);
+                btn_XuatHoaDonActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_InHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 610, 120, 30));
+        getContentPane().add(btn_XuatHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 610, 140, 30));
 
         jPanel1.setBackground(new java.awt.Color(187, 205, 197));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -266,13 +276,20 @@ public class ThongTinDoiTra_GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_InHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_InHoaDonActionPerformed
+    private void btn_XuatHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XuatHoaDonActionPerformed
+        btn_XuatHoaDon.setVisible(false);
+        jPanel1.setBackground(Color.white);
+        jPanel2.setBackground(Color.white);
+        jPanel3.setBackground(Color.white);
+        
+        String maDT = lbl_MaDoiTra.getText().trim();
+        ExportToPDF.exportToPDF(this, "src//pdf//thongtindoitra"+maDT+".pdf");
         dispose();
-    }//GEN-LAST:event_btn_InHoaDonActionPerformed
+    }//GEN-LAST:event_btn_XuatHoaDonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_InHoaDon;
+    private javax.swing.JButton btn_XuatHoaDon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;

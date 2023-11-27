@@ -6,9 +6,11 @@ package gui;
 
 import entity.ChiTietHoaDonEntity;
 import entity.HoaDonEntity;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import util.ConvertDoubleToMoney;
+import util.ExportToPDF;
 
 /**
  *
@@ -46,12 +48,12 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
         lbl_TienNhan.setText(convert.toMoney(tienNhan));
         lbl_TienTraLai.setText(convert.toMoney(tienTraLai));
         
-        String[] cols = {"Mã sản phẩm", "Tên sản phẩm", "Kích thước", "Màu sắc", "Số lượng", "Giá bán", "Thành tiền"};
+        String[] cols = {"Mã sản phẩm", "Tên sản phẩm", "Kích thước", "Màu sắc", "Số lượng", "Giá gốc", "Giá bán", "Thành tiền"};
         tableModel = new DefaultTableModel(cols, 0);
         table.setModel(tableModel);
         
         for (ChiTietHoaDonEntity cthd : cthdList) {
-            String[] data = {cthd.getSanPham().getMaSP(), cthd.getSanPham().getTenSP(), cthd.getSanPham().getKichThuoc().toString(), cthd.getSanPham().getMauSac().toString(), cthd.getSoLuong()+"", convert.toMoney(cthd.getGiaBan()), convert.toMoney(cthd.getThanhTien())};
+            String[] data = {cthd.getSanPham().getMaSP(), cthd.getSanPham().getTenSP(), cthd.getSanPham().getKichThuoc().toString(), cthd.getSanPham().getMauSac().toString(), cthd.getSoLuong()+"", convert.toMoney(cthd.getGiaGoc()), convert.toMoney(cthd.getGiaBan()), convert.toMoney(cthd.getThanhTien())};
             tableModel.addRow(data);
         }
     }
@@ -82,7 +84,7 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         lbl_TienTraLai = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        btn_InHoaDon = new javax.swing.JButton();
+        btn_XuatHoaDon = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         lbl_MaNhanVien = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -96,7 +98,6 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(890, 794));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -151,6 +152,8 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        table.setEnabled(false);
+        table.setSelectionBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(1).setPreferredWidth(200);
@@ -202,16 +205,16 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
         jLabel22.setText("Cảm ơn quý khách đã mua hàng tại cửa hàng của chúng tôi ! Hẹn gặp lại lần sau !");
         getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 640, 811, -1));
 
-        btn_InHoaDon.setBackground(new java.awt.Color(0, 51, 51));
-        btn_InHoaDon.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
-        btn_InHoaDon.setForeground(new java.awt.Color(255, 255, 255));
-        btn_InHoaDon.setText("In hoá đơn");
-        btn_InHoaDon.addActionListener(new java.awt.event.ActionListener() {
+        btn_XuatHoaDon.setBackground(new java.awt.Color(0, 51, 51));
+        btn_XuatHoaDon.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
+        btn_XuatHoaDon.setForeground(new java.awt.Color(255, 255, 255));
+        btn_XuatHoaDon.setText("Xuất hoá đơn");
+        btn_XuatHoaDon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_InHoaDonActionPerformed(evt);
+                btn_XuatHoaDonActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_InHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 690, 120, 30));
+        getContentPane().add(btn_XuatHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 690, 140, 30));
 
         jLabel14.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel14.setText("Mã nhân viên");
@@ -290,12 +293,19 @@ public class ThongTinHoaDon_GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_InHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_InHoaDonActionPerformed
+    private void btn_XuatHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XuatHoaDonActionPerformed
+        btn_XuatHoaDon.setVisible(false);
+        jPanel1.setBackground(Color.white);
+        jPanel2.setBackground(Color.white);
+        jPanel3.setBackground(Color.white);
+        
+        String maHD = lbl_MaHoaDon.getText().trim();
+        ExportToPDF.exportToPDF(this, "src//pdf//thongtinhoadon"+maHD+".pdf");
         dispose();
-    }//GEN-LAST:event_btn_InHoaDonActionPerformed
+    }//GEN-LAST:event_btn_XuatHoaDonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_InHoaDon;
+    private javax.swing.JButton btn_XuatHoaDon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;

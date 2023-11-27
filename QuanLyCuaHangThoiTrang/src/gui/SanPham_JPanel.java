@@ -38,6 +38,7 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+import org.apache.poi.sl.draw.ImageRenderer;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -204,10 +205,10 @@ public class SanPham_JPanel extends javax.swing.JPanel {
 
         txt_MaSanPham.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txt_MaSanPham.setEditable(false);
-        panel_ThongTin.add(txt_MaSanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 200, 25));
+        panel_ThongTin.add(txt_MaSanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 200, 30));
 
         txt_TenSanPham.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panel_ThongTin.add(txt_TenSanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 200, 25));
+        panel_ThongTin.add(txt_TenSanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 200, 30));
 
         lbl_ThuongHieu.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         lbl_ThuongHieu.setText("Thương hiệu");
@@ -224,7 +225,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         txt_SoLuongTonKho.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txt_SoLuongTonKho.setText("0");
         txt_SoLuongTonKho.setEditable(false);
-        panel_ThongTin.add(txt_SoLuongTonKho, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 200, 25));
+        panel_ThongTin.add(txt_SoLuongTonKho, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 200, 30));
 
         lbl_DanhMuc.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         lbl_DanhMuc.setText("Danh mục");
@@ -232,7 +233,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         panel_ThongTin.add(lbl_DanhMuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 117, 25));
 
         cbo_DanhMuc.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panel_ThongTin.add(cbo_DanhMuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 200, 25));
+        panel_ThongTin.add(cbo_DanhMuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 200, 30));
 
         lbl_KichThuoc.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         lbl_KichThuoc.setText("Kích thước");
@@ -243,7 +244,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         cbo_KichThuoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "XS", "S", "M", "L", "XL", "XXL" }));
         cbo_KichThuoc.setSelectedIndex(1);
         cbo_KichThuoc.setSelectedItem("S");
-        panel_ThongTin.add(cbo_KichThuoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 200, 25));
+        panel_ThongTin.add(cbo_KichThuoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 200, 30));
 
         lbl_ChatLieu.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         lbl_ChatLieu.setText("Chất liệu");
@@ -258,7 +259,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         cbo_MauSac.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         cbo_MauSac.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trắng", "Đen", "Xám" }));
         cbo_MauSac.setSelectedItem("Trắng");
-        panel_ThongTin.add(cbo_MauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 200, 25));
+        panel_ThongTin.add(cbo_MauSac, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 200, 30));
 
         lbl_TinhTrang.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         lbl_TinhTrang.setText("Tình trạng");
@@ -268,7 +269,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         cbo_TinhTrang.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         cbo_TinhTrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngừng bán", "Đang bán" }));
         cbo_TinhTrang.setSelectedItem("Đang bán");
-        panel_ThongTin.add(cbo_TinhTrang, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 200, 25));
+        panel_ThongTin.add(cbo_TinhTrang, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 200, 30));
 
         lbl_DonGia.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         lbl_DonGia.setText("Đơn giá");
@@ -278,7 +279,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         panel_ThongTin.add(lbl_DonGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, 69, 25));
 
         txt_DonGia.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panel_ThongTin.add(txt_DonGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, 200, 25));
+        panel_ThongTin.add(txt_DonGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, 200, 30));
 
         lbl_AnhSanPham.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         panel_ThongTin.add(lbl_AnhSanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 20, 150, 140));
@@ -296,17 +297,17 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         panel_ThongTin.add(btn_ChonAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 170, 120, 30));
 
         cbo_ChatLieu.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panel_ThongTin.add(cbo_ChatLieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 20, 200, 25));
+        panel_ThongTin.add(cbo_ChatLieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 20, 200, 30));
 
         cbo_ThuongHieu.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panel_ThongTin.add(cbo_ThuongHieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 70, 200, 25));
+        panel_ThongTin.add(cbo_ThuongHieu, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 70, 200, 30));
 
         lbl_KhuyenMai.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         lbl_KhuyenMai.setText("Khuyến mãi");
         panel_ThongTin.add(lbl_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 120, -1, 25));
 
         cbo_KhuyenMai.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        panel_ThongTin.add(cbo_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 120, 200, 25));
+        panel_ThongTin.add(cbo_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 120, 200, 30));
 
         panel_ThaoTac.setBackground(new java.awt.Color(187, 205, 197));
         panel_ThaoTac.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Các thao tác", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
@@ -834,7 +835,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                     filePath += ".xlsx";
                 }
                 XSSFWorkbook workbook = new XSSFWorkbook();
-                XSSFSheet sheet = workbook.createSheet("Sản Phẩm");
+                XSSFSheet sheet = workbook.createSheet("Danh sách sản phẩm");
                 XSSFRow row = null;
                 Cell cell = null;
                 row = sheet.createRow(0);
@@ -853,15 +854,15 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                 cell = row.createCell(6, CellType.STRING);
                 cell.setCellValue("Số lượng tồn kho");
                 cell = row.createCell(7, CellType.STRING);
-                cell.setCellValue("Mã chất liệu");
+                cell.setCellValue("Chất liệu");
                 cell = row.createCell(8, CellType.STRING);
-                cell.setCellValue("Mã thương hiệu");
+                cell.setCellValue("Thương hiệu");
                 cell = row.createCell(9, CellType.STRING);
-                cell.setCellValue("Mã danh mục");
+                cell.setCellValue("Danh mục");
                 cell = row.createCell(10, CellType.STRING);
                 cell.setCellValue("Ảnh");
                 cell = row.createCell(11, CellType.STRING);
-                cell.setCellValue("Mã khuyến mãi");
+                cell.setCellValue("Khuyến mãi");
                 ArrayList<SanPhamEntity> listItem = sp_bus.getAllSanPham();
                 for (int i = 0; i < listItem.size(); i++) {
                     SanPhamEntity sp = listItem.get(i);
@@ -908,7 +909,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                     filePath += ".xlsx";
                 }
                 Workbook wb = new XSSFWorkbook();
-                Sheet sheet = wb.createSheet("Sản phẩm");
+                Sheet sheet = wb.createSheet("Danh sách sản phẩm");
                 Row rowCol = sheet.createRow(0);
                 for (int i = 0; i < table_DanhSachSanPham.getColumnCount(); i++) {
                     Cell cell = rowCol.createCell(i);
@@ -1007,34 +1008,51 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                     XSSFCell excelMaSP = excelRow.getCell(0);
                     // Kiểm tra xem mã sản phẩm đã tồn tại trong tập hợp chưa
                     String maSanPham = excelMaSP.getStringCellValue().trim();
-                    if (!maSanPhamSet.contains(maSanPham) && !kiemTraMaSanPhamTontaiTrongTable(model, maSanPham)) {
-                        maSanPhamSet.add(maSanPham);
-                        XSSFCell excelTenSP = excelRow.getCell(1);
-                        XSSFCell excelKichThuoc = excelRow.getCell(2);
-                        XSSFCell excelMauSac = excelRow.getCell(3);
-                        XSSFCell excelDonGia = excelRow.getCell(4);
-                        XSSFCell excelTinhTrang = excelRow.getCell(5);
-                        XSSFCell excelSoLuongTon = excelRow.getCell(6);
-                        XSSFCell excelChatLieu = excelRow.getCell(7);
-                        XSSFCell excelThuongHieu = excelRow.getCell(8);
-                        XSSFCell excelDanhMuc = excelRow.getCell(9);
-                        XSSFCell excelAnh = excelRow.getCell(10);
-                        String duongDanAnh = excelAnh.getStringCellValue();
-                        XSSFCell excelKhuyenMai = excelRow.getCell(11);
-                        String khuyenMai = "";
-                        if (excelKhuyenMai != null) {
-                            khuyenMai = excelKhuyenMai.getStringCellValue().trim();
-                        } else {
-                            khuyenMai = "Không giảm giá";
+                    int existingRow = -1;
+                    // Kiểm tra xem mã sản phẩm nhập đã tồn tại trong bảng chưa
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        if (maSanPham.equals(model.getValueAt(i, 0).toString())) {
+                            existingRow = i;
+                            break;
                         }
-                        int soLuongTonKho = (int) excelSoLuongTon.getNumericCellValue();
-                        double donGia = excelDonGia.getNumericCellValue();
-                        DecimalFormat decimalFormat = new DecimalFormat();
-                        String formattedDonGia = decimalFormat.format(donGia) + " VNĐ";
-                        model.addRow(new Object[]{maSanPham, excelTenSP, excelKichThuoc, excelMauSac, formattedDonGia, excelTinhTrang, soLuongTonKho, excelChatLieu, excelThuongHieu, excelDanhMuc, khuyenMai, duongDanAnh});
-//                        System.out.println("Đường dẫn ảnh từ Excel: " + duongDanAnh);
+                    }
+                    XSSFCell excelTenSP = excelRow.getCell(1);
+                    XSSFCell excelKichThuoc = excelRow.getCell(2);
+                    XSSFCell excelMauSac = excelRow.getCell(3);
+                    XSSFCell excelDonGia = excelRow.getCell(4);
+                    XSSFCell excelTinhTrang = excelRow.getCell(5);
+                    XSSFCell excelSoLuongTon = excelRow.getCell(6);
+                    XSSFCell excelChatLieu = excelRow.getCell(7);
+                    XSSFCell excelThuongHieu = excelRow.getCell(8);
+                    XSSFCell excelDanhMuc = excelRow.getCell(9);
+                    XSSFCell excelAnh = excelRow.getCell(10);
+                    String duongDanAnh = excelAnh.getStringCellValue();
+                    XSSFCell excelKhuyenMai = excelRow.getCell(11);
+                    String khuyenMai = "";
+                    if (excelKhuyenMai != null) {
+                        khuyenMai = excelKhuyenMai.getStringCellValue().trim();
                     } else {
-//                        System.out.println("Mã sản phẩm đã tồn tại: " + maSanPham);
+                        khuyenMai = "Không giảm giá";
+                    }
+                    int soLuongTonKho = (int) excelSoLuongTon.getNumericCellValue();
+                    double donGia = excelDonGia.getNumericCellValue();
+                    DecimalFormat decimalFormat = new DecimalFormat();
+                    String formattedDonGia = decimalFormat.format(donGia) + " VNĐ";
+                    if (existingRow != -1) {
+                        model.setValueAt(excelTenSP.getStringCellValue(), existingRow, 1);
+                        model.setValueAt(excelKichThuoc.getStringCellValue(), existingRow, 2);
+                        model.setValueAt(excelMauSac, existingRow, 3);
+                        model.setValueAt(formattedDonGia, existingRow, 4);
+                        model.setValueAt(excelTinhTrang, existingRow, 5);
+                        model.setValueAt(soLuongTonKho, existingRow, 6);
+                        model.setValueAt(excelChatLieu, existingRow, 7);
+                        model.setValueAt(excelThuongHieu, existingRow, 8);
+                        model.setValueAt(excelDanhMuc, existingRow, 9);
+                        model.setValueAt(khuyenMai, existingRow, 10);
+                        model.setValueAt(duongDanAnh, existingRow, 11);
+                    } else {
+                        maSanPhamSet.add(maSanPham);
+                        model.addRow(new Object[]{maSanPham, excelTenSP, excelKichThuoc, excelMauSac, formattedDonGia, excelTinhTrang, soLuongTonKho, excelChatLieu, excelThuongHieu, excelDanhMuc, khuyenMai, duongDanAnh});
                     }
                 }
                 JOptionPane.showMessageDialog(null, "Nhập thành công");
@@ -1062,7 +1080,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         luu();
     }//GEN-LAST:event_btn_LuuActionPerformed
-    
+
     //Hàm lưu dữ liệu từ table vào db
     private void luu() {
         for (int i = 0; i < model.getRowCount(); i++) {
@@ -1121,7 +1139,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(null, "Lưu thành công");
     }
 
-    //    Hàm set kích thước icon theo lbl_AnhSanPham
+    //Hàm set kích thước icon theo lbl_AnhSanPham
     private ImageIcon ResizeImageIcon(String ImagePath) {
         ImageIcon myIcon = new ImageIcon(ImagePath);
         Image img = myIcon.getImage().getScaledInstance(lbl_AnhSanPham.getWidth(), lbl_AnhSanPham.getHeight(), Image.SCALE_SMOOTH);
@@ -1203,7 +1221,6 @@ public class SanPham_JPanel extends javax.swing.JPanel {
 //        }
 //        lbl_AnhSanPham.setIcon(imageIcon);
 //    }
-    
     //Hàm kiểm tra regex
     private boolean validata() {
         String tenSP = txt_TenSanPham.getText().trim();
@@ -1277,6 +1294,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
 
 //Căn giữa cột trong table
 class CenterRenderer extends DefaultTableCellRenderer {
+
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         ((JLabel) c).setHorizontalAlignment(SwingConstants.CENTER);
