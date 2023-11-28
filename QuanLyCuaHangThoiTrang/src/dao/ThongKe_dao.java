@@ -117,6 +117,39 @@ public class ThongKe_dao implements ThongKe_Interface {
         }
         return ds;
     }
+ public ArrayList<Object[]> getListThongKeDoanhSoTheoNam(String Nam,String sort) {
+        ArrayList<Object[]> ds = new ArrayList<Object[]>();
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+           String sql = "SELECT TOP 5\n"
+                    + "    SanPham.maSP AS MaSanPham,\n"
+                    + "    SanPham.tenSP AS TenSanPham,\n"
+                    + "    SUM(ChiTietHoaDon.soLuong) AS SoLuongBan\n"
+                    + "FROM\n"
+                    + "    SanPham\n"
+                    + "    JOIN ChiTietHoaDon ON SanPham.maSP = ChiTietHoaDon.maSP\n"
+                    + "WHERE ChiTietHoaDon.maHD LIKE 'HD____' + ? + '%'\n"  // Sử dụng ? để thay thế giá trị của Nam
+                    + "GROUP BY\n"
+                    + "    SanPham.maSP, SanPham.tenSP\n"
+                    + "ORDER BY\n"
+                    + "    SoLuongBan "+sort;
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, Nam);      
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String ma = rs.getString("MaSanPham");
+                String ten = rs.getString("TenSanPham");
+                int soluong = rs.getInt("SoLuongBan");
+                Object[] row = {ma, ten, soluong};
+                ds.add(row);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
+    }
 
     @Override
     public ArrayList<Object[]> getListDoanhThuTheoThangvaNam(String thang, String nam) {

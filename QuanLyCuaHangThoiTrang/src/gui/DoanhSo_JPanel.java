@@ -33,6 +33,7 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
     private DefaultTableModel model;
     private BarRenderer renderer;
     private String sort = "desc";
+    private String timeline = "m";
 
     /**
      * Creates new form DoanhSo_JPanel
@@ -48,7 +49,7 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
 
     public DoanhSo_JPanel() {
         initComponents();
-          setBounds(0, 0, 1183, 730);
+          setBounds(0, 0, 1183, 710);
         setVisible(true);
         tkbus = new ThongKe_bus();
         DocDuLieuLenTable();
@@ -58,10 +59,16 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
         bg.add(rdo_bdd);
         monthChooser.setLocale(new Locale("Vi", "VN"));
 
+        ButtonGroup bgtime = new ButtonGroup();
+        bgtime.add(rdo_month);
+        bgtime.add(rdo_year);
+
+        jtb_sp.setDefaultEditor(Object.class, null);
+
     }
 
     public void XoaAllData() {
-        DefaultTableModel md = (DefaultTableModel) jTable.getModel();
+        DefaultTableModel md = (DefaultTableModel) jtb_sp.getModel();
 //        md.getDataVector().removeAllElements();
         md.setRowCount(0);
     }
@@ -78,6 +85,15 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
         }
     }
 
+    public void DocDuLieuLenTableTheoYear() {
+        String nam = String.valueOf(spin_nam.getValue());
+        String nam2So = layHaiSoCuoiNam(nam);
+        ArrayList<Object[]> ds = tkbus.getListThongKeDoanhSoTheoNam(nam2So, sort);
+        for (Object[] tk : ds) {
+            model.addRow(tk);
+        }
+    }
+
     private void xuatExcelTable() {
         try {
             JFileChooser fileChooser = new JFileChooser("C:\\Users\\MY PC\\OneDrive\\Máy tính");
@@ -90,24 +106,24 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
                     filePath += ".xlsx";
                 }
                 Workbook wb = new XSSFWorkbook();
-                Sheet sheet ;
+                Sheet sheet;
                 if (sort == "desc") {
-                     sheet = wb.createSheet("thống kê Sản phẩm bán chạy nhất ");
+                    sheet = wb.createSheet("thống kê Sản phẩm bán chạy nhất ");
                 } else {
-                     sheet = wb.createSheet("thống kê Sản phẩm bán chậm nhất");
+                    sheet = wb.createSheet("thống kê Sản phẩm bán chậm nhất");
                 }
-                
+
                 Row rowCol = sheet.createRow(0);
-                for (int i = 0; i < jTable.getColumnCount(); i++) {
+                for (int i = 0; i < jtb_sp.getColumnCount(); i++) {
                     Cell cell = rowCol.createCell(i);
-                    cell.setCellValue(jTable.getColumnName(i));
+                    cell.setCellValue(jtb_sp.getColumnName(i));
                 }
-                for (int j = 0; j < jTable.getRowCount(); j++) {
+                for (int j = 0; j < jtb_sp.getRowCount(); j++) {
                     Row row = sheet.createRow(j + 1);
-                    for (int k = 0; k < jTable.getColumnCount(); k++) {
+                    for (int k = 0; k < jtb_sp.getColumnCount(); k++) {
                         Cell cell = row.createCell(k);
-                        if (jTable.getValueAt(j, k) != null) {
-                            cell.setCellValue(jTable.getValueAt(j, k).toString());
+                        if (jtb_sp.getValueAt(j, k) != null) {
+                            cell.setCellValue(jtb_sp.getValueAt(j, k).toString());
                         }
                     }
                 }
@@ -126,7 +142,7 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
     public void charAt() {
         DefaultCategoryDataset barchardata = new DefaultCategoryDataset();
         try {
-            int countRow = jTable.getRowCount();
+            int countRow = jtb_sp.getRowCount();
             renderer = new BarRenderer();
             for (int i = 0; i < countRow; i++) {
                 int value = Integer.parseInt(model.getValueAt(i, 2).toString());
@@ -136,11 +152,18 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String title = "Top 5 sản phẩm bán chạy nhất";
-        if (sort == "desc") {
-            title = "Top 5 sản phẩm bán chạy nhất";
+
+        String month = String.valueOf(monthChooser.getMonth() + 1);
+        String nam = String.valueOf(spin_nam.getValue());
+        String title = "Top 5 sản phẩm bán chạy nhất theo tháng " + month;
+        if (sort == "desc" && timeline == "m") {
+            title = "Top 5 sản phẩm bán chạy nhất theo tháng " + month;
+        } else if (sort == "asc" && timeline == "m") {
+            title = "Top 5 sản phẩm bán chậm nhất theo tháng " + month;
+        } else if (sort == "asc" && timeline == "y") {
+            title = "Top 5 sản phẩm bán chậm nhất theo năm " + nam;
         } else {
-            title = "Top 5 sản phẩm bán chậm nhất";
+            title = "Top 5 sản phẩm bán chạy nhất theo năm " + nam;
         }
         JFreeChart barchart = ChartFactory.createBarChart(title, "Mã Sản Phẩm", "Số lượng bán", barchardata, PlotOrientation.VERTICAL, false, true, false);
 
@@ -176,15 +199,17 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         monthChooser = new com.toedter.calendar.JMonthChooser();
         jLabel3 = new javax.swing.JLabel();
-        rdo_bdc = new javax.swing.JRadioButton();
-        rdo_bdd = new javax.swing.JRadioButton();
+        rdo_month = new javax.swing.JRadioButton();
+        rdo_year = new javax.swing.JRadioButton();
         spin_nam = new com.toedter.calendar.JYearChooser();
         button1 = new java.awt.Button();
         jLabel5 = new javax.swing.JLabel();
+        rdo_bdc = new javax.swing.JRadioButton();
+        rdo_bdd = new javax.swing.JRadioButton();
         paneldoanhso = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable = new javax.swing.JTable();
+        jtb_sp = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(187, 205, 197));
 
@@ -220,26 +245,26 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
         jLabel3.setPreferredSize(new java.awt.Dimension(60, 30));
         jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(291, 33, 68, -1));
 
-        rdo_bdc.setBackground(new java.awt.Color(187, 205, 197));
-        rdo_bdc.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        rdo_bdc.setSelected(true);
-        rdo_bdc.setText("Top sản phẩm bán chạy");
-        rdo_bdc.addActionListener(new java.awt.event.ActionListener() {
+        rdo_month.setBackground(new java.awt.Color(187, 205, 197));
+        rdo_month.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        rdo_month.setSelected(true);
+        rdo_month.setText("Theo tháng");
+        rdo_month.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdo_bdcActionPerformed(evt);
+                rdo_monthActionPerformed(evt);
             }
         });
-        jPanel5.add(rdo_bdc, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, -1, -1));
+        jPanel5.add(rdo_month, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 100, -1, -1));
 
-        rdo_bdd.setBackground(new java.awt.Color(187, 205, 197));
-        rdo_bdd.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        rdo_bdd.setText("Top sản phẩm bán không chạy");
-        rdo_bdd.addActionListener(new java.awt.event.ActionListener() {
+        rdo_year.setBackground(new java.awt.Color(187, 205, 197));
+        rdo_year.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        rdo_year.setText("Theo năm");
+        rdo_year.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdo_bddActionPerformed(evt);
+                rdo_yearActionPerformed(evt);
             }
         });
-        jPanel5.add(rdo_bdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 80, -1, -1));
+        jPanel5.add(rdo_year, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 100, -1, -1));
 
         spin_nam.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -255,13 +280,34 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
                 button1ActionPerformed(evt);
             }
         });
-        jPanel5.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 80, -1, -1));
+        jPanel5.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 70, 80, 30));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Tháng");
         jLabel5.setPreferredSize(new java.awt.Dimension(60, 30));
         jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(146, 33, -1, -1));
+
+        rdo_bdc.setBackground(new java.awt.Color(187, 205, 197));
+        rdo_bdc.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        rdo_bdc.setSelected(true);
+        rdo_bdc.setText("Top sản phẩm bán chạy");
+        rdo_bdc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdo_bdcActionPerformed(evt);
+            }
+        });
+        jPanel5.add(rdo_bdc, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 70, -1, -1));
+
+        rdo_bdd.setBackground(new java.awt.Color(187, 205, 197));
+        rdo_bdd.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        rdo_bdd.setText("Top sản phẩm bán không chạy");
+        rdo_bdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdo_bddActionPerformed(evt);
+            }
+        });
+        jPanel5.add(rdo_bdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 70, -1, -1));
 
         paneldoanhso.setBackground(new java.awt.Color(187, 205, 197));
         paneldoanhso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -274,17 +320,17 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
         );
         paneldoanhsoLayout.setVerticalGroup(
             paneldoanhsoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 458, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jTable.setModel(model = new javax.swing.table.DefaultTableModel(
+        jtb_sp.setModel(model = new javax.swing.table.DefaultTableModel(
             new Object [][] {
             },
             new String [] {
                 "Mã Sản Phẩm", "Tên Sản Phẩm", "Số lượng Bán"
             }
         ));
-        jScrollPane1.setViewportView(jTable);
+        jScrollPane1.setViewportView(jtb_sp);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -331,32 +377,40 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
     private void monthChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_monthChooserPropertyChange
 
         XoaAllData();
-        DocDuLieuLenTable();
+        if (timeline == "y") {
+            DocDuLieuLenTableTheoYear();
+        } else {
+            DocDuLieuLenTable();
+        }
         charAt();
 
     }//GEN-LAST:event_monthChooserPropertyChange
 
-    private void rdo_bdcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bdcActionPerformed
-        sort = "desc";
+    private void rdo_monthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_monthActionPerformed
+        timeline = "m";
         XoaAllData();
         DocDuLieuLenTable();
         charAt();
-    }//GEN-LAST:event_rdo_bdcActionPerformed
+    }//GEN-LAST:event_rdo_monthActionPerformed
 
-    private void rdo_bddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bddActionPerformed
+    private void rdo_yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_yearActionPerformed
         // TODO add your handling code here:
-        sort = "asc";
+        timeline = "y";
         XoaAllData();
-        DocDuLieuLenTable();
+        DocDuLieuLenTableTheoYear();
         charAt();
 
 //        createLineChart();
-    }//GEN-LAST:event_rdo_bddActionPerformed
+    }//GEN-LAST:event_rdo_yearActionPerformed
 
     private void spin_namPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_spin_namPropertyChange
         // TODO add your handling code here:
         XoaAllData();
-        DocDuLieuLenTable();
+         if (timeline == "y") {
+            DocDuLieuLenTableTheoYear();
+        } else {
+            DocDuLieuLenTable();
+        }
         charAt();
     }//GEN-LAST:event_spin_namPropertyChange
 
@@ -407,6 +461,31 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_button1ActionPerformed
 
 
+    private void rdo_bdcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bdcActionPerformed
+        // TODO add your handling code here:
+        sort = "desc";
+        XoaAllData();
+        if (timeline == "m") {
+            DocDuLieuLenTable();
+        } else {
+            DocDuLieuLenTableTheoYear();
+        }
+        charAt();
+    }//GEN-LAST:event_rdo_bdcActionPerformed
+
+    private void rdo_bddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bddActionPerformed
+        sort = "asc";
+        XoaAllData();
+        if (timeline == "m") {
+            DocDuLieuLenTable();
+        } else {
+            DocDuLieuLenTableTheoYear();
+        }
+        charAt();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rdo_bddActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
     private javax.swing.JLabel jLabel1;
@@ -416,11 +495,13 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable;
+    private javax.swing.JTable jtb_sp;
     private com.toedter.calendar.JMonthChooser monthChooser;
     private javax.swing.JPanel paneldoanhso;
     private javax.swing.JRadioButton rdo_bdc;
     private javax.swing.JRadioButton rdo_bdd;
+    private javax.swing.JRadioButton rdo_month;
+    private javax.swing.JRadioButton rdo_year;
     private com.toedter.calendar.JYearChooser spin_nam;
     // End of variables declaration//GEN-END:variables
 }

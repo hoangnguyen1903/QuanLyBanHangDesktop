@@ -6,18 +6,18 @@ public class ToanCuc {
     private static String name = "";
     private static String gioitnh ="";
     private static String chucvu ="";
-    private static  String sdt = "";
+    private    String sdt = "";
 
     public  ToanCuc(){
         
     }
 
-    public static String getSdt() {
+    public   String getSdt() {
         return sdt;
     }
 
-    public static void setSdt(String sdt) {
-        ToanCuc.sdt = sdt;
+    public  void setSdt(String sdt) {
+        this.sdt = sdt;
     }
 
     public static String getName() {

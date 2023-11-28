@@ -12,4 +12,5 @@ public interface ThongKe_Interface {
     public ArrayList<Object[]> getListThongKeDoanhSoTheoThangNam(String thangNam,String sort);
     public ArrayList<Object[]> getListTop5NhanVienDoanhThuCaoNhat(String thang, String nam);
     public ArrayList<Object[]> getListTop5KhachHangMuaHangNhieuNhat(String thang, String nam);
+    public ArrayList<Object[]> getListThongKeDoanhSoTheoNam(String Nam,String sort) ;
 }

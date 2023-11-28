@@ -29,7 +29,7 @@ public class ThongKe_bus implements ThongKe_Interface {
     }
 
     @Override
-    public ArrayList<Object[]> getListThongKeDoanhSoTheoThangNam(String thangNam,String sort) {
+    public ArrayList<Object[]> getListThongKeDoanhSoTheoThangNam(String thangNam, String sort) {
         return tk_dao.getListThongKeDoanhSoTheoThangNam(thangNam, sort);
     }
 
@@ -41,5 +41,10 @@ public class ThongKe_bus implements ThongKe_Interface {
     @Override
     public ArrayList<Object[]> getListTop5KhachHangMuaHangNhieuNhat(String thang, String nam) {
         return tk_dao.getListTop5KhachHangMuaHangNhieuNhat(thang, nam);
+    }
+
+    @Override
+    public ArrayList<Object[]> getListThongKeDoanhSoTheoNam(String Nam, String sort) {
+        return tk_dao.getListThongKeDoanhSoTheoNam(Nam, sort);
     }
 }
