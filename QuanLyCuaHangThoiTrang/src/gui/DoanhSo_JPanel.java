@@ -377,7 +377,11 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
     private void monthChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_monthChooserPropertyChange
 
         XoaAllData();
-        DocDuLieuLenTable();
+        if (timeline == "y") {
+            DocDuLieuLenTableTheoYear();
+        } else {
+            DocDuLieuLenTable();
+        }
         charAt();
 
     }//GEN-LAST:event_monthChooserPropertyChange
@@ -402,7 +406,11 @@ public class DoanhSo_JPanel extends javax.swing.JPanel {
     private void spin_namPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_spin_namPropertyChange
         // TODO add your handling code here:
         XoaAllData();
-        DocDuLieuLenTable();
+         if (timeline == "y") {
+            DocDuLieuLenTableTheoYear();
+        } else {
+            DocDuLieuLenTable();
+        }
         charAt();
     }//GEN-LAST:event_spin_namPropertyChange
 
