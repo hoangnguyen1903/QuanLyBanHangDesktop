@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -249,8 +250,16 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
             String ten = txtTenCTKM.getText();
             String maLoai = txtLoaiKM.getText();
             LoaiKhuyenMaiEntity lkm = new LoaiKhuyenMaiEntity(maLoai);
-            Double sotienTT = Double.parseDouble(txtSoTienGiamTT.getText());
-            Double sotienTD = Double.parseDouble(txtSoTienGiamTD.getText());
+        double sotienTT;
+        double sotienTD;
+        if(txtLoaiKM.getText().equals("GGSP")){
+            sotienTT = 0;
+            sotienTD =0;
+        }
+        else{
+             sotienTT = Double.parseDouble(txtSoTienGiamTT.getText());
+             sotienTD = Double.parseDouble(txtSoTienGiamTD.getText());
+        }
             int giam = Integer.parseInt(txtGiamGia.getText());
             java.sql.Date ngayBD = new java.sql.Date(dateNgayBatDau.getDate().getTime());
             java.sql.Date ngayKT = new java.sql.Date(dateNgayKetThuc.getDate().getTime());
@@ -426,7 +435,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("QUẢN LÝ CHƯƠNG TRÌNH KHUYẾN MÃI");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 1, 1160, 38));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 1, 1150, 38));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 40));
 
@@ -474,7 +483,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jLabel6.setText("Loại Khuyến Mãi");
         jLabel6.setPreferredSize(new java.awt.Dimension(109, 30));
-        JPanel_ThongTinCTKM.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, 150, 30));
+        JPanel_ThongTinCTKM.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, 160, 30));
 
         txtSoTienGiamTD.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txtSoTienGiamTD.setBorder(null);
@@ -500,9 +509,9 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         JPanel_ThongTinCTKM.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 120, 30));
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jLabel9.setText("Số Tiền Giảm Tối Thiểu");
+        jLabel9.setText("Số Tiền  Tối Thiểu Để Giảm");
         jLabel9.setPreferredSize(new java.awt.Dimension(109, 30));
-        JPanel_ThongTinCTKM.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 150, 30));
+        JPanel_ThongTinCTKM.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 180, 30));
 
         txtSoTienGiamTT.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txtSoTienGiamTT.setBorder(null);
@@ -511,7 +520,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jLabel10.setText("Số Tiền Giảm Tối Đa");
         jLabel10.setPreferredSize(new java.awt.Dimension(109, 30));
-        JPanel_ThongTinCTKM.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, 150, 30));
+        JPanel_ThongTinCTKM.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, 160, 30));
 
         rdo_sp.setBackground(new java.awt.Color(187, 205, 197));
         rdo_sp.setFont(new java.awt.Font("Times New Roman", 3, 12)); // NOI18N
@@ -797,6 +806,16 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
 
     private void btn_XuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_XuatMouseClicked
         btn_Xuat.setBackground(Color.CYAN);        
+         JFileChooser fileChooser = new JFileChooser("C:\\Users\\MY PC\\OneDrive\\Máy tính");
+            fileChooser.setDialogTitle("Chọn nơi lưu file");
+            int chon = fileChooser.showSaveDialog(null);
+            if (chon == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                String filePath = selectedFile.getAbsolutePath();
+                if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                    filePath += ".xlsx";
+                }
+        
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Khuyến Mãi");
         XSSFRow row= null;
@@ -900,11 +919,11 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
                 
                 // Save file 
                 
-                    File fis = new File("E:\\KMExcel\\khuyenmai.xlsx");
+                    File fis = new File(filePath);
                     try {
                     FileOutputStream fisO = new FileOutputStream(fis);
                     workbook.write(fisO);
-                    fisO.close();
+//                    fisO.close();
                         openExcelFile(fis);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -912,7 +931,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
                 
             }
         }
-        
+            }
     }//GEN-LAST:event_btn_XuatMouseClicked
     // Mở file
     

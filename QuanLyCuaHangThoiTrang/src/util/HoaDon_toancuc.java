@@ -7,9 +7,18 @@ public class HoaDon_toancuc {
     private static String maHD = "";
     private static String maKH = "";
     private static String maNV = "";
+     private static String maKM = "";
     private static String NgayLap = "";
 
     public  HoaDon_toancuc() {
+    }
+
+    public static String getMaKM() {
+        return maKM;
+    }
+
+    public static void setMaKM(String maKM) {
+        HoaDon_toancuc.maKM = maKM;
     }
 
     public static String getMaHD() {

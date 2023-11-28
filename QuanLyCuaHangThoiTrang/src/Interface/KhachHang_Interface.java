@@ -20,4 +20,6 @@ public interface KhachHang_Interface {
     
     // Nguyen Huy Hoang
     public KhachHangEntity timKiemTheoSDT(String sdt);
+    // Đinh Nguyên Chung
+    public KhachHangEntity getKHTheoMa(String ma);
 }

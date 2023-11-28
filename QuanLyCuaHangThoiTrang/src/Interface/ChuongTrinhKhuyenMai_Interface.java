@@ -17,7 +17,7 @@ public interface ChuongTrinhKhuyenMai_Interface {
     public boolean update (ChuongTrinhKhuyenMaiEntity ctkm);
     public ArrayList<LoaiKhuyenMaiEntity> getallLoaiCTKM() ;
     public ArrayList<ChuongTrinhKhuyenMaiEntity> getallCTKMtheoLoaiKM(String ma);
-
+    public ChuongTrinhKhuyenMaiEntity getKMTheoma(String ma);
     // Nguyen Huy Hoang
     public ChuongTrinhKhuyenMaiEntity kiemTraKhuyenMai(double tongTien);
     public String layTenKhuyenMaiTheoMa(String maKhuyenMai);

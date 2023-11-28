@@ -56,8 +56,11 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         DocDuLieuLenTable();
         charAt();
         ButtonGroup bg = new ButtonGroup();
-        bg.add(rdo_bdc);
-        bg.add(rdo_bdd);
+        bg.add(rdo_bdc1);
+        bg.add(rdo_bdd2);
+        ButtonGroup bgStatictic = new ButtonGroup();
+        bgStatictic.add(rdo_staticticsByMonth);
+        bgStatictic.add(rdo_staticticByYear);
         monthChooser.setLocale(new Locale("Vi", "VN"));
 
     }
@@ -71,10 +74,12 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
     public void DocDuLieuLenTable() {
         String thang = String.valueOf(monthChooser.getMonth() + 1);
         String nam = String.valueOf(spin_nam.getValue());
-        ArrayList<Object[]> ds = tkbus.getListTop5NhanVienDoanhThuCaoNhat(thang, nam);
+        ArrayList<Object[]> ds = new ArrayList<>();
+        if (rdo_staticticByYear.isSelected()) { 
+            ds = tkbus.getListTop5NhanVienDoanhThuCaoNhat(" ", nam);
+        }
+        else ds = tkbus.getListTop5NhanVienDoanhThuCaoNhat(thang, nam);
         for (Object[] tk : ds) {
-//            System.out.println("Thong ke " + ds);
-            
             model.addRow(tk);
         }
     }
@@ -82,9 +87,12 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
     public void DocDuLieuLenTableDuplication() {
         String thang = String.valueOf(monthChooser.getMonth() + 1);
         String nam = String.valueOf(spin_nam.getValue());
-        ArrayList<Object[]> ds = tkbus.getListTop5KhachHangMuaHangNhieuNhat(thang, nam);
+        ArrayList<Object[]> ds = new ArrayList<>();
+        if (rdo_staticticByYear.isSelected()) { 
+            ds = tkbus.getListTop5KhachHangMuaHangNhieuNhat(" ", nam);
+        }
+        else ds = tkbus.getListTop5KhachHangMuaHangNhieuNhat(thang, nam);
         for (Object[] tk : ds) {
-            
             model.addRow(tk);
         }
     }
@@ -103,11 +111,16 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
                 Workbook wb = new XSSFWorkbook();
                 Sheet sheet ;
                 if (sort == "desc") {
-                     sheet = wb.createSheet("Top nhân viên doanh thu bán hàng cao");
+                    if (rdo_staticticsByMonth.isSelected()) {
+                        sheet = wb.createSheet("Top 5 nhân viên đạt doanh thu bán hàng cao nhất tháng " + (monthChooser.getMonth() + 1) + " năm " + spin_nam.getYear());
+                    }
+                    else sheet = wb.createSheet("Top 5 nhân viên đạt doanh thu bán hàng cao nhất" + " năm " + spin_nam.getYear());
                 } else {
-                     sheet = wb.createSheet("Top khách hàng mua hàng nhiều");
+                    if (rdo_staticticsByMonth.isSelected()) {
+                        sheet = wb.createSheet("Top 5 khách hàng có tổng tiền mua hàng nhiều nhất nhất tháng " + (monthChooser.getMonth() + 1) + " năm " + spin_nam.getYear());
+                    }
+                    else sheet = wb.createSheet("Top 5 khách hàng có tổng tiền mua hàng nhiều nhất" + " năm " + spin_nam.getYear());
                 }
-                
                 Row rowCol = sheet.createRow(0);
                 for (int i = 0; i < jTable.getColumnCount(); i++) {
                     Cell cell = rowCol.createCell(i);
@@ -150,9 +163,15 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         }
         String title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất";
         if (sort == "desc") {
-            title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất";
+            if (rdo_staticticsByMonth.isSelected()) {
+                title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất tháng " + (monthChooser.getMonth() + 1) + " năm " + spin_nam.getYear();
+            }
+            else title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất" + " năm " + spin_nam.getYear();
         } else {
-            title = "Top 5 khách hàng mua hàng nhiều nhất";
+            if (rdo_staticticsByMonth.isSelected()) {
+                title = "Top 5 khách hàng có tổng tiền mua hàng nhiều nhất nhất tháng " + (monthChooser.getMonth() + 1) + " năm " + spin_nam.getYear();
+            }
+            else title = "Top 5 khách hàng có tổng tiền mua hàng nhiều nhất" + " năm " + spin_nam.getYear();
         }
         JFreeChart barchart = ChartFactory.createBarChart(title, "Mã nhân viên", "Doanh thu (triệu VNĐ)", barchardata, PlotOrientation.VERTICAL, false, true, false);
 
@@ -193,10 +212,16 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
             e.printStackTrace();
         }
         String title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất";
-        if (sort == "desc") {
-            title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất";
+       if (sort == "desc") {
+            if (rdo_staticticsByMonth.isSelected()) {
+                title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất tháng " + (monthChooser.getMonth() + 1) + " năm " + spin_nam.getYear();
+            }
+            else title = "Top 5 nhân viên đạt doanh thu bán hàng cao nhất" + " năm " + spin_nam.getYear();
         } else {
-            title = "Top 5 khách hàng có tổng tiền mua hàng nhiều nhất";
+            if (rdo_staticticsByMonth.isSelected()) {
+                title = "Top 5 khách hàng có tổng tiền mua hàng nhiều nhất nhất tháng " + (monthChooser.getMonth() + 1) + " năm " + spin_nam.getYear();
+            }
+            else title = "Top 5 khách hàng có tổng tiền mua hàng nhiều nhất" + " năm " + spin_nam.getYear();
         }
         JFreeChart barchart = ChartFactory.createBarChart(title, "Mã nhân viên", "Tiền mua (triệu VNĐ)", barchardata, PlotOrientation.VERTICAL, false, true, false);
 
@@ -232,11 +257,13 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         monthChooser = new com.toedter.calendar.JMonthChooser();
         jLabel3 = new javax.swing.JLabel();
-        rdo_bdc = new javax.swing.JRadioButton();
-        rdo_bdd = new javax.swing.JRadioButton();
+        rdo_staticticsByMonth = new javax.swing.JRadioButton();
+        rdo_staticticByYear = new javax.swing.JRadioButton();
         spin_nam = new com.toedter.calendar.JYearChooser();
         button1 = new java.awt.Button();
         jLabel5 = new javax.swing.JLabel();
+        rdo_bdc1 = new javax.swing.JRadioButton();
+        rdo_bdd2 = new javax.swing.JRadioButton();
         paneldoanhso = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -260,7 +287,7 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Thống kê theo");
         jLabel2.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 140, 50));
+        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 140, 50));
 
         monthChooser.setPreferredSize(new java.awt.Dimension(125, 30));
         monthChooser.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -276,26 +303,26 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         jLabel3.setPreferredSize(new java.awt.Dimension(60, 30));
         jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(291, 33, 68, -1));
 
-        rdo_bdc.setBackground(new java.awt.Color(187, 205, 197));
-        rdo_bdc.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        rdo_bdc.setSelected(true);
-        rdo_bdc.setText("Top nhân viên doanh thu bán hàng cao");
-        rdo_bdc.addActionListener(new java.awt.event.ActionListener() {
+        rdo_staticticsByMonth.setBackground(new java.awt.Color(187, 205, 197));
+        rdo_staticticsByMonth.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        rdo_staticticsByMonth.setSelected(true);
+        rdo_staticticsByMonth.setText("Theo tháng");
+        rdo_staticticsByMonth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdo_bdcActionPerformed(evt);
+                rdo_staticticsByMonthActionPerformed(evt);
             }
         });
-        jPanel5.add(rdo_bdc, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, -1, -1));
+        jPanel5.add(rdo_staticticsByMonth, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, -1, -1));
 
-        rdo_bdd.setBackground(new java.awt.Color(187, 205, 197));
-        rdo_bdd.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        rdo_bdd.setText("Top khách hàng mua hàng nhiều");
-        rdo_bdd.addActionListener(new java.awt.event.ActionListener() {
+        rdo_staticticByYear.setBackground(new java.awt.Color(187, 205, 197));
+        rdo_staticticByYear.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        rdo_staticticByYear.setText("Theo năm");
+        rdo_staticticByYear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdo_bddActionPerformed(evt);
+                rdo_staticticByYearActionPerformed(evt);
             }
         });
-        jPanel5.add(rdo_bdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 80, -1, -1));
+        jPanel5.add(rdo_staticticByYear, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 100, -1, -1));
 
         spin_nam.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -311,13 +338,34 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
                 button1ActionPerformed(evt);
             }
         });
-        jPanel5.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 80, -1, -1));
+        jPanel5.add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 80, 50, 30));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Tháng");
         jLabel5.setPreferredSize(new java.awt.Dimension(60, 30));
         jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(146, 33, -1, -1));
+
+        rdo_bdc1.setBackground(new java.awt.Color(187, 205, 197));
+        rdo_bdc1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        rdo_bdc1.setSelected(true);
+        rdo_bdc1.setText("Top nhân viên doanh thu bán hàng cao");
+        rdo_bdc1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdo_bdc1ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(rdo_bdc1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, -1, -1));
+
+        rdo_bdd2.setBackground(new java.awt.Color(187, 205, 197));
+        rdo_bdd2.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        rdo_bdd2.setText("Top khách hàng mua hàng nhiều");
+        rdo_bdd2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdo_bdd2ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(rdo_bdd2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 70, -1, -1));
 
         paneldoanhso.setBackground(new java.awt.Color(187, 205, 197));
         paneldoanhso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -330,7 +378,7 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         );
         paneldoanhsoLayout.setVerticalGroup(
             paneldoanhsoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 458, Short.MAX_VALUE)
+            .addGap(0, 445, Short.MAX_VALUE)
         );
 
         jTable.setModel(model = new javax.swing.table.DefaultTableModel(
@@ -399,22 +447,32 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_monthChooserPropertyChange
 
-    private void rdo_bdcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bdcActionPerformed
-        sort = "desc";
-        XoaAllData();
-        DocDuLieuLenTable();
-        charAt();
-    }//GEN-LAST:event_rdo_bdcActionPerformed
+    private void rdo_staticticsByMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_staticticsByMonthActionPerformed
+        if (sort.equals("desc")) {
+            XoaAllData();
+            DocDuLieuLenTable();
+            charAt();
+        }
+        else {
+            XoaAllData();
+            DocDuLieuLenTableDuplication();
+            charAtDuplicattion();
+        }
+    }//GEN-LAST:event_rdo_staticticsByMonthActionPerformed
 
-    private void rdo_bddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bddActionPerformed
-        // TODO add your handling code here:
-        sort = "asc";
-        XoaAllData();
-        DocDuLieuLenTableDuplication();
-        charAtDuplicattion();
-
+    private void rdo_staticticByYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_staticticByYearActionPerformed
+        if (sort.equals("desc")) {
+            XoaAllData();
+            DocDuLieuLenTable();
+            charAt();
+        }
+        else {
+            XoaAllData();
+            DocDuLieuLenTableDuplication();
+            charAtDuplicattion();
+        }
 //        createLineChart();
-    }//GEN-LAST:event_rdo_bddActionPerformed
+    }//GEN-LAST:event_rdo_staticticByYearActionPerformed
 
     private void spin_namPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_spin_namPropertyChange
         // TODO add your handling code here:
@@ -469,6 +527,20 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_button1ActionPerformed
 
+    private void rdo_bdc1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bdc1ActionPerformed
+        sort = "desc";
+        XoaAllData();
+        DocDuLieuLenTable();
+        charAt();
+    }//GEN-LAST:event_rdo_bdc1ActionPerformed
+
+    private void rdo_bdd2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bdd2ActionPerformed
+        sort = "asc";
+        XoaAllData();
+        DocDuLieuLenTableDuplication();
+        charAtDuplicattion();
+    }//GEN-LAST:event_rdo_bdd2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
@@ -482,8 +554,10 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
     private javax.swing.JTable jTable;
     private com.toedter.calendar.JMonthChooser monthChooser;
     private javax.swing.JPanel paneldoanhso;
-    private javax.swing.JRadioButton rdo_bdc;
-    private javax.swing.JRadioButton rdo_bdd;
+    private javax.swing.JRadioButton rdo_bdc1;
+    private javax.swing.JRadioButton rdo_bdd2;
+    private javax.swing.JRadioButton rdo_staticticByYear;
+    private javax.swing.JRadioButton rdo_staticticsByMonth;
     private com.toedter.calendar.JYearChooser spin_nam;
     // End of variables declaration//GEN-END:variables
 }

@@ -241,7 +241,22 @@ public class ThongKe_dao implements ThongKe_Interface {
         try {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
-           String sql = """
+            PreparedStatement stmt;
+            if (thang.isBlank()) {
+                String sql = """
+                        SELECT TOP 5
+                            	NV.maNV, NV.hoTen, SUM(tongTien) AS tongDoanhThu
+                            FROM HoaDon AS HD  JOIN NhanVien AS NV ON HD.maNV = NV.maNV
+                            WHERE YEAR(ngayLapHD) = ?
+                            GROUP BY
+                            NV.maNV, NV.hoTen
+                            ORDER BY
+                            tongDoanhThu DESC """; // Sử dụng ? để thay thế giá trị của thangNam
+                stmt = con.prepareStatement(sql);
+                stmt.setString(1, nam);
+            }
+            else {
+                String sql = """
                         SELECT TOP 5
                             	NV.maNV, NV.hoTen, SUM(tongTien) AS tongDoanhThu
                             FROM HoaDon AS HD  JOIN NhanVien AS NV ON HD.maNV = NV.maNV
@@ -250,9 +265,10 @@ public class ThongKe_dao implements ThongKe_Interface {
                             NV.maNV, NV.hoTen
                             ORDER BY
                             tongDoanhThu DESC """; // Sử dụng ? để thay thế giá trị của thangNam
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, thang);
-            stmt.setString(2, nam);      
+                stmt = con.prepareStatement(sql);
+                stmt.setString(1, thang);
+                stmt.setString(2, nam);      
+            }
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String maNV = rs.getString("maNV");
@@ -274,7 +290,22 @@ public class ThongKe_dao implements ThongKe_Interface {
         try {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
-           String sql = """
+            PreparedStatement stmt;
+            if (thang.isBlank()) {
+                String sql = """
+                        SELECT TOP 5
+                                KH.maKH, KH.hoTen, SUM(tienThanhToan) AS tongDoanhThu
+                            FROM HoaDon AS HD  JOIN KhachHang AS KH ON HD.maKH = KH.maKH
+                            WHERE YEAR(ngayLapHD) = ?
+                            GROUP BY
+                            KH.maKH, KH.hoTen
+                            ORDER BY
+                            tongDoanhThu DESC """; // Sử dụng ? để thay thế giá trị của thangNam
+                stmt = con.prepareStatement(sql);
+                stmt.setString(1, nam);
+            }
+            else {
+                String sql = """
                         SELECT TOP 5
                                 KH.maKH, KH.hoTen, SUM(tienThanhToan) AS tongDoanhThu
                             FROM HoaDon AS HD  JOIN KhachHang AS KH ON HD.maKH = KH.maKH
@@ -283,9 +314,10 @@ public class ThongKe_dao implements ThongKe_Interface {
                             KH.maKH, KH.hoTen
                             ORDER BY
                             tongDoanhThu DESC """; // Sử dụng ? để thay thế giá trị của thangNam
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, thang);
-            stmt.setString(2, nam);      
+                stmt = con.prepareStatement(sql);
+                stmt.setString(1, thang);
+                stmt.setString(2, nam);      
+            }
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String maKH = rs.getString("maKH");

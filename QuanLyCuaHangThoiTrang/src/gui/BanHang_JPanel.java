@@ -1406,6 +1406,10 @@ public class BanHang_JPanel extends javax.swing.JPanel {
         }
         try {
         double tienNhanKH = Double.parseDouble(tienNhan);
+        if(tienNhanKH > 1000000000) {
+            JOptionPane.showMessageDialog(this, "Tiền nhận tối đa là 1,000,000,000");
+            return;
+        }
         double tienThanhToan = convert.toDouble(lbl_TienThanhToan.getText());
 
         if (tienNhanKH < tienThanhToan) {

@@ -189,4 +189,38 @@ public class KhachHang_dao implements KhachHang_Interface{
             }
         }
     }
+
+    @Override
+    public KhachHangEntity getKHTheoMa(String ma) {
+          KhachHangEntity khachHang = null;
+        ResultSet rs = null;
+        try {
+            connect.connect();
+            PreparedStatement statement = connect.getConnection().prepareStatement("SELECT * FROM KhachHang WHERE maKH = ?");
+//            statement = ConnectDB.getConnection().prepareStatement("SELECT * FROM KhachHang WHERE maKH = ?");
+            statement.setString(1, ma);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                GioiTinhEnum gt = null;
+                if (rs.getString("gioiTinh").equals("Nam")) {
+                    gt = GioiTinhEnum.NAM;
+                }
+                else if (rs.getString("gioiTinh").equals("Nữ")) {
+                    gt = GioiTinhEnum.NU;
+                } else gt = GioiTinhEnum.KHAC;
+                khachHang = new KhachHangEntity(
+                       rs.getString("maKH"), 
+                       rs.getString("hoTen"), 
+                       gt, 
+                       rs.getString("soDienThoai"), 
+                       rs.getString("diaChi"));
+            }
+            
+            connect.disconnect();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(KhachHang_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return khachHang;
+    }
 }

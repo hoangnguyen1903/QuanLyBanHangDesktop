@@ -357,7 +357,17 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
             if(rs.next()) {
                 String mahd = rs.getString("maHD");
                 String makh = rs.getString("maKH");
+                String manv = rs.getString("maNV");
+                NhanVienEntity nv = new NhanVienEntity(manv);
+                String mactkm = rs.getString("maCTKM");
+                ChuongTrinhKhuyenMaiEntity km = new ChuongTrinhKhuyenMaiEntity(mactkm);
+                Date nglap = rs.getDate("ngayLapHD");
+                double tongTien = rs.getDouble("tongTien");
+                double tienKhuyenMai = rs.getDouble("tienKhuyenMai");
+                double tienThanhToan = rs.getDouble("tienThanhToan");
+                String tinhTrang = rs.getString("tinhTrang");
                 KhachHangEntity kh = new KhachHangEntity();
+                
                 if(makh != null) {
                     kh.setMaKH(makh);
                     String sql_kh = "Select hoTen, soDienThoai from KhachHang where maKH=?";
@@ -372,16 +382,7 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
                         kh.setSoDienThoai(soDienThoai);
                     }
                 }
-                String manv = rs.getString("maNV");
-                NhanVienEntity nv = new NhanVienEntity(manv);
-                String mactkm = rs.getString("maCTKM");
-                ChuongTrinhKhuyenMaiEntity km = new ChuongTrinhKhuyenMaiEntity(mactkm);
-                Date nglap = rs.getDate("ngayLapHD");
-                double tongTien = rs.getDouble("tongTien");
-                double tienKhuyenMai = rs.getDouble("tienKhuyenMai");
-                double tienThanhToan = rs.getDouble("tienThanhToan");
-                String tinhTrang = rs.getString("tinhTrang");
-                
+
                 hd = new HoaDonEntity(mahd, nglap, kh, nv, km, tienKhuyenMai, tongTien, tienThanhToan, toEnum.TinhTrangHDToEnum(tinhTrang));
             }
             return hd;
