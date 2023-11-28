@@ -63,5 +63,10 @@ public class SanPham_bus implements SanPham_Interface{
     public boolean capNhatSoLuongTonSauKhiTaoHD(String maSP, int soLuong) {
         return sp_dao.capNhatSoLuongTonSauKhiTaoHD(maSP, soLuong);
     }
+
+    @Override
+    public void capNhatKhuyenMai() {
+        sp_dao.capNhatKhuyenMai();
+    }
     
 }

@@ -530,6 +530,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
 
     //Hàm load dữ liệu từ db lên table
     private void loadDuLieuTuDataLenTable() {
+        sp_bus.capNhatKhuyenMai();
         ArrayList<SanPhamEntity> dsSanPham = sp_bus.getAllSanPham();
         DecimalFormat decimalFormat = new DecimalFormat();
         for (SanPhamEntity sp : dsSanPham) {
@@ -731,6 +732,9 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         cbo_DanhMuc.setSelectedIndex(0);
         cbo_TinhTrang.setSelectedItem("Đang bán");
         txt_MaSanPham_Search.setText("");
+        cbo_KhuyenMai.removeAllItems();
+        duaDuLieuVaoComboBox(cbo_KhuyenMai, ctkm_bus.getallCTKMtheoLoaiKM("GGSP"), "TenCTKM");
+        cbo_KhuyenMai.addItem("Không giảm giá");
         cbo_KhuyenMai.setSelectedItem("Không giảm giá");
         model.setRowCount(0);
         ImageIcon anhMacDinh = new ImageIcon(duongDanAnhMacDinh);
@@ -740,7 +744,6 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         lbl_AnhSanPham.setText("");
         btn_Them.setEnabled(true);
         loadDuLieuTuDataLenTable();
-
     }
 
     private void btn_CapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CapNhatActionPerformed
@@ -802,7 +805,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                         String maCTKM = ctkm_bus.layMaKhuyenMaiTheoTen(tenCTKM);
                         ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(maCTKM);
                         String anh = lbl_AnhSanPham.getText();
-                        System.out.println(anh);
+//                        System.out.println(anh);
                         SanPhamEntity sp = new SanPhamEntity(maSP, tenSanPham, kichThuoc, mauSac, donGia, soLuongTonKho, tinhTrang, chatLieu, thuongHieu, danhMuc, ctkm, anh);
                         boolean kq = sp_bus.capNhatSanPham(sp);
                         if (kq) {
@@ -928,7 +931,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                 try (FileOutputStream fos = new FileOutputStream(f)) {
                     wb.write(fos);
                     JOptionPane.showMessageDialog(null, "Xuất file thành công");
-                    System.out.println(f);
+//                    System.out.println(f);
                     openExcelFile(f);
 
                 }

@@ -28,9 +28,9 @@
           <Group type="102" attributes="0">
               <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="panel_ThongTin" alignment="0" pref="1176" max="32767" attributes="0"/>
+                  <Component id="panel_ThongTin" alignment="0" max="32767" attributes="0"/>
                   <Component id="panel_DanhSachPhieuNhapHang" alignment="0" max="32767" attributes="0"/>
-                  <Component id="panel_ThaoTac" alignment="0" pref="1345" max="32767" attributes="0"/>
+                  <Component id="panel_ThaoTac" alignment="0" pref="1179" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
           </Group>
@@ -291,9 +291,9 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Component id="lbl_NgayNhap_Search" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="60" pref="60" max="-2" attributes="0"/>
-                  <Component id="jdc_NgayNhap_Search" min="-2" pref="160" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jdc_NgayNhap_Search" pref="203" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_TimKiem" min="-2" pref="120" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_LamMoi" min="-2" pref="120" max="-2" attributes="0"/>
@@ -302,9 +302,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_CapNhat" min="-2" pref="120" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btn_NhapExcel" min="-2" pref="120" max="-2" attributes="0"/>
+                  <Component id="btn_NhapExcel" min="-2" pref="132" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btn_XuatExcel" min="-2" pref="120" max="-2" attributes="0"/>
+                  <Component id="btn_XuatExcel" min="-2" pref="132" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_Luu" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -319,10 +319,6 @@
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                           <Component id="lbl_NgayNhap_Search" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                          <Component id="jdc_NgayNhap_Search" min="-2" pref="30" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="btn_TimKiem" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btn_LamMoi" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -332,8 +328,9 @@
                           <Component id="btn_XuatExcel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="btn_Luu" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="jdc_NgayNhap_Search" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -549,7 +546,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="scroll_TablePhieuNhapHang" alignment="0" pref="607" max="32767" attributes="0"/>
+              <Component id="scroll_TablePhieuNhapHang" alignment="0" pref="512" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

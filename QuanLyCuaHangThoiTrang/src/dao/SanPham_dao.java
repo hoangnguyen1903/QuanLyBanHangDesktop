@@ -453,4 +453,22 @@ public class SanPham_dao implements SanPham_Interface {
         return false;
     }
 
+    @Override
+    public void capNhatKhuyenMai() {
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+            String sql = "UPDATE SanPham SET maCTKM = NULL WHERE maCTKM IN (SELECT maCTKM FROM ChuongTrinhKhuyenMai WHERE ngayKetThuc < GETDATE())";
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+//            System.out.println("Số lượng bản ghi được cập nhật: " + kq);
+            ps.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    }
+
 }

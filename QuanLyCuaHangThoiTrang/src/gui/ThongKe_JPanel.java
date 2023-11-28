@@ -45,8 +45,6 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         Panel_NVKH = new javax.swing.JPanel();
         Panel_doanhso = new javax.swing.JPanel();
@@ -56,8 +54,6 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(1020, 700));
         setPreferredSize(new java.awt.Dimension(1020, 700));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         javax.swing.GroupLayout Panel_NVKHLayout = new javax.swing.GroupLayout(Panel_NVKH);
         Panel_NVKH.setLayout(Panel_NVKHLayout);
@@ -108,8 +104,6 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
     private javax.swing.JPanel Panel_NVKH;
     private javax.swing.JPanel Panel_doanhso;
     private javax.swing.JPanel Panel_doanhthu;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane3;
     // End of variables declaration//GEN-END:variables
 }
