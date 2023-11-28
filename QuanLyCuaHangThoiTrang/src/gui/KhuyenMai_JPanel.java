@@ -250,9 +250,6 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
             String ten = txtTenCTKM.getText();
             String maLoai = txtLoaiKM.getText();
             LoaiKhuyenMaiEntity lkm = new LoaiKhuyenMaiEntity(maLoai);
-            
-//            Double sotienTT = Double.parseDouble(txtSoTienGiamTT.getText());
-//            Double sotienTD = Double.parseDouble(txtSoTienGiamTD.getText());
         double sotienTT;
         double sotienTD;
         if(txtLoaiKM.getText().equals("GGSP")){
