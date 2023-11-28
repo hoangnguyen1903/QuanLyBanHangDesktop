@@ -5,11 +5,9 @@
         <group>
             <file>file:/D:/QuanLyBanHang/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/gui/ThongKeNVKH_Panel.java</file>
             <file>file:/D:/QuanLyBanHang/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/dao/ThongKe_dao.java</file>
+            <file>file:/D:/QuanLyBanHang/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/Interface/ThongKe_Interface.java</file>
             <file>file:/D:/QuanLyBanHang/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/bus/ThongKe_bus.java</file>
-            <file>file:/D:/QuanLyBanHang/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/util/ConvertDoubleToMoney.java</file>
             <file>file:/D:/QuanLyBanHang/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/gui/DangNhap_GUI.java</file>
-            <file>file:/D:/QuanLyBanHang/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/dao/TaiKhoan_dao.java</file>
-            <file>file:/D:/QuanLyBanHang/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/gui/ThongKe_JPanel.java</file>
         </group>
     </open-files>
 </project-private>
