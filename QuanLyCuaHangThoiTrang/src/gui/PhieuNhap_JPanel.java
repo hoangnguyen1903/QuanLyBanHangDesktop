@@ -471,6 +471,8 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         jdc_NgayNhap.setDate(new Date());
         jdc_NgayNhap_Search.setDate(new Date());
         model.setRowCount(0);
+        cbo_MaNhaCungCap.removeAllItems();
+        duaDuLieuVaoComboBox(cbo_MaNhaCungCap, ncc_bus.layDSNCCDangNhap(), "TenNCC");
         loadDuLieuTuDataLenTable();
 //        cbo_MaNhaCungCap.setEnabled(true);
         btn_NhapHang.setEnabled(true);
