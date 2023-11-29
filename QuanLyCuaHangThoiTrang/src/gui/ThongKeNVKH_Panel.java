@@ -50,7 +50,7 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
 
     public ThongKeNVKH_Panel() {
         initComponents();
-          setBounds(0, 0, 1183, 730);
+        setBounds(0, 0, 1183, 710);
         setVisible(true);
         tkbus = new ThongKe_bus();
         DocDuLieuLenTable();
@@ -270,6 +270,7 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         jTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(187, 205, 197));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel5.setBackground(new java.awt.Color(187, 205, 197));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -367,19 +368,12 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
         });
         jPanel5.add(rdo_bdd2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 70, -1, -1));
 
+        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, 130));
+
         paneldoanhso.setBackground(new java.awt.Color(187, 205, 197));
         paneldoanhso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout paneldoanhsoLayout = new javax.swing.GroupLayout(paneldoanhso);
-        paneldoanhso.setLayout(paneldoanhsoLayout);
-        paneldoanhsoLayout.setHorizontalGroup(
-            paneldoanhsoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        paneldoanhsoLayout.setVerticalGroup(
-            paneldoanhsoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 445, Short.MAX_VALUE)
-        );
+        paneldoanhso.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        add(paneldoanhso, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 266, 1168, 430));
 
         jTable.setModel(model = new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -407,29 +401,7 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(paneldoanhso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(paneldoanhso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 142, 1168, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void monthChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_monthChooserPropertyChange

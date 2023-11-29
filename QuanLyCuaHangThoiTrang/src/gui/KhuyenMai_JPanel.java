@@ -269,6 +269,9 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Cập nhật thành công" );
                 XoahetDuLieuTrenTable();
                 DocDuLieuTuSQLvaoTable();
+                LamMoi();
+                dateNgayBatDau.setSelectableDateRange(new Date(), null);
+                dateNgayKetThuc.setSelectableDateRange(new Date(), null);
 
             } else {
                 JOptionPane.showMessageDialog(null, "Cập nhật thất bại !");
@@ -720,6 +723,8 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         DocDuLieuTrenTable();
+        dateNgayBatDau.setSelectableDateRange(null, null);
+        dateNgayKetThuc.setSelectableDateRange(null, null);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btn_ThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ThemMouseClicked

@@ -31,6 +31,7 @@ import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.Locale;
 import javax.swing.JFileChooser;
 
@@ -39,6 +40,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
     private final ThongKe_bus tkbus;
     private DefaultTableModel model;
     private BarRenderer Renderer;
+    private static String tieude,trucX,trucY;
         // Định dạng số tiền sang VND
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
@@ -57,7 +59,10 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
 
         monthChooser.setLocale(new Locale("vi", "VN"));
         DocDuLieuLenTable();
-        charAt();
+        tieude = "Doanh Thu Tháng";
+        trucX = "Ngày";
+        trucY = "Doanh Thu";
+        charAt(tieude,trucX,trucY);
     }
 
     public void DocDuLieuLenTable() {
@@ -65,24 +70,44 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         String nam = String.valueOf(spin_nam.getValue());
         System.out.println("Tháng " + month + nam);
         ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
-        if(ds.isEmpty()) JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
+        if(ds.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
+            Date datenow = new Date();
+            monthChooser.setMonth(datenow.getMonth());
+            spin_nam.setYear(datenow.getYear() + 1900);
+           
+        }
         else for (Object[] tk : ds) {
 //            System.out.println("Thong ke " + tk);
             model.addRow(tk);
-        }
         ChuyenDuLieuSoTrongTableThanhVND();
         TongDoanhThu();
+        }
+
         
     }
-    private void ChuyenDuLieuSoTrongTableThanhVND(){
-         NumberFormat formatter = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
-        int Crow = jTable1.getRowCount();
-        for (int i=0;i<Crow;i++){
-            jTable1.setValueAt(formatter.format(jTable1.getValueAt(i, 1)), i, 1);
-             jTable1.setValueAt(formatter.format(jTable1.getValueAt(i, 2)), i, 2);
-              jTable1.setValueAt(formatter.format(jTable1.getValueAt(i, 3)), i, 3);
+        private void ChuyenDuLieuSoTrongTableThanhVND() {
+            NumberFormat formatter = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
+            int Crow = jTable1.getRowCount();
+            for (int i = 0; i < Crow; i++) {
+                Object valueAtColumn1 = jTable1.getValueAt(i, 1);
+                Object valueAtColumn2 = jTable1.getValueAt(i, 2);
+                Object valueAtColumn3 = jTable1.getValueAt(i, 3);
+
+                if (valueAtColumn1 instanceof Number) {
+                    jTable1.setValueAt(formatter.format(valueAtColumn1), i, 1);
+                }
+
+                if (valueAtColumn2 instanceof Number) {
+                    jTable1.setValueAt(formatter.format(valueAtColumn2), i, 2);
+                }
+
+                if (valueAtColumn3 instanceof Number) {
+                    jTable1.setValueAt(formatter.format(valueAtColumn3), i, 3);
+                }
+            }
         }
-    }
+
     private void TongDoanhThu(){
         String Tong;
         double Sum =0;
@@ -105,7 +130,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         md.getDataVector().removeAllElements();
     }
 
-    public void charAt() {
+    public void charAt(String title,String x, String y) {
         DefaultCategoryDataset barchardata = new DefaultCategoryDataset();
         try {
             int countRow = jTable1.getRowCount();
@@ -119,7 +144,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
 
-        JFreeChart barchart = ChartFactory.createBarChart("Doanh Thu", "Ngày bán", "Doanh thu", barchardata, PlotOrientation.VERTICAL, false, true, false);
+        JFreeChart barchart = ChartFactory.createBarChart(title, x, y, barchardata, PlotOrientation.VERTICAL, false, true, false);
 
         CategoryPlot barchst = barchart.getCategoryPlot();
         barchst.setRangeCrosshairPaint(Color.ORANGE);
@@ -145,7 +170,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         Panel_bieudo.validate();
     }
 
-    public void createLineChart() {
+    public void createLineChart(String title,String x, String y) {
         DefaultCategoryDataset lineChartData = new DefaultCategoryDataset();
         try {
             int countRow = jTable1.getRowCount();
@@ -158,9 +183,9 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         }
 
         JFreeChart lineChart = ChartFactory.createLineChart(
-                "Doanh Thu", // Tiêu đề biểu đồ
-                "Ngày bán", // Label trục x
-                "Doanh thu", // Label trục y
+                title, // Tiêu đề biểu đồ
+                x, // Label trục x
+                y, // Label trục y
                 lineChartData, // Dữ liệu
                 PlotOrientation.VERTICAL,
                 false,
@@ -325,7 +350,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         jLabel4.setText("TỔNG:");
         jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 100, 40));
 
-        lblTongDoanhThu.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lblTongDoanhThu.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         lblTongDoanhThu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTongDoanhThu.setText("jLabel5");
         jPanel6.add(lblTongDoanhThu, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 506, 180, 40));
@@ -351,21 +376,23 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
 
     private void rdo_bdcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bdcActionPerformed
 
-        charAt();
+       charAt(tieude,trucX,trucY);
     }//GEN-LAST:event_rdo_bdcActionPerformed
 
     private void monthChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_monthChooserPropertyChange
         XoaAllData();
         DocDuLieuLenTable();
         if (rdo_bdc.isSelected())
-            charAt();
+            charAt(tieude,trucX,trucY);
         else
-            createLineChart();
+            createLineChart(tieude,trucX,trucY);
     }//GEN-LAST:event_monthChooserPropertyChange
 
     private void btn_dtnamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dtnamActionPerformed
         // TODO add your handling code here:
-
+        tieude = "Doanh Thu Năm";
+        trucX = "Tháng";
+        trucY = "Doanh Thu";
         String nam = String.valueOf(spin_nam.getValue());
 
         ArrayList<Object[]> ds = tkbus.getListDoanhThuTrongNam(nam);
@@ -375,12 +402,15 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
                 model.addRow(tk);
             }
             if (rdo_bdc.isSelected()) {
-                charAt();
+               charAt(tieude,trucX,trucY);
             } else {
-                createLineChart();
+                createLineChart(tieude,trucX,trucY);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Doanh Thu trong năm " + nam + " không có dữ liệu");
+             Date datenow = new Date();
+            monthChooser.setMonth(datenow.getMonth());
+            spin_nam.setYear(datenow.getYear() + 1900);
         }
         ChuyenDuLieuSoTrongTableThanhVND();
         TongDoanhThu();
@@ -465,24 +495,31 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
     }
     private void rdo_bddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_bddActionPerformed
         // TODO add your handling code here:
-        createLineChart();
+        createLineChart(tieude,trucX,trucY);
     }//GEN-LAST:event_rdo_bddActionPerformed
 
     private void spin_namPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_spin_namPropertyChange
         // TODO add your handling code here:
         XoaAllData();
         DocDuLieuLenTable();
-        charAt();
+          if (rdo_bdc.isSelected()) {
+         charAt(tieude,trucX,trucY);
+        } else {
+            createLineChart(tieude,trucX,trucY);
+        }
     }//GEN-LAST:event_spin_namPropertyChange
 
     private void btnLamMoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLamMoiMouseClicked
         // TODO add your handling code here:
+        tieude = "Doanh Thu Tháng";
+        trucX = "Ngày";
+        trucY = "Doanh Thu";
         XoaAllData();
         DocDuLieuLenTable();
         if (rdo_bdc.isSelected()) {
-            charAt();
+         charAt(tieude,trucX,trucY);
         } else {
-            createLineChart();
+            createLineChart(tieude,trucX,trucY);
         }
 
     }//GEN-LAST:event_btnLamMoiMouseClicked

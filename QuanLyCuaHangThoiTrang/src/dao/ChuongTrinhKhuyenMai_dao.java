@@ -282,7 +282,8 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             PreparedStatement stmt = null;
-            String sql = "select * from ChuongTrinhKhuyenMai where maLoaiCTKM = ? and tinhTrang=N'Còn'";
+            String sql = "select * from ChuongTrinhKhuyenMai where maLoaiCTKM = ?";
+//            String sql = "select * from ChuongTrinhKhuyenMai where maLoaiCTKM = ? and tinhTrang=N'Còn'";
             stmt =con.prepareStatement(sql);
             stmt.setString(1, ma);
             ResultSet rs = stmt.executeQuery();
