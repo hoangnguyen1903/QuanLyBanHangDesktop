@@ -312,7 +312,6 @@ public class DangNhap_GUI extends javax.swing.JFrame {
                 tk_dao.thoiGianDNGN(tk);
 
                 NhanVienEntity nv = nvbus.getNV(tfTK);
-                System.out.println(nv);
                 ToanCuc tc = new ToanCuc();
                 tc.setName(nv.getHoTen());
                 tc.setMa(nv.getMaNV());

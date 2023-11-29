@@ -394,13 +394,14 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         trucX = "Tháng";
         trucY = "Doanh Thu";
         String nam = String.valueOf(spin_nam.getValue());
-
+       
         ArrayList<Object[]> ds = tkbus.getListDoanhThuTrongNam(nam);
         if (ds != null) {
             XoaAllData();
             for (Object[] tk : ds) {
                 model.addRow(tk);
             }
+             ChuyenDuLieuSoTrongTableThanhVND();
             if (rdo_bdc.isSelected()) {
                charAt(tieude,trucX,trucY);
             } else {
@@ -412,7 +413,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
             monthChooser.setMonth(datenow.getMonth());
             spin_nam.setYear(datenow.getYear() + 1900);
         }
-        ChuyenDuLieuSoTrongTableThanhVND();
+        
         TongDoanhThu();
 
     }//GEN-LAST:event_btn_dtnamActionPerformed

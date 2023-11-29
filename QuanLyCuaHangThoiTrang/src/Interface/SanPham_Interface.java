@@ -29,6 +29,8 @@ public interface SanPham_Interface {
     
     public boolean kiemTraMaSanPhamTonTai(String maSP);
     
+    public void capNhatKhuyenMai();
+    
     // Nguyen Huy Hoang
     public SanPhamEntity timKiemSanPham(String ma);
     public boolean capNhatSoLuongTonSauKhiTaoHD(String maSP, int soLuong);

@@ -83,7 +83,19 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         Image scaled_btn_CapNhat = img_btn_CapNhat.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
         img_btn_CapNhat = new ImageIcon(scaled_btn_CapNhat);
         btn_CapNhat.setIcon(img_btn_CapNhat);
-
+        ImageIcon img_btn_NhapExcel = new ImageIcon("src//pic//icon//buttonNhapExcel.png");
+        Image scaled_btn_NhapExcel = img_btn_NhapExcel.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        img_btn_NhapExcel = new ImageIcon(scaled_btn_NhapExcel);
+        btn_NhapExcel.setIcon(img_btn_NhapExcel);
+        ImageIcon img_btn_XuatExcel = new ImageIcon("src//pic//icon//buttonXuatExcel.png");
+        Image scaled_btn_XuatExcel = img_btn_XuatExcel.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        img_btn_XuatExcel = new ImageIcon(scaled_btn_XuatExcel);
+        btn_XuatExcel.setIcon(img_btn_XuatExcel);
+        ImageIcon img_btn_Luu = new ImageIcon("src//pic//icon//buttonLuu.png");
+        Image scaled_btn_Luu = img_btn_Luu.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        img_btn_Luu = new ImageIcon(scaled_btn_Luu);
+        btn_Luu.setIcon(img_btn_Luu);
+        
         loadDuLieuTuDataLenTable();
         duaDuLieuVaoComboBox(cbo_MaNhaCungCap, ncc_bus.layDSNCCDangNhap(), "TenNCC");
     }
@@ -308,9 +320,9 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
             .addGroup(panel_ThaoTacLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(lbl_NgayNhap_Search)
-                .addGap(60, 60, 60)
-                .addComponent(jdc_NgayNhap_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jdc_NgayNhap_Search, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_LamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -319,9 +331,9 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_NhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_NhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_XuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_XuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_Luu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -333,9 +345,6 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
                     .addGroup(panel_ThaoTacLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(lbl_NgayNhap_Search))
-                    .addGroup(panel_ThaoTacLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jdc_NgayNhap_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel_ThaoTacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_LamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -343,8 +352,9 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
                         .addComponent(btn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_NhapExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_XuatExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_Luu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6))
+                        .addComponent(btn_Luu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jdc_NgayNhap_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7))
         );
 
         panel_DanhSachPhieuNhapHang.setBackground(new java.awt.Color(187, 205, 197));
@@ -370,7 +380,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         );
         panel_DanhSachPhieuNhapHangLayout.setVerticalGroup(
             panel_DanhSachPhieuNhapHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scroll_TablePhieuNhapHang, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
+            .addComponent(scroll_TablePhieuNhapHang, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -381,9 +391,9 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel_ThongTin, javax.swing.GroupLayout.DEFAULT_SIZE, 1176, Short.MAX_VALUE)
+                    .addComponent(panel_ThongTin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panel_DanhSachPhieuNhapHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panel_ThaoTac, javax.swing.GroupLayout.DEFAULT_SIZE, 1345, Short.MAX_VALUE))
+                    .addComponent(panel_ThaoTac, javax.swing.GroupLayout.DEFAULT_SIZE, 1179, Short.MAX_VALUE))
                 .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
@@ -461,6 +471,8 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         jdc_NgayNhap.setDate(new Date());
         jdc_NgayNhap_Search.setDate(new Date());
         model.setRowCount(0);
+        cbo_MaNhaCungCap.removeAllItems();
+        duaDuLieuVaoComboBox(cbo_MaNhaCungCap, ncc_bus.layDSNCCDangNhap(), "TenNCC");
         loadDuLieuTuDataLenTable();
 //        cbo_MaNhaCungCap.setEnabled(true);
         btn_NhapHang.setEnabled(true);

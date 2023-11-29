@@ -153,8 +153,15 @@ public class DoiTra_dao implements DoiTra_Interface{
                 String maDT = rs.getString("maDT");
                 String maHD = rs.getString("maHD");
                 HoaDonEntity hd = new HoaDonEntity(maHD);
+                
                 String maKH = rs.getString("maKH");
                 KhachHangEntity kh = new KhachHangEntity();
+                
+                String maNV = rs.getString("maNV");
+                NhanVienEntity nv = new NhanVienEntity(maNV);
+                Date thoiGian = rs.getDate("thoiGianDoiTra");
+                String hinhThuc = rs.getString("hinhThucDoiTra");
+                double tongTien = rs.getDouble("tongTien");
                 if(maKH != null) {
                     kh.setMaKH(maKH);
                     String sql_kh = "Select hoTen, soDienThoai from KhachHang where maKH=?";
@@ -170,11 +177,6 @@ public class DoiTra_dao implements DoiTra_Interface{
                     
                 }
                 hd.setKhachHang(kh);
-                String maNV = rs.getString("maNV");
-                NhanVienEntity nv = new NhanVienEntity(maNV);
-                Date thoiGian = rs.getDate("thoiGianDoiTra");
-                String hinhThuc = rs.getString("hinhThucDoiTra");
-                double tongTien = rs.getDouble("tongTien");
                 
                 ConvertStringToEnum toEnum = new ConvertStringToEnum();
                 
