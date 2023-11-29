@@ -609,6 +609,8 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                 tinhTrang = TinhTrangSPEnum.DANGBAN;
             } else if (cbo_TinhTrang.getSelectedItem().equals("Ngừng bán")) {
                 tinhTrang = TinhTrangSPEnum.NGUNGBAN;
+            } else if (cbo_TinhTrang.getSelectedItem().equals("Hết hàng")) {
+                tinhTrang = TinhTrangSPEnum.HETHANG;
             }
             int soLuongTonKho = Integer.parseInt(txt_SoLuongTonKho.getText());
             String tenChatLieu = cbo_ChatLieu.getSelectedItem().toString();
@@ -790,7 +792,9 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                             tinhTrang = TinhTrangSPEnum.DANGBAN;
                         } else if (cbo_TinhTrang.getSelectedItem().equals("Ngừng bán")) {
                             tinhTrang = TinhTrangSPEnum.NGUNGBAN;
-                        }
+                        } else if (cbo_TinhTrang.getSelectedItem().equals("Hết hàng")) {
+                            tinhTrang = TinhTrangSPEnum.HETHANG;
+                        } 
                         int soLuongTonKho = Integer.parseInt(txt_SoLuongTonKho.getText());
                         String tenChatLieu = cbo_ChatLieu.getSelectedItem().toString();
                         String maChatLieu = chatLieu_bus.layMaChatLieuTheoTen(tenChatLieu);

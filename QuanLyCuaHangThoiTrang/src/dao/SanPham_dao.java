@@ -81,6 +81,8 @@ public class SanPham_dao implements SanPham_Interface {
                     tinhTrangSPEnum = TinhTrangSPEnum.DANGBAN;
                 } else if (tinhTrang.equals("Ngừng bán")) {
                     tinhTrangSPEnum = TinhTrangSPEnum.NGUNGBAN;
+                } else if (tinhTrang.equals("Hết hàng")) {
+                    tinhTrangSPEnum = TinhTrangSPEnum.HETHANG;
                 }
                 ChatLieuEntity maChatLieu = new ChatLieuEntity(chatLieu);
                 ThuongHieuEntity maThuongHieu = new ThuongHieuEntity(thuongHieu);

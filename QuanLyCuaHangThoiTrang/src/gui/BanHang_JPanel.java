@@ -11,6 +11,7 @@ import entity.HoaDonEntity;
 import entity.KhachHangEntity;
 import entity.NhanVienEntity;
 import entity.SanPhamEntity;
+import entity.TinhTrangSPEnum;
 import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -1050,6 +1051,14 @@ public class BanHang_JPanel extends javax.swing.JPanel {
         }
         SanPhamEntity sanPham = sp_bus.timKiemSanPham(maSP);
         if(sanPham != null) {
+            if(sanPham.getTinhTrang().equals(TinhTrangSPEnum.HETHANG)) {
+                JOptionPane.showMessageDialog(this, "Sản phẩm đã hết hàng!");
+                return;
+            }
+            if(sanPham.getTinhTrang().equals(TinhTrangSPEnum.NGUNGBAN)) {
+                JOptionPane.showMessageDialog(this, "Sản phẩm đã ngừng bán!");
+                return;
+            }
             lbl_TenSanPham.setText(sanPham.getTenSP());
             lbl_KichThuoc.setText(sanPham.getKichThuoc().toString());
             lbl_ChatLieu.setText(sanPham.getChatLieu().getTenChatLieu());

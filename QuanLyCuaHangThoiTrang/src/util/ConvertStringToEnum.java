@@ -116,6 +116,9 @@ public class ConvertStringToEnum {
         if(tinhTrangSP.equals("Đang bán")) {
             return TinhTrangSPEnum.DANGBAN;
         }
+        if(tinhTrangSP.equals("Hết hàng")) {
+            return TinhTrangSPEnum.HETHANG;
+        }
         if(tinhTrangSP.equals("Ngừng bán")) {
             return TinhTrangSPEnum.NGUNGBAN;
         }
