@@ -215,7 +215,7 @@ public class DoiTra_dao implements DoiTra_Interface{
 
             ResultSet rs = statement.executeQuery();
             
-            ArrayList<DoiTraEntity> dtList = null;
+            ArrayList<DoiTraEntity> dtList = new ArrayList<DoiTraEntity>();
             while(rs.next()) {
                 String maDT = rs.getString("maDT");
                 String maHD = rs.getString("maHD");
@@ -229,7 +229,7 @@ public class DoiTra_dao implements DoiTra_Interface{
                 ConvertStringToEnum toEnum = new ConvertStringToEnum();
                 
                 DoiTraEntity dt = new DoiTraEntity(maDT, hd, nv, toEnum.HinhThucDTToEnum(hinhThuc), thoiGian, tongTien);
-                dtList = new ArrayList<DoiTraEntity>();
+                
                 dtList.add(dt);
             }
 

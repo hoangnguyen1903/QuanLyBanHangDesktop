@@ -1383,7 +1383,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
         lbl_DanhMuc.setText("");
         lbl_DonGia.setText("");
         lbl_KhuyenMaiSP.setText("");
-        spinnerModel.setValue(1);
+        spinnerModel.setValue(0);
         spinner_SoLuong.setEnabled(false);
         
         tableModel_GioHang.setRowCount(0);
@@ -1440,7 +1440,7 @@ public class BanHang_JPanel extends javax.swing.JPanel {
         }
         
         hdList = hd_bus.timKiemHoaDonChuaThanhToan(sdt);
-        if(hdList != null) {
+        if(hdList != null && hdList.isEmpty() == false) {
             tableModel_HoaDon.setRowCount(0);
             for (HoaDonEntity hd : hdList) {
                 String[] data = {hd.getMaHD(), hd.getKhachHang().getMaKH(), hd.getNhanVien().getMaNV(), hd.getChuongTrinhKM().getMaCTKM(), hd.getNgayLapHD().toString(), convert.toMoney(hd.getTienKhuyenMai()), convert.toMoney(hd.getTongTien()), convert.toMoney(hd.getTienThanhToan()), hd.getTinhTrang().toString()};
