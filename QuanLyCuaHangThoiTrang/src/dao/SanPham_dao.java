@@ -29,7 +29,6 @@ import util.ConvertStringToEnum;
  */
 public class SanPham_dao implements SanPham_Interface {
 
-
     @Override
     public ArrayList<SanPhamEntity> getAllSanPham() {
         ArrayList<SanPhamEntity> dsSanPham = new ArrayList<SanPhamEntity>();
@@ -173,6 +172,8 @@ public class SanPham_dao implements SanPham_Interface {
                     tinhTrang = TinhTrangSPEnum.DANGBAN;
                 } else if (rs.getString("tinhTrang").equals("Ngừng bán")) {
                     tinhTrang = TinhTrangSPEnum.NGUNGBAN;
+                } else if (rs.getString("tinhTrang").equals("Hết hàng")) {
+                    tinhTrang = TinhTrangSPEnum.HETHANG;
                 }
                 int soLuongTonKho = rs.getInt("soLuongTonKho");
                 ChatLieuEntity chatLieu = new ChatLieuEntity(rs.getString("maChatLieu"));
@@ -272,6 +273,8 @@ public class SanPham_dao implements SanPham_Interface {
                     tinhTrangSPEnum = TinhTrangSPEnum.DANGBAN;
                 } else if (tinhTrang.equals("Ngừng bán")) {
                     tinhTrangSPEnum = TinhTrangSPEnum.NGUNGBAN;
+                } else if (tinhTrang.equals("Hết hàng")) {
+                    tinhTrangSPEnum = TinhTrangSPEnum.HETHANG;
                 }
                 ChatLieuEntity maChatLieu = new ChatLieuEntity(chatLieu);
                 ThuongHieuEntity maThuongHieu = new ThuongHieuEntity(thuongHieu);
@@ -325,19 +328,19 @@ public class SanPham_dao implements SanPham_Interface {
                 DanhMucSanPhamEntity danhMucSanPham = new DanhMucSanPhamEntity(maDanhMuc, tenDanhMuc);
                 String maCTKM = rs.getString("maCTKM");
                 ChuongTrinhKhuyenMaiEntity chuongTrinhKhuyenMai = null;
-                if(maCTKM != null) {
+                if (maCTKM != null) {
                     chuongTrinhKhuyenMai = new ChuongTrinhKhuyenMaiEntity(maCTKM);
                     String sqlKM = "Select giamGia from ChuongTrinhKhuyenMai where maCTKM=? and maLoaiCTKM='GGSP'";
                     statement = con.prepareStatement(sqlKM);
                     statement.setString(1, maCTKM);
-                    
+
                     rs = statement.executeQuery();
-                    if(rs.next()) {
+                    if (rs.next()) {
                         int giamGia = rs.getInt("giamGia");
                         chuongTrinhKhuyenMai.setGiamGia(giamGia);
                     }
                 }
-                
+
                 ConvertStringToEnum convertToEnum = new ConvertStringToEnum();
 
                 sanPham = new SanPhamEntity(maSP, tenSP, convertToEnum.KichThuoctoEnum(kichThuoc), convertToEnum.MauSactoEnum(mauSac), donGia, soLuongTonKho, convertToEnum.TinhTrangSPToEnum(tinhTrang), chatLieu, thuongHieu, danhMucSanPham, chuongTrinhKhuyenMai, imgUrl);
@@ -355,7 +358,7 @@ public class SanPham_dao implements SanPham_Interface {
             }
         }
     }
-    
+
     @Override
     public boolean capNhatSoLuongTonSauKhiTaoHD(String maSP, int soLuong) {
         PreparedStatement statement = null;
@@ -371,7 +374,7 @@ public class SanPham_dao implements SanPham_Interface {
             int rs = statement.executeUpdate();
             SanPhamEntity sanPham = null;
             if (rs < 1) {
-                
+
                 return false;
             }
             return true;
@@ -440,17 +443,17 @@ public class SanPham_dao implements SanPham_Interface {
             String sql = "SELECT COUNT(*) FROM SanPham WHERE maSP =?";
             ps = con.prepareStatement(sql);
             ps.setString(1, maSP);
-            ResultSet rs=ps.executeQuery();
-            if(rs.next()){
-                int sl=rs.getInt(1);
-                return sl>0;
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int sl = rs.getInt(1);
+                return sl > 0;
             }
             ps.close();
             rs.close();
             ConnectDB.getInstance().disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(SanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
-            
+
         }
         return false;
     }
@@ -464,7 +467,25 @@ public class SanPham_dao implements SanPham_Interface {
             String sql = "UPDATE SanPham SET maCTKM = NULL WHERE maCTKM IN (SELECT maCTKM FROM ChuongTrinhKhuyenMai WHERE ngayKetThuc < GETDATE())";
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
-//            System.out.println("Số lượng bản ghi được cập nhật: " + kq);
+            ps.close();
+            ConnectDB.getInstance().disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPham_dao.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    }
+
+    @Override
+    public void capNhatTinhTrang(String maSP, TinhTrangSPEnum tinhTrangDangBan) {
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement ps = null;
+            String sql = "UPDATE SanPham SET tinhTrang = ? WHERE maSP = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, tinhTrangDangBan.toString());
+            ps.setString(2, maSP);
+            ps.executeUpdate();
             ps.close();
             ConnectDB.getInstance().disconnect();
         } catch (SQLException ex) {

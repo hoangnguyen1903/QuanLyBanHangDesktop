@@ -5,6 +5,7 @@
 package Interface;
 
 import entity.SanPhamEntity;
+import entity.TinhTrangSPEnum;
 import java.util.ArrayList;
 
 /**
@@ -30,6 +31,8 @@ public interface SanPham_Interface {
     public boolean kiemTraMaSanPhamTonTai(String maSP);
     
     public void capNhatKhuyenMai();
+    
+    public void capNhatTinhTrang(String maSP, TinhTrangSPEnum tinhTrangDangBan);
     
     // Nguyen Huy Hoang
     public SanPhamEntity timKiemSanPham(String ma);

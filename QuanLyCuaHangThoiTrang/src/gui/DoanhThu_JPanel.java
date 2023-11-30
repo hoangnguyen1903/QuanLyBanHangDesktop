@@ -66,12 +66,12 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
     }
 
     public void DocDuLieuLenTable() {
-        String month = String.valueOf(monthChooser.getMonth() + 1);
+        String month = String.valueOf(monthChooser.getMonth()+1);
         String nam = String.valueOf(spin_nam.getValue());
         System.out.println("Tháng " + month + nam);
         ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
         if(ds.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
+//            JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
             Date datenow = new Date();
             monthChooser.setMonth(datenow.getMonth());
             spin_nam.setYear(datenow.getYear() + 1900);
