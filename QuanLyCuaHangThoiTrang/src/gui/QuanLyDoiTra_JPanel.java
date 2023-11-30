@@ -195,14 +195,18 @@ public class QuanLyDoiTra_JPanel extends javax.swing.JPanel {
         ArrayList<DoiTraEntity> dtList = new ArrayList<>();
         if(ma.length() > 0 && ngayLap == null) {
             DoiTraEntity dt = dt_bus.getDoiTraTheoMa(ma);
-            dtList.add(dt);
+            if(dt != null) { 
+                dtList.add(dt);
+            }
         } else if(ma.equals("") && ngayLap != null) {
             dtList = dt_bus.getDoiTraTheoNgayLap(new java.sql.Date(ngayLap.getTime()));
         } else {
             DoiTraEntity dt = dt_bus.getDoiTraTheoDieuKien(ma, new java.sql.Date(ngayLap.getTime()));
-            dtList.add(dt);
+            if(dt != null) { 
+                dtList.add(dt);
+            }
         }
-        
+
         if(!dtList.isEmpty()) {
             tableModel.setRowCount(0);
             for (DoiTraEntity dt : dtList) {

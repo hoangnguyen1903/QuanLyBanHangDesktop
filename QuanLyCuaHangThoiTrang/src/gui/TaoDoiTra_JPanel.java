@@ -766,6 +766,7 @@ public class TaoDoiTra_JPanel extends javax.swing.JPanel {
         int soLuongConLai = soLuongMax - tongSoLuong;
         if(soLuongConLai == 0) {
             JOptionPane.showMessageDialog(this, "Sản phẩm này đã được hoàn trả hết số lượng!");
+            table_HoaDon.clearSelection();
             return;
         }
         if(soLuongConLai < Integer.parseInt(soLuong)) {
