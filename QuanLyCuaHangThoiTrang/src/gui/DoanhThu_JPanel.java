@@ -227,6 +227,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         button1 = new java.awt.Button();
         btn_dtnam = new java.awt.Button();
         btnLamMoi = new javax.swing.JButton();
+        btn_TopDT = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -247,7 +248,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         jLabel1.setText("THỐNG KÊ");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel1.setPreferredSize(new java.awt.Dimension(70, 30));
-        jPanel5.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(516, 7, 189, 92));
+        jPanel5.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 189, 92));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -267,7 +268,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Năm");
         jLabel3.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(291, 33, 68, -1));
+        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 68, -1));
 
         rdo_bdc.setBackground(new java.awt.Color(187, 205, 197));
         rdo_bdc.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
@@ -295,7 +296,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
                 spin_namPropertyChange(evt);
             }
         });
-        jPanel5.add(spin_nam, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, -1, 30));
+        jPanel5.add(spin_nam, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, -1, 30));
 
         button1.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
         button1.setLabel("Xuất");
@@ -325,6 +326,17 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
             }
         });
         jPanel5.add(btnLamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, 30));
+
+        btn_TopDT.setBackground(new java.awt.Color(0, 51, 51));
+        btn_TopDT.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btn_TopDT.setForeground(new java.awt.Color(255, 255, 255));
+        btn_TopDT.setText("Doanh Thu Tiêu Biểu");
+        btn_TopDT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_TopDTMouseClicked(evt);
+            }
+        });
+        jPanel5.add(btn_TopDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, -1, 30));
 
         add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 5, 1168, 130));
 
@@ -525,10 +537,38 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnLamMoiMouseClicked
 
+    private void btn_TopDTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_TopDTMouseClicked
+        // TODO add your handling code here:
+        XoaAllData();
+           String month = String.valueOf(monthChooser.getMonth() + 1);
+        String nam = String.valueOf(spin_nam.getValue());
+        System.out.println("Tháng " + month + nam);
+        ArrayList<Object[]> ds = tkbus.getListDoanhThuBySort(month, nam);
+        if(ds.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
+            Date datenow = new Date();
+            monthChooser.setMonth(datenow.getMonth());
+            spin_nam.setYear(datenow.getYear() + 1900);
+           
+        }
+        else for (Object[] tk : ds) {
+//            System.out.println("Thong ke " + tk);
+            model.addRow(tk);
+        ChuyenDuLieuSoTrongTableThanhVND();
+        TongDoanhThu();  
+        }
+        if (rdo_bdc.isSelected()) {
+         charAt(tieude,trucX,trucY);
+        } else {
+            createLineChart(tieude,trucX,trucY);
+        }
+    }//GEN-LAST:event_btn_TopDTMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel_bieudo;
     private javax.swing.JButton btnLamMoi;
+    private javax.swing.JButton btn_TopDT;
     private java.awt.Button btn_dtnam;
     private java.awt.Button button1;
     private javax.swing.JLabel jLabel1;
