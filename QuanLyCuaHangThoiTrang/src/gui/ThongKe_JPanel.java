@@ -55,6 +55,8 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1020, 700));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        Panel_NVKH.setBackground(new java.awt.Color(187, 205, 197));
+
         javax.swing.GroupLayout Panel_NVKHLayout = new javax.swing.GroupLayout(Panel_NVKH);
         Panel_NVKH.setLayout(Panel_NVKHLayout);
         Panel_NVKHLayout.setHorizontalGroup(
@@ -67,6 +69,8 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
         );
 
         jTabbedPane3.addTab("Thống Kê", Panel_NVKH);
+
+        Panel_doanhso.setBackground(new java.awt.Color(187, 205, 197));
 
         javax.swing.GroupLayout Panel_doanhsoLayout = new javax.swing.GroupLayout(Panel_doanhso);
         Panel_doanhso.setLayout(Panel_doanhsoLayout);
@@ -81,6 +85,7 @@ public class ThongKe_JPanel extends javax.swing.JPanel {
 
         jTabbedPane3.addTab("Doanh Số", Panel_doanhso);
 
+        Panel_doanhthu.setBackground(new java.awt.Color(187, 205, 197));
         Panel_doanhthu.setPreferredSize(new java.awt.Dimension(1181, 715));
 
         javax.swing.GroupLayout Panel_doanhthuLayout = new javax.swing.GroupLayout(Panel_doanhthu);
