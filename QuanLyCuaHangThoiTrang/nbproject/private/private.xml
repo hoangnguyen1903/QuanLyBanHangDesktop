@@ -3,15 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/D:/NetBeans/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/gui/BanHang_JPanel.java</file>
-            <file>file:/D:/NetBeans/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/dao/HoaDon_dao.java</file>
-            <file>file:/D:/NetBeans/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/gui/SanPham_JPanel.java</file>
+            <file>file:/D:/NetBeans/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/dao/MatHangNhap_dao.java</file>
             <file>file:/D:/NetBeans/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/demo/runProgram.java</file>
-=======
-            <file>file:/C:/Users/DELL/Desktop/DOAN2PTUD/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/gui/DangNhap_GUI.java</file>
-            <file>file:/C:/Users/DELL/Desktop/DOAN2PTUD/QuanLyBanHangDesktop/QuanLyCuaHangThoiTrang/src/gui/DoanhThu_JPanel.java</file>
->>>>>>> afd5bbd2e2b5fd844d047dd702e066a305a63a5b
         </group>
     </open-files>
 </project-private>
