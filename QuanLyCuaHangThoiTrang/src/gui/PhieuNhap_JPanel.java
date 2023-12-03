@@ -95,7 +95,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         Image scaled_btn_Luu = img_btn_Luu.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
         img_btn_Luu = new ImageIcon(scaled_btn_Luu);
         btn_Luu.setIcon(img_btn_Luu);
-        
+
         loadDuLieuTuDataLenTable();
         duaDuLieuVaoComboBox(cbo_MaNhaCungCap, ncc_bus.layDSNCCDangNhap(), "TenNCC");
     }
@@ -523,35 +523,42 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Chưa chọn phiếu nhập hàng để cập nhật");
         } else {
             if (table_PhieuNhapHang.getSelectedRowCount() == 1) {
-                if (validata()) {
-                    if (JOptionPane.showConfirmDialog(null, "Bạn có chắc chắc cập nhật phiếu nhập hàng có mã sản phẩm" + table_PhieuNhapHang.getValueAt(row, 0) + " này không?", "Cảnh báo cập nhật", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                        String maMHN = txt_MaMatHangNhap.getText();
-                        int soLuongNhapMoi = (int) spinner_SoLuong.getValue();
-                        int soLuongNhapBanDau = laySoLuongNhapBanDau(maMHN);
-                        if (soLuongNhapBanDau != -1) {
-                            String maSP = txt_MaSanPham.getText().trim();
-                            String tenNCC = cbo_MaNhaCungCap.getSelectedItem().toString();
-                            int soLuongHT = sp_bus.laySoLuongTonKhoTheoMaSP(txt_MaSanPham.getText().trim());
-                            int soLuongThayDoi = soLuongNhapBanDau - soLuongNhapMoi;
-                            int soLuongMoiCapNhat = soLuongHT - soLuongThayDoi;
-                            Date ngayNhap_Date = jdc_NgayNhap.getDate();
-                            LocalDate ngayNhap_LocalDate = ngayNhap_Date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            SanPhamEntity sp = new SanPhamEntity(maSP);
-                            String maNCC = ncc_bus.layMaNhaCungCapTheoTen(tenNCC);
-                            NhaCungCapEntity ncc = new NhaCungCapEntity(maNCC);
-                            MatHangNhapEntity mhn = new MatHangNhapEntity(maMHN, ncc, sp, soLuongNhapMoi, ngayNhap_LocalDate);
-                            boolean kq = mhn_bus.capNhapMatHangNhap(mhn);
-                            if (kq) {
-                                JOptionPane.showMessageDialog(null, "Cập nhật thành công");
-                                sp_bus.capNhatSoLuong(maSP, soLuongMoiCapNhat);
-                                lamMoi();
+                LocalDate ngayHienTai = LocalDate.now();
+                LocalDate ngayNhap_Date_Table = (LocalDate) table_PhieuNhapHang.getValueAt(row, 4);
+                if (ngayNhap_Date_Table.isEqual(ngayHienTai)) {
+                    if (validata()) {
+                        if (JOptionPane.showConfirmDialog(null, "Bạn có chắc chắc cập nhật phiếu nhập hàng có mã sản phẩm" + table_PhieuNhapHang.getValueAt(row, 0) + " này không?", "Cảnh báo cập nhật", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+
+                            String maMHN = txt_MaMatHangNhap.getText();
+                            int soLuongNhapMoi = (int) spinner_SoLuong.getValue();
+                            int soLuongNhapBanDau = laySoLuongNhapBanDau(maMHN);
+                            if (soLuongNhapBanDau != -1) {
+                                String maSP = txt_MaSanPham.getText().trim();
+                                String tenNCC = cbo_MaNhaCungCap.getSelectedItem().toString();
+                                int soLuongHT = sp_bus.laySoLuongTonKhoTheoMaSP(txt_MaSanPham.getText().trim());
+                                int soLuongThayDoi = soLuongNhapBanDau - soLuongNhapMoi;
+                                int soLuongMoiCapNhat = soLuongHT - soLuongThayDoi;
+                                Date ngayNhap_Date = jdc_NgayNhap.getDate();
+                                LocalDate ngayNhap_LocalDate = ngayNhap_Date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                                SanPhamEntity sp = new SanPhamEntity(maSP);
+                                String maNCC = ncc_bus.layMaNhaCungCapTheoTen(tenNCC);
+                                NhaCungCapEntity ncc = new NhaCungCapEntity(maNCC);
+                                MatHangNhapEntity mhn = new MatHangNhapEntity(maMHN, ncc, sp, soLuongNhapMoi, ngayNhap_LocalDate);
+                                boolean kq = mhn_bus.capNhapMatHangNhap(mhn);
+                                if (kq) {
+                                    JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+                                    sp_bus.capNhatSoLuong(maSP, soLuongMoiCapNhat);
+                                    lamMoi();
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Cập nhật không thành công");
+                                }
                             } else {
-                                JOptionPane.showMessageDialog(null, "Cập nhật không thành công");
+                                JOptionPane.showMessageDialog(null, "Không tìm thấy đơn hàng nhập với mã " + maMHN);
                             }
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Không tìm thấy đơn hàng nhập với mã " + maMHN);
                         }
                     }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Chỉ được cập nhật khi ngày nhập là ngày hiện tại");
                 }
             }
         }

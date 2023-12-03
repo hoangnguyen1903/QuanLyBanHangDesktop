@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import util.ConvertDoubleToMoney;
 
 public class ThongKe_dao implements ThongKe_Interface {
+
     private ConvertDoubleToMoney convert;
 
     public ThongKe_dao() {
@@ -67,7 +68,7 @@ public class ThongKe_dao implements ThongKe_Interface {
                     + "    SanPham.maSP, SanPham.tenSP\n"
                     + "ORDER BY\n"
                     + "    SoLuongBan DESC";
-            
+
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -84,25 +85,25 @@ public class ThongKe_dao implements ThongKe_Interface {
         return ds;
     }
 
-    public ArrayList<Object[]> getListThongKeDoanhSoTheoThangNam(String thangNam,String sort) {
+    public ArrayList<Object[]> getListThongKeDoanhSoTheoThangNam(String thangNam, String sort) {
         ArrayList<Object[]> ds = new ArrayList<Object[]>();
         try {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
-           String sql = "SELECT TOP 5\n"
+            String sql = "SELECT TOP 5\n"
                     + "    SanPham.maSP AS MaSanPham,\n"
                     + "    SanPham.tenSP AS TenSanPham,\n"
                     + "    SUM(ChiTietHoaDon.soLuong) AS SoLuongBan\n"
                     + "FROM\n"
                     + "    SanPham\n"
                     + "    JOIN ChiTietHoaDon ON SanPham.maSP = ChiTietHoaDon.maSP\n"
-                    + "WHERE ChiTietHoaDon.maHD LIKE 'HD__' + ? + '%'\n"  // Sử dụng ? để thay thế giá trị của thangNam
+                    + "WHERE ChiTietHoaDon.maHD LIKE 'HD__' + ? + '%'\n" // Sử dụng ? để thay thế giá trị của thangNam
                     + "GROUP BY\n"
                     + "    SanPham.maSP, SanPham.tenSP\n"
                     + "ORDER BY\n"
-                    + "    SoLuongBan "+sort;
+                    + "    SoLuongBan " + sort;
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, thangNam);      
+            stmt.setString(1, thangNam);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String ma = rs.getString("MaSanPham");
@@ -117,25 +118,26 @@ public class ThongKe_dao implements ThongKe_Interface {
         }
         return ds;
     }
- public ArrayList<Object[]> getListThongKeDoanhSoTheoNam(String Nam,String sort) {
+
+    public ArrayList<Object[]> getListThongKeDoanhSoTheoNam(String Nam, String sort) {
         ArrayList<Object[]> ds = new ArrayList<Object[]>();
         try {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
-           String sql = "SELECT TOP 5\n"
+            String sql = "SELECT TOP 5\n"
                     + "    SanPham.maSP AS MaSanPham,\n"
                     + "    SanPham.tenSP AS TenSanPham,\n"
                     + "    SUM(ChiTietHoaDon.soLuong) AS SoLuongBan\n"
                     + "FROM\n"
                     + "    SanPham\n"
                     + "    JOIN ChiTietHoaDon ON SanPham.maSP = ChiTietHoaDon.maSP\n"
-                    + "WHERE ChiTietHoaDon.maHD LIKE 'HD____' + ? + '%'\n"  // Sử dụng ? để thay thế giá trị của Nam
+                    + "WHERE ChiTietHoaDon.maHD LIKE 'HD____' + ? + '%'\n" // Sử dụng ? để thay thế giá trị của Nam
                     + "GROUP BY\n"
                     + "    SanPham.maSP, SanPham.tenSP\n"
                     + "ORDER BY\n"
-                    + "    SoLuongBan "+sort;
+                    + "    SoLuongBan " + sort;
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, Nam);      
+            stmt.setString(1, Nam);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String ma = rs.getString("MaSanPham");
@@ -157,33 +159,33 @@ public class ThongKe_dao implements ThongKe_Interface {
         try {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
-            String sql = "SELECT \n" +
-                            "    hoadon.ngayLapHD AS NgayBan, \n" +
-                            "    COALESCE(SUM(ChiTietDoiTra.thanhTien),0) AS TongTienDoiTra, \n" +
-                            "    COALESCE(SUM(ChiTietHoaDon.thanhTien),0) AS TongTienHoaDon,\n" +
-                            "	(COALESCE(SUM(ChiTietHoaDon.thanhTien),0) - COALESCE(SUM(ChiTietDoiTra.thanhTien),0)) AS DoanhThuTrongNgay\n" +
-                            "FROM \n" +
-                            "    HoaDon\n" +
-                            "JOIN \n" +
-                            "    ChiTietHoaDon ON HoaDon.maHD = chitiethoadon.maHD\n" +
-                            "LEFT JOIN \n" +
-                            "    ChiTietDoiTra ON ChiTietHoaDon.maSP = ChiTietDoiTra.maSP\n" +
-                            "LEFT JOIN \n" +
-                            "    DoiTra ON ChiTietDoiTra.maDT = DoiTra.maDT\n" +
-                            "	WHERE \n" +
-                            "    YEAR(ngayLapHD) = ? AND MONTH(ngayLapHD) = ?\n" +
-                            "GROUP BY \n" +
-                            "    HoaDon.ngayLapHD";
+            String sql = "SELECT \n"
+                    + "    FORMAT(hoadon.ngayLapHD, 'dd-MM') AS NgayBan, \n"
+                    + "    COALESCE(SUM(ChiTietDoiTra.thanhTien),0) AS TongTienDoiTra, \n"
+                    + "    COALESCE(SUM(ChiTietHoaDon.thanhTien),0) AS TongTienHoaDon,\n"
+                    + "	(COALESCE(SUM(ChiTietHoaDon.thanhTien),0) - COALESCE(SUM(ChiTietDoiTra.thanhTien),0))	AS  DoanhThuTrongNgay\n"
+                    + "FROM \n"
+                    + "    HoaDon\n"
+                    + "JOIN \n"
+                    + "    ChiTietHoaDon ON HoaDon.maHD = chitiethoadon.maHD\n"
+                    + "LEFT JOIN \n"
+                    + "    ChiTietDoiTra ON ChiTietHoaDon.maSP = ChiTietDoiTra.maSP\n"
+                    + "LEFT JOIN \n"
+                    + "    DoiTra ON ChiTietDoiTra.maDT = DoiTra.maDT\n"
+                    + "	WHERE \n"
+                    + "    YEAR(ngayLapHD) = ? AND MONTH(ngayLapHD) = ?\n"
+                    + "GROUP BY \n"
+                    + "   FORMAT(hoadon.ngayLapHD, 'dd-MM')";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, nam);
             stmt.setString(2, thang);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Date ngay = rs.getDate("NgayBan");
-                double ttDT = rs.getInt("TongTienDoiTra");
+                String ngay = rs.getString("NgayBan");
+                double ttDT = rs.getDouble("TongTienDoiTra");
                 double ttHD = rs.getDouble("TongTienHoaDon");
                 double doanhthu = rs.getDouble("DoanhThuTrongNgay");
-                Object[] row = {ngay, ttDT,ttHD, doanhthu};
+                Object[] row = {ngay, ttDT, ttHD, doanhthu};
                 ds.add(row);
 
             }
@@ -199,23 +201,23 @@ public class ThongKe_dao implements ThongKe_Interface {
         try {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
-            String sql = "SELECT \n" +
-                        "    MONTH(ngayLapHD) AS Thang,\n" +
-                        "    COALESCE(SUM(ChiTietDoiTra.thanhTien),0) AS TongTienDoiTra, \n" +
-                        "    COALESCE(SUM(ChiTietHoaDon.thanhTien),0) AS TongTienHoaDon,\n" +
-                        "	(COALESCE(SUM(ChiTietHoaDon.thanhTien),0) - COALESCE(SUM(ChiTietDoiTra.thanhTien),0))	AS  DoanhThuTrongNgay\n" +
-                        "FROM \n" +
-                        "    HoaDon\n" +
-                        "JOIN \n" +
-                        "    ChiTietHoaDon ON HoaDon.maHD = chitiethoadon.maHD\n" +
-                        "LEFT JOIN \n" +
-                        "    ChiTietDoiTra ON ChiTietHoaDon.maSP = ChiTietDoiTra.maSP\n" +
-                        "LEFT JOIN \n" +
-                        "    DoiTra ON ChiTietDoiTra.maDT = DoiTra.maDT\n" +
-                        "	WHERE \n" +
-                        "    YEAR(ngayLapHD) = ? \n" +
-                        "GROUP BY \n" +
-                        "     MONTH(ngayLapHD) ";
+            String sql = "SELECT \n"
+                    + "    MONTH(ngayLapHD) AS Thang,\n"
+                    + "    COALESCE(SUM(ChiTietDoiTra.thanhTien),0) AS TongTienDoiTra, \n"
+                    + "    COALESCE(SUM(ChiTietHoaDon.thanhTien),0) AS TongTienHoaDon,\n"
+                    + "	(COALESCE(SUM(ChiTietHoaDon.thanhTien),0) - COALESCE(SUM(ChiTietDoiTra.thanhTien),0))	AS  DoanhThuTrongNgay\n"
+                    + "FROM \n"
+                    + "    HoaDon\n"
+                    + "JOIN \n"
+                    + "    ChiTietHoaDon ON HoaDon.maHD = chitiethoadon.maHD\n"
+                    + "LEFT JOIN \n"
+                    + "    ChiTietDoiTra ON ChiTietHoaDon.maSP = ChiTietDoiTra.maSP\n"
+                    + "LEFT JOIN \n"
+                    + "    DoiTra ON ChiTietDoiTra.maDT = DoiTra.maDT\n"
+                    + "	WHERE \n"
+                    + "    YEAR(ngayLapHD) = ? \n"
+                    + "GROUP BY \n"
+                    + "     MONTH(ngayLapHD) ";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, nam);
 
@@ -225,7 +227,7 @@ public class ThongKe_dao implements ThongKe_Interface {
                 double ttDT = rs.getDouble("TongTienDoiTra");
                 double ttHD = rs.getDouble("TongTienHoaDon");
                 double doanhthu = rs.getDouble("DoanhThuTrongNgay");
-                Object[] row = {thang, ttDT,ttHD, doanhthu};
+                Object[] row = {thang, ttDT, ttHD, doanhthu};
                 ds.add(row);
 
             }
@@ -254,8 +256,7 @@ public class ThongKe_dao implements ThongKe_Interface {
                             tongDoanhThu DESC """; // Sử dụng ? để thay thế giá trị của thangNam
                 stmt = con.prepareStatement(sql);
                 stmt.setString(1, nam);
-            }
-            else {
+            } else {
                 String sql = """
                         SELECT TOP 5
                             	NV.maNV, NV.hoTen, SUM(tongTien) AS tongDoanhThu
@@ -267,14 +268,14 @@ public class ThongKe_dao implements ThongKe_Interface {
                             tongDoanhThu DESC """; // Sử dụng ? để thay thế giá trị của thangNam
                 stmt = con.prepareStatement(sql);
                 stmt.setString(1, thang);
-                stmt.setString(2, nam);      
+                stmt.setString(2, nam);
             }
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String maNV = rs.getString("maNV");
                 String hoTen = rs.getString("hoTen");
                 String tongDT = rs.getString("tongDoanhThu");
-                Object[] row = {maNV, hoTen , convert.toStringMoney(tongDT)};
+                Object[] row = {maNV, hoTen, convert.toStringMoney(tongDT)};
                 ds.add(row);
             }
         } catch (Exception e) {
@@ -282,7 +283,6 @@ public class ThongKe_dao implements ThongKe_Interface {
         }
         return ds;
     }
-    
 
     @Override
     public ArrayList<Object[]> getListTop5KhachHangMuaHangNhieuNhat(String thang, String nam) {
@@ -303,8 +303,7 @@ public class ThongKe_dao implements ThongKe_Interface {
                             tongDoanhThu DESC """; // Sử dụng ? để thay thế giá trị của thangNam
                 stmt = con.prepareStatement(sql);
                 stmt.setString(1, nam);
-            }
-            else {
+            } else {
                 String sql = """
                         SELECT TOP 5
                                 KH.maKH, KH.hoTen, SUM(tienThanhToan) AS tongDoanhThu
@@ -316,15 +315,59 @@ public class ThongKe_dao implements ThongKe_Interface {
                             tongDoanhThu DESC """; // Sử dụng ? để thay thế giá trị của thangNam
                 stmt = con.prepareStatement(sql);
                 stmt.setString(1, thang);
-                stmt.setString(2, nam);      
+                stmt.setString(2, nam);
             }
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String maKH = rs.getString("maKH");
                 String hoTen = rs.getString("hoTen");
                 String tongDT = rs.getString("tongDoanhThu");
-                Object[] row = {maKH, hoTen ,convert.toStringMoney(tongDT)};
+                Object[] row = {maKH, hoTen, convert.toStringMoney(tongDT)};
                 ds.add(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ds;
+    }
+
+    @Override
+    public ArrayList<Object[]> getListDoanhThuBySort(String thang, String nam) {
+        ArrayList<Object[]> ds = new ArrayList<Object[]>();
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            String sql = "SELECT FORMAT(hoadon.ngayLapHD, 'dd-MM') AS NgayBan,\n"
+                    + "			COALESCE(SUM(ChiTietDoiTra.thanhTien),0) AS TongTienDoiTra, \n"
+                    + "			COALESCE(SUM(ChiTietHoaDon.thanhTien),0) AS TongTienHoaDon,\n"
+                    + "			(COALESCE(SUM(ChiTietHoaDon.thanhTien),0) - COALESCE(SUM(ChiTietDoiTra.thanhTien),0)) AS DoanhThuTrongNgay\n"
+                    + "		FROM \n"
+                    + "			HoaDon\n"
+                    + "		JOIN \n"
+                    + "			ChiTietHoaDon ON HoaDon.maHD = ChiTietHoaDon.maHD\n"
+                    + "		LEFT JOIN \n"
+                    + "			ChiTietDoiTra ON ChiTietHoaDon.maSP = ChiTietDoiTra.maSP\n"
+                    + "		LEFT JOIN \n"
+                    + "			DoiTra ON ChiTietDoiTra.maDT = DoiTra.maDT\n"
+                    + "		WHERE \n"
+                    + "			YEAR(ngayLapHD) = ? AND MONTH(ngayLapHD) = ?\n"
+                    + "		GROUP BY \n"
+                    + "			FORMAT(hoadon.ngayLapHD, 'dd-MM')\n"
+                    + "		ORDER BY \n"
+                    + "			DoanhThuTrongNgay DESC;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, nam);
+            stmt.setString(2, thang);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+//                Date ngay = rs.getDate("NgayBan");
+                String ngay = rs.getString("NgayBan");
+                double ttDT = rs.getDouble("TongTienDoiTra");
+                double ttHD = rs.getDouble("TongTienHoaDon");
+                double doanhthu = rs.getDouble("DoanhThuTrongNgay");
+                Object[] row = {ngay, ttDT, ttHD, doanhthu};
+                ds.add(row);
+
             }
         } catch (Exception e) {
             e.printStackTrace();

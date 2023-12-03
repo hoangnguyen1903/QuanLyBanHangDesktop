@@ -47,4 +47,9 @@ public class ThongKe_bus implements ThongKe_Interface {
     public ArrayList<Object[]> getListThongKeDoanhSoTheoNam(String Nam, String sort) {
         return tk_dao.getListThongKeDoanhSoTheoNam(Nam, sort);
     }
+
+    @Override
+    public ArrayList<Object[]> getListDoanhThuBySort(String thang, String nam) {
+        return tk_dao.getListDoanhThuBySort(thang, nam);
+    }
 }
