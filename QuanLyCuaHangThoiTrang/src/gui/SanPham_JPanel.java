@@ -38,7 +38,6 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-import org.apache.poi.sl.draw.ImageRenderer;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -190,7 +189,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1186, 748));
 
         panel_ThongTin.setBackground(new java.awt.Color(187, 205, 197));
-        panel_ThongTin.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Thông tin nhà cung cấp", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
+        panel_ThongTin.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Thông tin sản phẩm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
         panel_ThongTin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_MaSanPham.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
@@ -224,7 +223,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
 
         txt_SoLuongTonKho.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txt_SoLuongTonKho.setText("0");
-        txt_SoLuongTonKho.setEditable(true);
+        txt_SoLuongTonKho.setEditable(false);
         panel_ThongTin.add(txt_SoLuongTonKho, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 200, 30));
 
         lbl_DanhMuc.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
@@ -698,27 +697,34 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         String timKiem = txt_MaSanPham_Search.getText().trim();
         if (timKiem.isBlank()) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập điều kiện tìm kiếm");
-        }
-        model.setRowCount(0);
-        ArrayList<SanPhamEntity> dsSP = sp_bus.getAllSanPham();
-        DecimalFormat decimalFormat = new DecimalFormat();
-        for (SanPhamEntity sp : dsSP) {
-            String formattedDonGia = decimalFormat.format(sp.getDonGia()) + " VNĐ";
-            String tenChatLieu = chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
-            String tenThuongHieu = thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
-            String tenDanhMuc = danhMucSanPham_bus.layTenDanhMucTheoMa(sp.getDanhMucSanPham().getMaDanhMuc());
-            String km = ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
-            String hienThiKM = null;
-            if (km != null) {
-                hienThiKM = km;
-            } else {
-                hienThiKM = "Không giảm giá";
+        } else {
+            model.setRowCount(0);
+            ArrayList<SanPhamEntity> dsSP = sp_bus.getAllSanPham();
+            DecimalFormat decimalFormat = new DecimalFormat();
+            boolean kt = false;
+            for (SanPhamEntity sp : dsSP) {
+                String formattedDonGia = decimalFormat.format(sp.getDonGia()) + " VNĐ";
+                String tenChatLieu = chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
+                String tenThuongHieu = thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
+                String tenDanhMuc = danhMucSanPham_bus.layTenDanhMucTheoMa(sp.getDanhMucSanPham().getMaDanhMuc());
+                String km = ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+                String hienThiKM = null;
+                if (km != null) {
+                    hienThiKM = km;
+                } else {
+                    hienThiKM = "Không giảm giá";
+                }
+                if (matchesSearchTerm(sp, dieuKien)) {
+                    model.addRow(new Object[]{sp.getMaSP(), sp.getTenSP(), sp.getKichThuoc(),
+                        sp.getMauSac().toString(), formattedDonGia, sp.getTinhTrang().toString(),
+                        sp.getSoLuongTonKho(), tenChatLieu, tenThuongHieu, tenDanhMuc,
+                        hienThiKM, sp.getImgUrl()});
+                    kt = true;
+                }
             }
-            if (matchesSearchTerm(sp, dieuKien)) {
-                model.addRow(new Object[]{sp.getMaSP(), sp.getTenSP(), sp.getKichThuoc(),
-                    sp.getMauSac().toString(), formattedDonGia, sp.getTinhTrang().toString(),
-                    sp.getSoLuongTonKho(), tenChatLieu, tenThuongHieu, tenDanhMuc,
-                    hienThiKM, sp.getImgUrl()});
+            if(!kt){
+                JOptionPane.showMessageDialog(null, "Không tìm thấy sản phẩm");
+                lamMoi();
             }
         }
     }
