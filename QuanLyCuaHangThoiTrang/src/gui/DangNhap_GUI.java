@@ -48,62 +48,63 @@ public class DangNhap_GUI extends javax.swing.JFrame {
         img_btnTimKiem = new ImageIcon(scaled_btnTimKiem);
         jLabel1.setIcon(img_btnTimKiem);
         setLocationRelativeTo(null);
-        
-             // Create a KeyStroke for Enter
+
+        // Create a KeyStroke for Enter
         KeyStroke enterKey = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
 
         // Add KeyStroke binding to the button's input map
         btn_DangNhap4.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(enterKey, "enterPressed");
         btn_DangNhap4.getActionMap().put("enterPressed", danhNhapAction);
     }
-           // Tạo AcTion để xử lý sự kiện cho phím O
-        Action danhNhapAction = new AbstractAction("Đăng Nhập") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                  try {
-
-            String tfTK = jtf_TenTaiKhoan.getText();
-            char[] pass = jpf_MatKhau.getPassword();
-            String stringPass = new String(pass);
-            String encodePass = MD5Encode.md5Encode(stringPass);
-
-            dao.NhanVien_dao nv_dao = new NhanVien_dao();
-            dao.TaiKhoan_dao tk_dao = new dao.TaiKhoan_dao();
-            nvbus = new NhanVien_bus();
-            TaiKhoanEntity tk = new TaiKhoanEntity();
+    // Tạo AcTion để xử lý sự kiện cho phím O
+    Action danhNhapAction = new AbstractAction("Đăng Nhập") {
+        @Override
+        public void actionPerformed(ActionEvent e) {
             try {
-                tk = tk_dao.getTaiKhoan(tfTK, encodePass);
-                // TODO add your handling code here:
+
+                String tfTK = jtf_TenTaiKhoan.getText();
+                char[] pass = jpf_MatKhau.getPassword();
+                String stringPass = new String(pass);
+                String encodePass = MD5Encode.md5Encode(stringPass);
+
+                dao.NhanVien_dao nv_dao = new NhanVien_dao();
+                dao.TaiKhoan_dao tk_dao = new dao.TaiKhoan_dao();
+                nvbus = new NhanVien_bus();
+                TaiKhoanEntity tk = new TaiKhoanEntity();
+                try {
+                    tk = tk_dao.getTaiKhoan(tfTK, encodePass);
+                    // TODO add your handling code here:
+                } catch (SQLException ex) {
+                    Logger.getLogger(DangNhap_GUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (tk == null) {
+                    JOptionPane.showMessageDialog(null, "Tài khoản hoặc mật khẩu không đúng!");
+                } else {
+                    tk_dao.thoiGianDNGN(tk);
+
+                    NhanVienEntity nv = nvbus.getNV(tfTK);
+                    System.out.println(nv);
+                    ToanCuc tc = new ToanCuc();
+                    tc.setName(nv.getHoTen());
+                    tc.setMa(nv.getMaNV());
+                    tc.setChucvu(nv.getChucVu().toString());
+                    tc.setGioitnh(nv.getGioiTinh().toString());
+                    tc.setSdt(nv.getSoDienThoai());
+//                this.setVisible(false);
+                    dispose();
+                    gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
+                    trangChu_GUI.setVisible(true);
+                }
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(DangNhap_GUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(DangNhap_GUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(DangNhap_GUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (tk == null) {
-                JOptionPane.showMessageDialog(null, "Tài khoản hoặc mật khẩu không đúng!");
-            } else {
-                tk_dao.thoiGianDNGN(tk);
-
-                NhanVienEntity nv = nvbus.getNV(tfTK);
-                System.out.println(nv);
-                ToanCuc tc = new ToanCuc();
-                tc.setName(nv.getHoTen());
-                tc.setMa(nv.getMaNV());
-                tc.setChucvu(nv.getChucVu().toString());
-                tc.setGioitnh(nv.getGioiTinh().toString());
-                tc.setSdt(nv.getSoDienThoai());
-//                this.setVisible(false);
-              dispose();
-                gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
-                trangChu_GUI.setVisible(true);
-            }
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(DangNhap_GUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(DangNhap_GUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(DangNhap_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-            }
-        };
+    };
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -309,18 +310,24 @@ public class DangNhap_GUI extends javax.swing.JFrame {
             if (tk == null) {
                 JOptionPane.showMessageDialog(null, "Tài khoản hoặc mật khẩu không đúng!");
             } else {
-                tk_dao.thoiGianDNGN(tk);
 
-                NhanVienEntity nv = nvbus.getNV(tfTK);
-                ToanCuc tc = new ToanCuc();
-                tc.setName(nv.getHoTen());
-                tc.setMa(nv.getMaNV());
-                tc.setChucvu(nv.getChucVu().toString());
-                tc.setGioitnh(nv.getGioiTinh().toString());
-                tc.setSdt(nv.getSoDienThoai());
-                this.setVisible(false);
-                gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
-                trangChu_GUI.setVisible(true);
+                if (tk.getTinhTrang().toString() == "Ngưng hoạt động") {
+                    JOptionPane.showMessageDialog(null, "Tài khoản đã ngừng hoạt động!");
+                } else {
+                    tk_dao.thoiGianDNGN(tk);
+
+                    NhanVienEntity nv = nvbus.getNV(tfTK);
+                    ToanCuc tc = new ToanCuc();
+                    tc.setName(nv.getHoTen());
+                    tc.setMa(nv.getMaNV());
+                    tc.setChucvu(nv.getChucVu().toString());
+                    tc.setGioitnh(nv.getGioiTinh().toString());
+                    tc.setSdt(nv.getSoDienThoai());
+                    this.setVisible(false);
+                    gui.TrangChu_GUI trangChu_GUI = new TrangChu_GUI();
+                    trangChu_GUI.setVisible(true);
+                }
+
             }
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(DangNhap_GUI.class.getName()).log(Level.SEVERE, null, ex);

@@ -118,7 +118,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         img_btnLuu = new ImageIcon(scaled_btnLuu);
         btn_Luu.setIcon(img_btnLuu);
 
-//        loadDuLieuTuDataLenTable();
+        loadDuLieuTuDataLenTable();
         duaDuLieuVaoComboBox(cbo_DanhMuc, danhMucSanPham_bus.getAllDMSP(), "TenDanhMuc");
         duaDuLieuVaoComboBox(cbo_ChatLieu, chatLieu_bus.getAllCL(), "TenChatLieu");
         duaDuLieuVaoComboBox(cbo_ThuongHieu, thuongHieu_bus.getAllTH(), "TenThuongHieu");
