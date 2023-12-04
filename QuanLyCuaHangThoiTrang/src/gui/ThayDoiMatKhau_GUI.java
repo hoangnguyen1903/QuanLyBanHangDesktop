@@ -49,11 +49,11 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
         jlb_MatKhauHienTai = new javax.swing.JLabel();
         jlb_TenTaiKhoan = new javax.swing.JLabel();
         jpf_MatKhauHienTai = new javax.swing.JPasswordField();
+        jlf_TenTaiKhoan = new javax.swing.JLabel();
         btn_HuyBo = new javax.swing.JButton();
         btn_ThuyDoi = new javax.swing.JButton();
         jlb_MatKhauMoi = new javax.swing.JLabel();
         jpf_MatKhauMoi = new javax.swing.JPasswordField();
-        jlf_TenTaiKhoan = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -87,6 +87,9 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
 
         jpf_MatKhauHienTai.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jpf_MatKhauHienTai.setToolTipText("");
+
+        jlf_TenTaiKhoan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jlf_TenTaiKhoan.setText("Tên tài khoản");
 
         btn_HuyBo.setBackground(new java.awt.Color(0, 51, 51));
         btn_HuyBo.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -127,9 +130,6 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
 
         jpf_MatKhauMoi.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jpf_MatKhauMoi.setToolTipText("");
-
-        jlf_TenTaiKhoan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jlf_TenTaiKhoan.setText("Tên tài khoản");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
