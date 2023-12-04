@@ -96,7 +96,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
     private void DocDuLieuTuSQLvaoTable() {
           ArrayList<ChuongTrinhKhuyenMaiEntity> listCTKM = ctkmbus.getallCTKMtheoLoaiKM(txtLoaiKM.getText());
         for (ChuongTrinhKhuyenMaiEntity ctkm : listCTKM) {
-            addRows(new Object[]{ctkm.getMaCTKM(),ctkm.getMaLoaiKM().getMaLoaiKM(), ctkm.getTenCTKM(),ctkm.getSoTienToiDa(), ctkm.getSoTienToiThieu(), ctkm.getGiamGia(), ctkm.getNgayBatDau(), ctkm.getNgayKetThuc(),ctkm.getTinhTrang()});
+            addRows(new Object[]{ctkm.getMaCTKM(),ctkm.getMaLoaiKM().getMaLoaiKM(), ctkm.getTenCTKM(), ctkm.getSoTienToiThieu(),ctkm.getSoTienToiDa(), ctkm.getGiamGia(), ctkm.getNgayBatDau(), ctkm.getNgayKetThuc(),ctkm.getTinhTrang()});
         }
     }
 
@@ -512,7 +512,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         JPanel_ThongTinCTKM.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 120, 30));
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jLabel9.setText("Số Tiền  Tối Thiểu Để Giảm");
+        jLabel9.setText("Tiền  Tối Thiểu Để Giảm");
         jLabel9.setPreferredSize(new java.awt.Dimension(109, 30));
         JPanel_ThongTinCTKM.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, 180, 30));
 
@@ -521,7 +521,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         JPanel_ThongTinCTKM.add(txtSoTienGiamTT, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 170, 30));
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jLabel10.setText("Số Tiền Giảm Tối Đa");
+        jLabel10.setText("Tiền Tối Đa Được Giảm");
         jLabel10.setPreferredSize(new java.awt.Dimension(109, 30));
         JPanel_ThongTinCTKM.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, 160, 30));
 
@@ -655,7 +655,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã Chương Trình", "Loại Khuyến Mãi", "Tên Chương Trình", "Số tiền tối thiểu", "Số tiền tối đa", "Giảm Giá", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Tình Trạng"
+                "Mã Chương Trình", "Loại Khuyến Mãi", "Tên Chương Trình", "Tiền tối thiểu để giảm", "Tiền tối đa được giảm", "Giảm Giá", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Tình Trạng"
             }
         ) {
             boolean[] canEdit = new boolean [] {

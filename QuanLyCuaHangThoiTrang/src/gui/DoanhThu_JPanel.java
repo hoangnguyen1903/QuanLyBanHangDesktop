@@ -71,7 +71,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         System.out.println("Tháng " + month + nam);
         ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
         if(ds.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
+//            JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
             Date datenow = new Date();
             monthChooser.setMonth(datenow.getMonth());
             spin_nam.setYear(datenow.getYear() + 1900);
@@ -392,8 +392,28 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_rdo_bdcActionPerformed
 
     private void monthChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_monthChooserPropertyChange
+       
         XoaAllData();
-        DocDuLieuLenTable();
+//        DocDuLieuLenTable();
+         String month = String.valueOf(monthChooser.getMonth() + 1);
+        String nam = String.valueOf(spin_nam.getValue());
+        System.out.println("Tháng " + month + nam);
+        ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
+        if(ds.isEmpty()){
+            int i=1;
+           if(i!=1) JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
+           i++;
+            Date datenow = new Date();
+            monthChooser.setMonth(datenow.getMonth());
+            spin_nam.setYear(datenow.getYear() + 1900);
+           
+        }
+        else for (Object[] tk : ds) {
+//            System.out.println("Thong ke " + tk);
+            model.addRow(tk);
+        ChuyenDuLieuSoTrongTableThanhVND();
+        TongDoanhThu();
+        }
         if (rdo_bdc.isSelected())
             charAt(tieude,trucX,trucY);
         else
@@ -513,8 +533,28 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
 
     private void spin_namPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_spin_namPropertyChange
         // TODO add your handling code here:
+       
         XoaAllData();
-        DocDuLieuLenTable();
+//        DocDuLieuLenTable();
+            String month = String.valueOf(monthChooser.getMonth() + 1);
+        String nam = String.valueOf(spin_nam.getValue());
+        System.out.println("Tháng " + month + nam);
+        ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);
+        if(ds.isEmpty()){
+            int i =1;
+           if(i!=1) JOptionPane.showMessageDialog(null, "Doanh thu trong tháng/ năm này chưa có !");
+            i++;
+            Date datenow = new Date();
+            monthChooser.setMonth(datenow.getMonth());
+            spin_nam.setYear(datenow.getYear() + 1900);
+           
+        }
+        else for (Object[] tk : ds) {
+//            System.out.println("Thong ke " + tk);
+            model.addRow(tk);
+        ChuyenDuLieuSoTrongTableThanhVND();
+        TongDoanhThu();
+        }
           if (rdo_bdc.isSelected()) {
          charAt(tieude,trucX,trucY);
         } else {
@@ -528,7 +568,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
         trucX = "Ngày";
         trucY = "Doanh Thu";
         XoaAllData();
-        DocDuLieuLenTable();
+        DocDuLieuLenTable();  
         if (rdo_bdc.isSelected()) {
          charAt(tieude,trucX,trucY);
         } else {

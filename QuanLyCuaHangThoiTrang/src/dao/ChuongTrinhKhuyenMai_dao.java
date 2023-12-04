@@ -176,7 +176,6 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
                 stmt.setInt(5, ctkm.getGiamGia());
                 stmt.setDate(6, (Date) ctkm.getNgayBatDau());
                 stmt.setDate(7,(Date)ctkm.getNgayKetThuc());
-                 java.util.Date datenow = new java.util.Date();
                  stmt.setString(8, ctkm.getTinhTrang());
                 stmt.setString(9, ctkm.getMaCTKM());
             }
@@ -189,7 +188,6 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
                 stmt.setInt(3, ctkm.getGiamGia());
                 stmt.setDate(4, (Date) ctkm.getNgayBatDau());
                 stmt.setDate(5,(Date)ctkm.getNgayKetThuc());
-                 java.util.Date datenow = new java.util.Date();
                  stmt.setString(6, ctkm.getTinhTrang());
                 stmt.setString(7, ctkm.getMaCTKM());
             }
