@@ -6,7 +6,7 @@ public class ToanCuc {
     private static String name = "";
     private static String gioitnh ="";
     private static String chucvu ="";
-    private    String sdt = "";
+    private static String sdt = "";
 
     public  ToanCuc(){
         

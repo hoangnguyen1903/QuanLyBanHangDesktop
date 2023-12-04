@@ -30,7 +30,8 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
         String a = "<HTML><u>Quên mật khẩu?</u></HTML>";
         setLocationRelativeTo(null);
         ToanCuc tc = new  ToanCuc();
-        jtf_TenTaiKhoan.setText(tc.getSdt());
+        jlf_TenTaiKhoan.setText(tc.getSdt());
+        jlf_TenTaiKhoan.setEnabled(false);
     }
 
     /**
@@ -47,12 +48,12 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
         jlb_ThayDoiMatKhau = new javax.swing.JLabel();
         jlb_MatKhauHienTai = new javax.swing.JLabel();
         jlb_TenTaiKhoan = new javax.swing.JLabel();
-        jtf_TenTaiKhoan = new javax.swing.JTextField();
         jpf_MatKhauHienTai = new javax.swing.JPasswordField();
         btn_HuyBo = new javax.swing.JButton();
         btn_ThuyDoi = new javax.swing.JButton();
         jlb_MatKhauMoi = new javax.swing.JLabel();
         jpf_MatKhauMoi = new javax.swing.JPasswordField();
+        jlf_TenTaiKhoan = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -83,14 +84,6 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
 
         jlb_TenTaiKhoan.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jlb_TenTaiKhoan.setText("Tên tài khoản");
-
-        jtf_TenTaiKhoan.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jtf_TenTaiKhoan.setToolTipText("");
-        jtf_TenTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtf_TenTaiKhoanActionPerformed(evt);
-            }
-        });
 
         jpf_MatKhauHienTai.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jpf_MatKhauHienTai.setToolTipText("");
@@ -135,6 +128,9 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
         jpf_MatKhauMoi.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jpf_MatKhauMoi.setToolTipText("");
 
+        jlf_TenTaiKhoan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jlf_TenTaiKhoan.setText("Tên tài khoản");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -155,11 +151,11 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
                                     .addComponent(jlb_MatKhauHienTai)
                                     .addComponent(jlb_TenTaiKhoan)
                                     .addComponent(jlb_MatKhauMoi))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                                .addGap(37, 37, 37)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jtf_TenTaiKhoan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jpf_MatKhauHienTai, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jpf_MatKhauMoi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jpf_MatKhauMoi, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                                    .addComponent(jlf_TenTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jlb_ThayDoiMatKhau)))
@@ -170,11 +166,11 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
                 .addComponent(jlb_ThayDoiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jlb_TenTaiKhoan)
-                    .addComponent(jtf_TenTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jlf_TenTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlb_MatKhauHienTai)
                     .addComponent(jpf_MatKhauHienTai, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
@@ -182,7 +178,7 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jlb_MatKhauMoi)
                     .addComponent(jpf_MatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_ThuyDoi, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_HuyBo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -193,10 +189,6 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jtf_TenTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf_TenTaiKhoanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtf_TenTaiKhoanActionPerformed
 
     private void btn_HuyBoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_HuyBoActionPerformed
         // TODO add your handling code here:
@@ -213,7 +205,7 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
 
     private void btn_ThuyDoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ThuyDoiMouseClicked
         try {                                         
-            String tenTaiKhoan = jtf_TenTaiKhoan.getText();
+            String tenTaiKhoan = jlf_TenTaiKhoan.getText();
             char[] po = jpf_MatKhauHienTai.getPassword();
             char[] pn = jpf_MatKhauMoi.getPassword();
             String oldPass = new String(po);
@@ -249,7 +241,7 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
                 entity.TaiKhoanEntity newTK = new  TaiKhoanEntity(tenTaiKhoan, encodeNewPass);
                 if(tk_dao.lamMoiMatKhau(newTK) == true){
                     JOptionPane.showMessageDialog(null, "đồi mật khẩu thành công");
-                    jtf_TenTaiKhoan.setText("");
+                    jlf_TenTaiKhoan.setText("");
                     jpf_MatKhauHienTai.setText("");
                     jpf_MatKhauMoi.setText("");
                 }
@@ -312,8 +304,8 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jlb_MatKhauMoi;
     private javax.swing.JLabel jlb_TenTaiKhoan;
     private javax.swing.JLabel jlb_ThayDoiMatKhau;
+    private javax.swing.JLabel jlf_TenTaiKhoan;
     private javax.swing.JPasswordField jpf_MatKhauHienTai;
     private javax.swing.JPasswordField jpf_MatKhauMoi;
-    private javax.swing.JTextField jtf_TenTaiKhoan;
     // End of variables declaration//GEN-END:variables
 }

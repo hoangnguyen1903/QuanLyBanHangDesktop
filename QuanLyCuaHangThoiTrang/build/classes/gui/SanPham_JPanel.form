@@ -60,7 +60,7 @@
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Th&#xf4;ng tin nh&#xe0; cung c&#x1ea5;p">
+            <TitledBorder title="Th&#xf4;ng tin s&#x1ea3;n ph&#x1ea9;m">
               <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                 <LineBorder/>
               </Border>
@@ -344,13 +344,14 @@
               <Font name="Times New Roman" size="14" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="Ng&#x1eeb;ng b&#xe1;n"/>
-                <StringItem index="1" value="&#x110;ang b&#xe1;n"/>
+              <StringArray count="3">
+                <StringItem index="0" value="H&#x1ebf;t h&#xe0;ng"/>
+                <StringItem index="1" value="Ng&#x1eeb;ng b&#xe1;n"/>
+                <StringItem index="2" value="&#x110;ang b&#xe1;n"/>
               </StringArray>
             </Property>
             <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="&quot;&#x110;ang b&#xe1;n&quot;" type="code"/>
+              <Connection code="&quot;H&#x1ebf;t h&#xe0;ng&quot;" type="code"/>
             </Property>
           </Properties>
           <AuxValues>

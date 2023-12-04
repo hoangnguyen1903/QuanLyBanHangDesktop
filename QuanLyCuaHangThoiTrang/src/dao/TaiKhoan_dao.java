@@ -44,8 +44,8 @@ public class TaiKhoan_dao implements TaiKhoanInterface{
             while (rs.next()) {
                 String tk = rs.getString("tenTaiKhoan");
                 String mk = rs.getString("matKhau");
-
-                entity.TaiKhoanEntity taikhoan = new TaiKhoanEntity(tk, mk, null, null);
+               
+                entity.TaiKhoanEntity taikhoan = new TaiKhoanEntity(tk, mk, null, rs.getString("tinhTrang").equals("Đang hoạt động") == true ? TinhTrangTKEnum.DANG_HOAT_DONG : TinhTrangTKEnum.NGUNG_HOAT_DONG);
                 return taikhoan;
             }
 

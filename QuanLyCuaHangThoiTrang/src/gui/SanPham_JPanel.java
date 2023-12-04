@@ -38,7 +38,6 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-import org.apache.poi.sl.draw.ImageRenderer;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -122,9 +121,9 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         duaDuLieuVaoComboBox(cbo_DanhMuc, danhMucSanPham_bus.getAllDMSP(), "TenDanhMuc");
         duaDuLieuVaoComboBox(cbo_ChatLieu, chatLieu_bus.getAllCL(), "TenChatLieu");
         duaDuLieuVaoComboBox(cbo_ThuongHieu, thuongHieu_bus.getAllTH(), "TenThuongHieu");
-
-        duaDuLieuVaoComboBox(cbo_KhuyenMai, ctkm_bus.getallCTKMtheoLoaiKM("GGSP"), "TenCTKM");
+        duaDuLieuVaoComboBox(cbo_KhuyenMai, ctkm_bus.getAllCTKMTheoLoaiKMVaTinhTrang("GGSP", "Còn"), "TenCTKM");
         cbo_KhuyenMai.addItem("Không giảm giá");
+        cbo_KhuyenMai.setSelectedItem("Không giảm giá");
 
     }
 
@@ -190,7 +189,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1186, 748));
 
         panel_ThongTin.setBackground(new java.awt.Color(187, 205, 197));
-        panel_ThongTin.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Thông tin nhà cung cấp", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
+        panel_ThongTin.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Thông tin sản phẩm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 12))); // NOI18N
         panel_ThongTin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbl_MaSanPham.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
@@ -267,8 +266,8 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         panel_ThongTin.add(lbl_TinhTrang, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 117, 25));
 
         cbo_TinhTrang.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        cbo_TinhTrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngừng bán", "Đang bán" }));
-        cbo_TinhTrang.setSelectedItem("Đang bán");
+        cbo_TinhTrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hết hàng", "Ngừng bán", "Đang bán" }));
+        cbo_TinhTrang.setSelectedItem("Hết hàng");
         panel_ThongTin.add(cbo_TinhTrang, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 200, 30));
 
         lbl_DonGia.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
@@ -534,6 +533,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         ArrayList<SanPhamEntity> dsSanPham = sp_bus.getAllSanPham();
         DecimalFormat decimalFormat = new DecimalFormat();
         for (SanPhamEntity sp : dsSanPham) {
+
             String formattedDonGia = decimalFormat.format(sp.getDonGia()) + " VNĐ";
             String tenChatLieu = chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
             String tenThuongHieu = thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
@@ -545,6 +545,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
             } else {
                 hienThiKM = "Không giảm giá";
             }
+
             model.addRow(new Object[]{sp.getMaSP(), sp.getTenSP(), sp.getKichThuoc(),
                 sp.getMauSac().toString(), formattedDonGia, sp.getTinhTrang().toString(),
                 sp.getSoLuongTonKho(), tenChatLieu, tenThuongHieu, tenDanhMuc,
@@ -604,6 +605,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                 mauSac = MauSacEnum.XAM;
             }
             double donGia = Double.parseDouble(txt_DonGia.getText());
+            int soLuongTonKho = Integer.parseInt(txt_SoLuongTonKho.getText());
             TinhTrangSPEnum tinhTrang = null;
             if (cbo_TinhTrang.getSelectedItem().equals("Đang bán")) {
                 tinhTrang = TinhTrangSPEnum.DANGBAN;
@@ -612,7 +614,11 @@ public class SanPham_JPanel extends javax.swing.JPanel {
             } else if (cbo_TinhTrang.getSelectedItem().equals("Hết hàng")) {
                 tinhTrang = TinhTrangSPEnum.HETHANG;
             }
-            int soLuongTonKho = Integer.parseInt(txt_SoLuongTonKho.getText());
+            if (soLuongTonKho > 0) {
+                tinhTrang = TinhTrangSPEnum.DANGBAN;
+            } else {
+                tinhTrang = TinhTrangSPEnum.HETHANG;
+            }
             String tenChatLieu = cbo_ChatLieu.getSelectedItem().toString();
             String maChatLieu = chatLieu_bus.layMaChatLieuTheoTen(tenChatLieu);
             ChatLieuEntity chatLieu = new ChatLieuEntity(maChatLieu);
@@ -691,27 +697,34 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         String timKiem = txt_MaSanPham_Search.getText().trim();
         if (timKiem.isBlank()) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập điều kiện tìm kiếm");
-        }
-        model.setRowCount(0);
-        ArrayList<SanPhamEntity> dsSP = sp_bus.getAllSanPham();
-        DecimalFormat decimalFormat = new DecimalFormat();
-        for (SanPhamEntity sp : dsSP) {
-            String formattedDonGia = decimalFormat.format(sp.getDonGia()) + " VNĐ";
-            String tenChatLieu = chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
-            String tenThuongHieu = thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
-            String tenDanhMuc = danhMucSanPham_bus.layTenDanhMucTheoMa(sp.getDanhMucSanPham().getMaDanhMuc());
-            String km = ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
-            String hienThiKM = null;
-            if (km != null) {
-                hienThiKM = km;
-            } else {
-                hienThiKM = "Không giảm giá";
+        } else {
+            model.setRowCount(0);
+            ArrayList<SanPhamEntity> dsSP = sp_bus.getAllSanPham();
+            DecimalFormat decimalFormat = new DecimalFormat();
+            boolean kt = false;
+            for (SanPhamEntity sp : dsSP) {
+                String formattedDonGia = decimalFormat.format(sp.getDonGia()) + " VNĐ";
+                String tenChatLieu = chatLieu_bus.layTenChatLieuTheoMa(sp.getChatLieu().getMaChatLieu());
+                String tenThuongHieu = thuongHieu_bus.layTenThuongHieuTheoMa(sp.getThuongHieu().getMaThuongHieu());
+                String tenDanhMuc = danhMucSanPham_bus.layTenDanhMucTheoMa(sp.getDanhMucSanPham().getMaDanhMuc());
+                String km = ctkm_bus.layTenKhuyenMaiTheoMa(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+                String hienThiKM = null;
+                if (km != null) {
+                    hienThiKM = km;
+                } else {
+                    hienThiKM = "Không giảm giá";
+                }
+                if (matchesSearchTerm(sp, dieuKien)) {
+                    model.addRow(new Object[]{sp.getMaSP(), sp.getTenSP(), sp.getKichThuoc(),
+                        sp.getMauSac().toString(), formattedDonGia, sp.getTinhTrang().toString(),
+                        sp.getSoLuongTonKho(), tenChatLieu, tenThuongHieu, tenDanhMuc,
+                        hienThiKM, sp.getImgUrl()});
+                    kt = true;
+                }
             }
-            if (matchesSearchTerm(sp, dieuKien)) {
-                model.addRow(new Object[]{sp.getMaSP(), sp.getTenSP(), sp.getKichThuoc(),
-                    sp.getMauSac().toString(), formattedDonGia, sp.getTinhTrang().toString(),
-                    sp.getSoLuongTonKho(), tenChatLieu, tenThuongHieu, tenDanhMuc,
-                    hienThiKM, sp.getImgUrl()});
+            if(!kt){
+                JOptionPane.showMessageDialog(null, "Không tìm thấy sản phẩm");
+                lamMoi();
             }
         }
     }
@@ -732,10 +745,10 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         cbo_KichThuoc.setSelectedItem("S");
         cbo_MauSac.setSelectedItem("Trắng");
         cbo_DanhMuc.setSelectedIndex(0);
-        cbo_TinhTrang.setSelectedItem("Đang bán");
+        cbo_TinhTrang.setSelectedItem("Hết hàng");
         txt_MaSanPham_Search.setText("");
         cbo_KhuyenMai.removeAllItems();
-        duaDuLieuVaoComboBox(cbo_KhuyenMai, ctkm_bus.getallCTKMtheoLoaiKM("GGSP"), "TenCTKM");
+        duaDuLieuVaoComboBox(cbo_KhuyenMai, ctkm_bus.getAllCTKMTheoLoaiKMVaTinhTrang("GGSP", "Còn"), "TenCTKM");
         cbo_KhuyenMai.addItem("Không giảm giá");
         cbo_KhuyenMai.setSelectedItem("Không giảm giá");
         model.setRowCount(0);
@@ -745,6 +758,17 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         duongDanAnh = null;
         lbl_AnhSanPham.setText("");
         btn_Them.setEnabled(true);
+        ArrayList<SanPhamEntity> dsSP = sp_bus.getAllSanPham();
+        for (SanPhamEntity sp : dsSP) {
+            if (sp.getSoLuongTonKho() > 0 && sp.getTinhTrang() == TinhTrangSPEnum.HETHANG) {
+                sp_bus.capNhatTinhTrang(sp.getMaSP(), TinhTrangSPEnum.DANGBAN);
+            }
+            if (sp.getSoLuongTonKho() == 0 && sp.getTinhTrang() == TinhTrangSPEnum.DANGBAN) {
+                {
+                    sp_bus.capNhatTinhTrang(sp.getMaSP(), TinhTrangSPEnum.HETHANG);
+                }
+            }
+        }
         loadDuLieuTuDataLenTable();
     }
 
@@ -794,7 +818,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                             tinhTrang = TinhTrangSPEnum.NGUNGBAN;
                         } else if (cbo_TinhTrang.getSelectedItem().equals("Hết hàng")) {
                             tinhTrang = TinhTrangSPEnum.HETHANG;
-                        } 
+                        }
                         int soLuongTonKho = Integer.parseInt(txt_SoLuongTonKho.getText());
                         String tenChatLieu = cbo_ChatLieu.getSelectedItem().toString();
                         String maChatLieu = chatLieu_bus.layMaChatLieuTheoTen(tenChatLieu);
@@ -1045,12 +1069,16 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                     double donGia = excelDonGia.getNumericCellValue();
                     DecimalFormat decimalFormat = new DecimalFormat();
                     String formattedDonGia = decimalFormat.format(donGia) + " VNĐ";
+                    String tinhTrang = excelTinhTrang.getStringCellValue().trim();
+                    if (soLuongTonKho == 0 && "Đang bán".equals(tinhTrang)) {
+                        tinhTrang = "Hết hàng";
+                    }
                     if (existingRow != -1) {
                         model.setValueAt(excelTenSP.getStringCellValue(), existingRow, 1);
                         model.setValueAt(excelKichThuoc.getStringCellValue(), existingRow, 2);
                         model.setValueAt(excelMauSac, existingRow, 3);
                         model.setValueAt(formattedDonGia, existingRow, 4);
-                        model.setValueAt(excelTinhTrang, existingRow, 5);
+                        model.setValueAt(tinhTrang, existingRow, 5);
                         model.setValueAt(soLuongTonKho, existingRow, 6);
                         model.setValueAt(excelChatLieu, existingRow, 7);
                         model.setValueAt(excelThuongHieu, existingRow, 8);
@@ -1059,7 +1087,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                         model.setValueAt(duongDanAnh, existingRow, 11);
                     } else {
                         maSanPhamSet.add(maSanPham);
-                        model.addRow(new Object[]{maSanPham, excelTenSP, excelKichThuoc, excelMauSac, formattedDonGia, excelTinhTrang, soLuongTonKho, excelChatLieu, excelThuongHieu, excelDanhMuc, khuyenMai, duongDanAnh});
+                        model.addRow(new Object[]{maSanPham, excelTenSP, excelKichThuoc, excelMauSac, formattedDonGia, tinhTrang, soLuongTonKho, excelChatLieu, excelThuongHieu, excelDanhMuc, khuyenMai, duongDanAnh});
                     }
                 }
                 JOptionPane.showMessageDialog(null, "Nhập thành công");
@@ -1156,39 +1184,48 @@ public class SanPham_JPanel extends javax.swing.JPanel {
 
     //Hàm kiểm tra sản phẩm có chứa tiêu chí tìm kiếm không
     private boolean matchesSearchTerm(SanPhamEntity sanPham, String search) {
-        if (sanPham.getMaSP().contains(search)
-                || sanPham.getTenSP().contains(search)
-                || sanPham.getKichThuoc().toString().contains(search)
-                || sanPham.getMauSac().toString().contains(search)
-                || Double.toString(sanPham.getDonGia()).contains(search)
-                || sanPham.getTinhTrang().toString().contains(search)
-                || Integer.toString(sanPham.getSoLuongTonKho()).contains(search)) {
+        String lowercaseSearch = search.toLowerCase(); // Chuyển chuỗi tìm kiếm về chữ thường
+
+        if (sanPham.getMaSP().toLowerCase().contains(lowercaseSearch)
+                || sanPham.getTenSP().toLowerCase().contains(lowercaseSearch)
+                || sanPham.getKichThuoc().toString().toLowerCase().contains(lowercaseSearch)
+                || sanPham.getMauSac().toString().toLowerCase().contains(lowercaseSearch)
+                || Double.toString(sanPham.getDonGia()).toLowerCase().contains(lowercaseSearch)
+                || sanPham.getTinhTrang().toString().toLowerCase().contains(lowercaseSearch)
+                || Integer.toString(sanPham.getSoLuongTonKho()).toLowerCase().contains(lowercaseSearch)) {
             return true;
         }
         if (sanPham.getChatLieu() != null && sanPham.getChatLieu().getMaChatLieu() != null) {
-            String tenChatLieu = chatLieu_bus.layTenChatLieuTheoMa(sanPham.getChatLieu().getMaChatLieu());
-            if (tenChatLieu.contains(search)) {
+            String tenChatLieu = chatLieu_bus.layTenChatLieuTheoMa(sanPham.getChatLieu().getMaChatLieu()).toLowerCase();
+            if (tenChatLieu.contains(lowercaseSearch)) {
                 return true;
             }
         }
         if (sanPham.getThuongHieu() != null && sanPham.getThuongHieu().getMaThuongHieu() != null) {
-            String tenThuongHieu = thuongHieu_bus.layTenThuongHieuTheoMa(sanPham.getThuongHieu().getMaThuongHieu());
-            if (tenThuongHieu.contains(search)) {
+            String tenThuongHieu = thuongHieu_bus.layTenThuongHieuTheoMa(sanPham.getThuongHieu().getMaThuongHieu()).toLowerCase();
+            if (tenThuongHieu.contains(lowercaseSearch)) {
                 return true;
             }
         }
         if (sanPham.getDanhMucSanPham() != null && sanPham.getDanhMucSanPham().getMaDanhMuc() != null) {
-            String tenDanhMuc = danhMucSanPham_bus.layTenDanhMucTheoMa(sanPham.getDanhMucSanPham().getMaDanhMuc());
-            if (tenDanhMuc.contains(search)) {
+            String tenDanhMuc = danhMucSanPham_bus.layTenDanhMucTheoMa(sanPham.getDanhMucSanPham().getMaDanhMuc()).toLowerCase();
+            if (tenDanhMuc.contains(lowercaseSearch)) {
                 return true;
             }
         }
         if (sanPham.getChuongTrinhKhuyenMai() != null && sanPham.getChuongTrinhKhuyenMai().getMaCTKM() != null) {
-            String tenCTKM = ctkm_bus.layTenKhuyenMaiTheoMa(sanPham.getChuongTrinhKhuyenMai().getMaCTKM());
-            if (tenCTKM.contains(search)) {
+            String tenCTKM = ctkm_bus.layTenKhuyenMaiTheoMa(sanPham.getChuongTrinhKhuyenMai().getMaCTKM()).toLowerCase();
+            if (tenCTKM.contains(lowercaseSearch)) {
                 return true;
             }
         }
+        if (sanPham.getChuongTrinhKhuyenMai() == null || sanPham.getChuongTrinhKhuyenMai().getMaCTKM() == null) {
+            String km = "Không giảm giá".toLowerCase();
+            if (km.contains(lowercaseSearch)) {
+                return true;
+            }
+        }
+
         return false;
     }
 

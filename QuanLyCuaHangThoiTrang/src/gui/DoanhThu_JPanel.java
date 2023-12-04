@@ -66,7 +66,7 @@ public class DoanhThu_JPanel extends javax.swing.JPanel {
     }
 
     public void DocDuLieuLenTable() {
-        String month = String.valueOf(monthChooser.getMonth() + 1);
+        String month = String.valueOf(monthChooser.getMonth()+1);
         String nam = String.valueOf(spin_nam.getValue());
         System.out.println("Tháng " + month + nam);
         ArrayList<Object[]> ds = tkbus.getListDoanhThuTheoThangvaNam(month, nam);

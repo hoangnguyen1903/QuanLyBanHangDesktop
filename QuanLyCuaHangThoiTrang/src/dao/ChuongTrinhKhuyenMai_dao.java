@@ -396,4 +396,37 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
         return dsctkm;
     }
 
+    @Override
+    public ArrayList<ChuongTrinhKhuyenMaiEntity> getAllCTKMTheoLoaiKMVaTinhTrang(String loaiKM, String tinhTrang) {
+        ArrayList<ChuongTrinhKhuyenMaiEntity> dsctkm = new ArrayList<>();
+        try {
+            ConnectDB.getInstance().connect();
+            Connection con = ConnectDB.getConnection();
+            PreparedStatement stmt = null;
+            String sql = "select * from ChuongTrinhKhuyenMai where maLoaiCTKM = ? and tinhTrang=?";
+            stmt =con.prepareStatement(sql);
+            stmt.setString(1, loaiKM);
+            stmt.setString(2, tinhTrang);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){
+                 String maKM = rs.getString("maCTKM");
+                String ten = rs.getString("tenCTKM");
+                String maLoaiKM = rs.getString("maLoaiCTKM");
+                LoaiKhuyenMaiEntity lkm = new LoaiKhuyenMaiEntity(maLoaiKM);
+                double sotienTT = rs.getDouble("soTienToiThieu");
+                double sotienTD = rs.getDouble("soTienToiDa");
+                int giamgia = rs.getInt("giamGia");
+                Date ngaybatdau = rs.getDate("ngayBatDau");
+                Date ngayketthuc = rs.getDate("ngayKetThuc");
+                String tinhTrangKM = rs.getString("tinhTrang");
+//                ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(ma, ten, sotienTT, giamgia, ngaybatdau, ngayketthuc);
+                ChuongTrinhKhuyenMaiEntity ctkm = new ChuongTrinhKhuyenMaiEntity(maKM, ten, lkm, sotienTT, sotienTD, giamgia, ngaybatdau, ngayketthuc, tinhTrangKM);
+                dsctkm.add(ctkm);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dsctkm;
+    }
+
 }

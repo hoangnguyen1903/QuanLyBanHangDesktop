@@ -7,6 +7,7 @@ package bus;
 import Interface.SanPham_Interface;
 import dao.SanPham_dao;
 import entity.SanPhamEntity;
+import entity.TinhTrangSPEnum;
 import java.util.ArrayList;
 
 /**
@@ -67,6 +68,11 @@ public class SanPham_bus implements SanPham_Interface{
     @Override
     public void capNhatKhuyenMai() {
         sp_dao.capNhatKhuyenMai();
+    }
+
+    @Override
+    public void capNhatTinhTrang(String maSP, TinhTrangSPEnum tinhTrangDangBan) {
+        sp_dao.capNhatTinhTrang(maSP, tinhTrangDangBan);
     }
     
 }
