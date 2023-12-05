@@ -287,7 +287,7 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
                         else {
                             XoahetDuLieuTrenTable();
                         for (HoaDonEntity hd : ds) {
-                            addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getNgayLapHD(),hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan()});
+                            addRows(new Object[]{hd.getMaHD(),hd.getKhachHang().getMaKH(),hd.getNhanVien().getMaNV(),hd.getChuongTrinhKM().getMaCTKM(),hd.getNgayLapHD(),hd.getTienKhuyenMai(), hd.getTongTien(), hd.getTienThanhToan(),hd.getTinhTrang()});
                         }
                         }
                         }

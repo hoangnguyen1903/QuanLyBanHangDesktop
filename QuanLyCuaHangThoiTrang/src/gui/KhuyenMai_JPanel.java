@@ -203,7 +203,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
            
             JOptionPane.showMessageDialog(null, "Thêm thành công !");
             LamMoi();
-            addRows(new Object[]{ctkm.getMaCTKM(),ctkm.getMaLoaiKM().getMaLoaiKM(), ctkm.getTenCTKM(),ctkm.getSoTienToiDa(), ctkm.getSoTienToiThieu(), ctkm.getGiamGia(), ctkm.getNgayBatDau(), ctkm.getNgayKetThuc(),ctkm.getTinhTrang()});
+            addRows(new Object[]{ctkm.getMaCTKM(),ctkm.getMaLoaiKM().getMaLoaiKM(), ctkm.getTenCTKM(), ctkm.getSoTienToiThieu(),ctkm.getSoTienToiDa(), ctkm.getGiamGia(), ctkm.getNgayBatDau(), ctkm.getNgayKetThuc(),ctkm.getTinhTrang()});
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Trùng mã");
