@@ -340,7 +340,7 @@ public class ChuongTrinhKhuyenMai_dao implements ChuongTrinhKhuyenMai_Interface 
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             PreparedStatement ps = null;
-            String sql = "SELECT maCTKM FROM ChuongTrinhKhuyenMai WHERE tenCTKM = ?";
+            String sql = "SELECT maCTKM FROM ChuongTrinhKhuyenMai WHERE tenCTKM = ? AND tinhTrang=N'Còn'";
             ps = con.prepareStatement(sql);
             ps.setString(1, tenDanhMuc);
             ResultSet rs = ps.executeQuery();
