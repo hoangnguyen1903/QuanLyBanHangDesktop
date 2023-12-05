@@ -415,7 +415,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Số điện thoại phải có 10 ký số và thuộc quốc gia Việt Nam!");
             return false;
         }
-        else if (!diaChi.matches("^[A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ,]*)*$") && diaChi.length() <= 50) {
+        else if (!diaChi.matches("^([A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ,]*))*|([a-zA-Z0-9.]+)+$") && diaChi.length() > 50) {
             JOptionPane.showMessageDialog(this, "Địa chỉ tối đa 50 kí tự"
                     + "!");
             return false;
@@ -472,6 +472,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
         }
         txt_SDT.setText(tableModel.getValueAt(rowSeleted, 3) + "");
         txt_DiaChi.setText(tableModel.getValueAt(rowSeleted, 4) + "");
+        btn_Them.setEnabled(false);
     }//GEN-LAST:event_table_KhachHangMouseClicked
 
     private void btn_CapNhatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CapNhatMouseClicked
@@ -480,10 +481,14 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 
     private void btn_TimKiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_TimKiemMouseClicked
         String id = txt_NhapSDT.getText();
-        if (id.isBlank()) JOptionPane.showMessageDialog(this, "Bạn chưa nhập số điện thoại của kháchc hàng!");
+        if (id.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa nhập số điện thoại của khách hàng!");
+            return;
+        }
         KhachHangEntity kh = bus.findOne(id);
         if (kh == null) {
             JOptionPane.showMessageDialog(this, "Khách hàng không tồn tại!");
+            return;
         }
         txt_MaKH.setText(kh.getMaKH());
         txt_HoTen.setText(kh.getHoTen());
@@ -518,6 +523,7 @@ public class KhachHang_JPanel extends javax.swing.JPanel {
 
     private void btn_LamMoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_LamMoiMouseClicked
         refresh();
+        btn_Them.setEnabled(true);
     }//GEN-LAST:event_btn_LamMoiMouseClicked
 
     private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed

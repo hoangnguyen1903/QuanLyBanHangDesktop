@@ -223,7 +223,7 @@ public class ThongKeNVKH_Panel extends javax.swing.JPanel {
             }
             else title = "Top 5 khách hàng có tổng tiền mua hàng nhiều nhất" + " năm " + spin_nam.getYear();
         }
-        JFreeChart barchart = ChartFactory.createBarChart(title, "Mã nhân viên", "Tiền mua (triệu VNĐ)", barchardata, PlotOrientation.VERTICAL, false, true, false);
+        JFreeChart barchart = ChartFactory.createBarChart(title, "Mã kháchh hàng", "Tiền mua (triệu VNĐ)", barchardata, PlotOrientation.VERTICAL, false, true, false);
 
         CategoryPlot barchst = barchart.getCategoryPlot();
         barchst.setRangeCrosshairPaint(Color.ORANGE);
