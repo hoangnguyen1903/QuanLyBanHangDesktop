@@ -281,13 +281,29 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         }
     }
     
-    private String SetTinhTrang(Date dateKT){
-        Date datenow = new Date();
-        if(datenow.after(dateKT)){
-            return "Đã hết";
-        }
-        
-        return "Còn";
+    private String SetTinhTrang(Date dateKT){ 
+//        Date datenow = new Date();
+//        if(datenow.after(dateKT)){
+//            return "Đã hết";
+//        }
+//        
+//        return "Còn";
+    Date datenow = new Date(); // Lấy ngày hiện tại
+
+    Calendar calendarNow = Calendar.getInstance();
+    calendarNow.setTime(datenow);
+
+    Calendar calendarKT = Calendar.getInstance();
+    calendarKT.setTime(dateKT);
+
+    // Kiểm tra ngày
+    if (calendarNow.get(Calendar.YEAR) > calendarKT.get(Calendar.YEAR) ||
+        (calendarNow.get(Calendar.YEAR) == calendarKT.get(Calendar.YEAR) &&
+         calendarNow.get(Calendar.DAY_OF_YEAR) > calendarKT.get(Calendar.DAY_OF_YEAR))) {
+        return "Đã hết";
+    }
+
+    return "Còn";
     }
     
     private boolean CheckValid(){
@@ -667,6 +683,8 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setFocusable(false);
+        jTable1.setRequestFocusEnabled(false);
         jTable1.setModel(jTable1.getModel());
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
         jTable1.getColumnModel().getColumn(1).setPreferredWidth(100);

@@ -77,4 +77,9 @@ public class ChuongTrinhKhuyenMai_bus implements ChuongTrinhKhuyenMai_Interface{
     public ArrayList<ChuongTrinhKhuyenMaiEntity> getAllCTKMTheoLoaiKMVaTinhTrang(String loaiKM, String tinhTrang) {
         return ctkm_dao.getAllCTKMTheoLoaiKMVaTinhTrang(loaiKM, tinhTrang);
     }
+
+    @Override
+    public ChuongTrinhKhuyenMaiEntity getKMTheomaHD(String maHD) {
+       return ctkm_dao.getKMTheomaHD(maHD);
+    }
 }

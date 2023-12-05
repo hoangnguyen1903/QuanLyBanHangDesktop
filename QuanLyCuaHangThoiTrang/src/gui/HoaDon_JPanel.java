@@ -16,7 +16,8 @@ import util.HoaDon_toancuc;
 public class HoaDon_JPanel extends javax.swing.JPanel {
 
     private  HoaDon_bus hdbus;
-
+    private DefaultTableModel model;
+    
     /**
      * Creates new form HoaDon_JPanel
      */
@@ -48,9 +49,18 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
 //        }
         
          hdbus = new HoaDon_bus();
-         DocDuLieuTuSQLvaoTable();
          
+//           Object [][] data ={};
+//           String [] columnNames = { "Mã Hóa Đơn", "Mã Khách Hàng", "Mã Nhân Viên", "Mã CTKM", "Ngày Lập Hóa Đơn", "Tiền Khuyến Mãi", "Tổng Tiền", "Tiền Thanh Toán", "Tình Trạng" };
+//         model=new DefaultTableModel(data, columnNames){
+//            @Override
+//            public boolean isCellEditable(int row, int column){
+//                return false;
+//                }
+//            };
+         DocDuLieuTuSQLvaoTable();
     }
+    
 
    private void DocDuLieuTuSQLvaoTable(){
        ArrayList<HoaDonEntity> listHD = hdbus.getallHoaDon();
@@ -182,14 +192,16 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
                 "Mã Hóa Đơn", "Mã Khách Hàng", "Mã Nhân Viên", "Mã CTKM", "Ngày Lập Hóa Đơn", "Tiền Khuyến Mãi", "Tổng Tiền", "Tiền Thanh Toán", "Tình Trạng"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Object.class
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
             };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        jTable1.setFocusable(false);
+        jTable1.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(jTable1);
 
         Jpanel_Table.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 1150, 550));
@@ -321,7 +333,7 @@ public class HoaDon_JPanel extends javax.swing.JPanel {
                 e.printStackTrace();
             }
     }//GEN-LAST:event_dateNgayLapPropertyChange
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Jpanel_Table;
