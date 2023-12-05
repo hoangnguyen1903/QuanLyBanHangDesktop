@@ -565,4 +565,68 @@ public class HoaDon_dao implements  Interface.HoaDon_Interface{
         }
             return dshd;
     }
+
+    @Override
+    public ArrayList<HoaDonEntity> getHoaDonTheoMaHDvaNgayLap(String maHD, java.util.Date ngayLap) {
+        try {
+            ConnectDB.getInstance().connect();
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDon_dao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement statement = null;
+        
+        try {
+            String sql = "Select * from HoaDon where maHD=? and ngayLapHD=? ";
+            statement = con.prepareStatement(sql);
+            statement.setString(1, maHD);
+            statement.setDate(2, (Date) ngayLap);
+            ResultSet rs = statement.executeQuery();
+            ArrayList<HoaDonEntity> dshd = new ArrayList<>();
+            if(rs.next()) {
+                String mahd = rs.getString("maHD");
+                String makh = rs.getString("maKH");
+                String manv = rs.getString("maNV");
+                NhanVienEntity nv = new NhanVienEntity(manv);
+                String mactkm = rs.getString("maCTKM");
+                ChuongTrinhKhuyenMaiEntity km = new ChuongTrinhKhuyenMaiEntity(mactkm);
+                Date nglap = rs.getDate("ngayLapHD");
+                double tongTien = rs.getDouble("tongTien");
+                double tienKhuyenMai = rs.getDouble("tienKhuyenMai");
+                double tienThanhToan = rs.getDouble("tienThanhToan");
+                String tinhTrang = rs.getString("tinhTrang");
+                KhachHangEntity kh = new KhachHangEntity();
+                
+                if(makh != null) {
+                    kh.setMaKH(makh);
+                    String sql_kh = "Select hoTen, soDienThoai from KhachHang where maKH=?";
+                    statement = con.prepareStatement(sql_kh);
+                    statement.setString(1, makh);
+                    
+                    rs = statement.executeQuery();
+                    if(rs.next()) {
+                        String hoTen = rs.getString("hoTen");
+                        String soDienThoai = rs.getString("soDienThoai");
+                        kh.setHoTen(hoTen);
+                        kh.setSoDienThoai(soDienThoai);
+                    }
+                }
+
+                HoaDonEntity hd = new HoaDonEntity(mahd, nglap, kh, nv, km, tienKhuyenMai, tongTien, tienThanhToan, toEnum.TinhTrangHDToEnum(tinhTrang));
+                dshd.add(hd);
+            }
+            return dshd;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if(con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(HoaDon_dao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
 }

@@ -4,6 +4,7 @@ package Interface;
 import entity.ChiTietHoaDonEntity;
 import entity.HoaDonEntity;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -16,7 +17,7 @@ public interface HoaDon_Interface {
     public double getTotalMoney(String maHD);
     public HoaDonEntity getHoaDonTheoMaHD(String maHD);
     public ArrayList<HoaDonEntity> getHoaDonTheoNgayLap(java.sql.Date ngayLap);
-//    public ArrayList<HoaDonEntity> getHoaDonTheoMaHDvaNgayLap(String maHD,java.sql.Date ngayLap);
+    public ArrayList<HoaDonEntity> getHoaDonTheoMaHDvaNgayLap(String maHD,Date ngayLap);
     
     // Nguyen Huy Hoang
     public boolean themHoaDon(HoaDonEntity hoaDon, ArrayList<ChiTietHoaDonEntity> danhSachCTHD);
