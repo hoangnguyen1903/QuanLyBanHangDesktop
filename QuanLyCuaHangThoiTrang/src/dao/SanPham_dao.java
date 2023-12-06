@@ -464,7 +464,7 @@ public class SanPham_dao implements SanPham_Interface {
             ConnectDB.getInstance().connect();
             Connection con = ConnectDB.getConnection();
             PreparedStatement ps = null;
-            String sql = "UPDATE SanPham SET maCTKM = NULL WHERE maCTKM IN (SELECT maCTKM FROM ChuongTrinhKhuyenMai WHERE ngayKetThuc < GETDATE())";
+            String sql = "UPDATE SanPham SET maCTKM = NULL WHERE maCTKM IN (SELECT maCTKM FROM ChuongTrinhKhuyenMai WHERE ngayKetThuc < SYSDATETIME() AND ngayKetThuc <> CONVERT(DATE, SYSDATETIME()))";
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
             ps.close();

@@ -3,11 +3,13 @@ package gui;
 
 import bus.ChiTietHoaDon_bus;
 import bus.ChuongTrinhKhuyenMai_bus;
+import bus.HoaDon_bus;
 import bus.KhachHang_bus;
 import bus.SanPham_bus;
 import connectDB.ConnectDB;
 import entity.ChiTietHoaDonEntity;
 import entity.ChuongTrinhKhuyenMaiEntity;
+import entity.HoaDonEntity;
 import entity.KhachHangEntity;
 import entity.SanPhamEntity;
 import java.awt.Image;
@@ -52,6 +54,7 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
     private HoaDon_JPanel HDPanel;
     private KhachHang_bus khbus;
     private ChuongTrinhKhuyenMai_bus kmbus;
+    private HoaDon_bus hdbus;
        // Định dạng số tiền sang VND
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
@@ -87,10 +90,12 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
        // Lấy Khuyến Mãi
         kmbus = new ChuongTrinhKhuyenMai_bus();
           if(!hdtc.getMaKM().equals("")){
-               ChuongTrinhKhuyenMaiEntity km = kmbus.getKMTheoma(hdtc.getMaKM());
-               if(km.getMaLoaiKM().equals("GGHD")) lbl_TextKM.setText("Khuyến mãi hóa đơn");
-               else  lbl_TextKM.setText("Khuyến mãi sản phẩm");
-               lbl_KhuyenMai.setText(km.getGiamGia()+"%");
+
+                ChuongTrinhKhuyenMaiEntity ctkm = kmbus.getKMTheomaHD(lbl_MaHoaDon.getText());
+                 
+                     lbl_KhuyenMaiHD.setText(ctkm.getGiamGia()+"%");
+
+       
           }
        }
         lbl_IConExit.addMouseListener(new MouseAdapter(){
@@ -110,16 +115,25 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
         try {
             
             String maHD = lbl_MaHoaDon.getText();
-            ArrayList<SanPhamEntity> allSP = new ArrayList<SanPhamEntity>(); // Danh sách tất cả sản phẩm
+            ArrayList<SanPhamEntity> allSP = new ArrayList<>(); // Danh sách tất cả sản phẩm
              allSP = cthdbus.getSanPhamTheoMaHD(maHD);
+              String giagoc  = "";
             for(SanPhamEntity sp: allSP){
                 listCTHD = cthdbus.getCTHDTheoMaHDvaMaSP(maHD, sp.getMaSP());
                 for(ChiTietHoaDonEntity ct: listCTHD){
                     System.out.println(sl);
-                addRows(new Object[]{sp.getMaSP(),sp.getTenSP(),sp.getKichThuoc(),sp.getMauSac(),ct.getSoLuong(), ct.getGiaGoc() ,ct.getGiaBan(),ct.getThanhTien()});
+                    
+                    if(sp.getChuongTrinhKhuyenMai().getMaCTKM()!= null){
+                        ChuongTrinhKhuyenMaiEntity ctkm = kmbus.getKMTheoma(sp.getChuongTrinhKhuyenMai().getMaCTKM());
+                         giagoc = "<html><strike>"+ct.getGiaGoc()+"</strike><sub>"+"-"+ctkm.getGiamGia()+"%"+"</sub></html>" ;
+                    }
+                    else {
+                        giagoc = ct.getGiaGoc() +"";
+                    }
+                addRows(new Object[]{sp.getMaSP(),sp.getTenSP(),sp.getKichThuoc(),sp.getMauSac(),ct.getSoLuong(),giagoc ,ct.getGiaBan(),ct.getThanhTien()});
                 }
             }
-           lblTongTien.setText(TongTien(5));
+//           lblTongTien.setText(TongTien(5));
            lbl_TienThanhToan.setText(TongTien(7));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn hoá đơn cần xem !");
@@ -145,6 +159,14 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
                 tt += Double.parseDouble(table.getValueAt(i, col).toString());
             }
 //            lblTongTien.setText(tt+" đ");
+        String giamKMHD = lbl_KhuyenMaiHD.getText().replace("%", "");
+        double stg = tt * (Double.parseDouble(giamKMHD))/100;
+          ChuongTrinhKhuyenMaiEntity ctkm = kmbus.getKMTheomaHD(lbl_MaHoaDon.getText());
+          if(ctkm != null){
+              if(ctkm.getSoTienToiDa() < stg) stg = ctkm.getSoTienToiDa();
+          }
+          
+        tt = tt - stg;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -169,15 +191,13 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
         lbl_NgayLapHoaDon = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        lblTongTien = new javax.swing.JLabel();
-        lbl_TextKM = new javax.swing.JLabel();
-        lbl_KhuyenMai = new javax.swing.JLabel();
         btn_XacNhan = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         lbl_SDT = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         lbl_TienThanhToan = new javax.swing.JLabel();
+        lbl_TextKM1 = new javax.swing.JLabel();
+        lbl_KhuyenMaiHD = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -260,20 +280,6 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 760, 240));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jLabel3.setText("Tổng tiền giá gốc");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, 110, 30));
-
-        lblTongTien.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jPanel2.add(lblTongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 490, 100, 30));
-
-        lbl_TextKM.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        lbl_TextKM.setText("Khuyến Mãi");
-        jPanel2.add(lbl_TextKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 530, 120, 30));
-
-        lbl_KhuyenMai.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jPanel2.add(lbl_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 530, 100, 30));
-
         btn_XacNhan.setBackground(new java.awt.Color(0, 51, 51));
         btn_XacNhan.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         btn_XacNhan.setForeground(new java.awt.Color(255, 255, 255));
@@ -293,9 +299,19 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
         jPanel2.add(lbl_SDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 90, 30));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jLabel5.setText("Tiền phải  thanh toán");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 490, 130, -1));
+        jLabel5.setText("Tiền phải  thanh toán:");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 480, 130, 30));
+
+        lbl_TienThanhToan.setText("0");
         jPanel2.add(lbl_TienThanhToan, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 480, 140, 30));
+
+        lbl_TextKM1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        lbl_TextKM1.setText("Khuyến Mãi Hóa Đơn");
+        jPanel2.add(lbl_TextKM1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, 120, 30));
+
+        lbl_KhuyenMaiHD.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        lbl_KhuyenMaiHD.setText("0");
+        jPanel2.add(lbl_KhuyenMaiHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 490, 100, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 800, 680));
 
@@ -336,7 +352,6 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
     private javax.swing.JButton btn_XacNhan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -346,15 +361,14 @@ public class ChiTietHoaDon_GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblTongTien;
     private javax.swing.JLabel lbl_IConExit;
-    private javax.swing.JLabel lbl_KhuyenMai;
+    private javax.swing.JLabel lbl_KhuyenMaiHD;
     private javax.swing.JLabel lbl_MaHoaDon;
     private javax.swing.JLabel lbl_MaKhachHang;
     private javax.swing.JLabel lbl_MaNhanVien;
     private javax.swing.JLabel lbl_NgayLapHoaDon;
     private javax.swing.JLabel lbl_SDT;
-    private javax.swing.JLabel lbl_TextKM;
+    private javax.swing.JLabel lbl_TextKM1;
     private javax.swing.JLabel lbl_TienThanhToan;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables

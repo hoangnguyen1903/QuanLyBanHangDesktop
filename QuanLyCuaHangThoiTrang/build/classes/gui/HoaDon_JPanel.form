@@ -247,7 +247,11 @@
             <Component class="javax.swing.JTable" name="jTable1">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+<<<<<<< HEAD
                   <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;&#xa;    },&#xa;    new String [] {&#xa;        &quot;M&#xe3; H&#xf3;a &#x110;&#x1a1;n&quot;, &quot;M&#xe3; Kh&#xe1;ch H&#xe0;ng&quot;, &quot;M&#xe3; Nh&#xe2;n Vi&#xea;n&quot;, &quot;M&#xe3; CTKM&quot;, &quot;Ng&#xe0;y L&#x1ead;p H&#xf3;a &#x110;&#x1a1;n&quot;, &quot;Ti&#x1ec1;n Khuy&#x1ebf;n M&#xe3;i&quot;, &quot;T&#x1ed5;ng Ti&#x1ec1;n&quot;, &quot;Ti&#x1ec1;n Thanh To&#xe1;n&quot;, &quot;T&#xec;nh Tr&#x1ea1;ng&quot;&#xa;    }&#xa;)&#xa;    {&#xa;        Class[] types = new Class [] {&#xa;            java.lang.Object.class&#xa;&#xa;            , java.lang.Object.class&#xa;&#xa;            , java.lang.Object.class&#xa;&#xa;            , java.lang.Object.class&#xa;&#xa;            , java.lang.Object.class&#xa;&#xa;            , java.lang.Double.class&#xa;&#xa;            , java.lang.Double.class&#xa;&#xa;            , java.lang.Double.class&#xa;&#xa;            , java.lang.Object.class&#xa;&#xa;        };&#xa;&#xa;        public Class getColumnClass(int columnIndex) {&#xa;            return types [columnIndex];&#xa;        }&#xa;    }&#xa;&#xa;    " type="code"/>
+=======
+                  <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;&#xa;    },&#xa;    new String [] {&#xa;        &quot;M&#xe3; H&#xf3;a &#x110;&#x1a1;n&quot;, &quot;M&#xe3; Kh&#xe1;ch H&#xe0;ng&quot;, &quot;M&#xe3; Nh&#xe2;n Vi&#xea;n&quot;, &quot;M&#xe3; CTKM&quot;, &quot;Ng&#xe0;y L&#x1ead;p H&#xf3;a &#x110;&#x1a1;n&quot;, &quot;Ti&#x1ec1;n Khuy&#x1ebf;n M&#xe3;i&quot;, &quot;T&#x1ed5;ng Ti&#x1ec1;n&quot;, &quot;Ti&#x1ec1;n Thanh To&#xe1;n&quot;, &quot;T&#xec;nh Tr&#x1ea1;ng&quot;&#xa;    }&#xa;) {&#xa;    boolean[] canEdit = new boolean [] {&#xa;        false, false, false, false, false, false, false, false, false&#xa;    };&#xa;&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex) {&#xa;        return canEdit [columnIndex];&#xa;    }&#xa;}" type="code"/>
+>>>>>>> 20e6683ae5166785460f03362150dfac0f68f7cb
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
@@ -293,6 +297,8 @@
                     </Column>
                   </TableColumnModel>
                 </Property>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="requestFocusEnabled" type="boolean" value="false"/>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
