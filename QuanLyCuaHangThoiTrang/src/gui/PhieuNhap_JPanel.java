@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -37,7 +38,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -640,16 +647,16 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         excelFileChooser.setFileFilter(fnef);
         int excelChooser = excelFileChooser.showOpenDialog(null);
         if (excelChooser == JFileChooser.APPROVE_OPTION) {
-            Set<Object> maMHNSet = new HashSet<>();
+//            Set<Object> maMHNSet = new HashSet<>();
             try {
                 excelFile = excelFileChooser.getSelectedFile();
                 excelFIS = new FileInputStream(excelFile);
                 excelBIS = new BufferedInputStream(excelFIS);
                 excelImportToJTable = new XSSFWorkbook(excelBIS);
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 XSSFSheet excelSheet = excelImportToJTable.getSheetAt(0);
-
-                for (int row = 1; row <= excelSheet.getLastRowNum(); row++) {
+                DateTimeFormatter formatterExcel = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                DateTimeFormatter formatterTable = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                for (int row = 1; row < excelSheet.getPhysicalNumberOfRows(); row++) {
                     XSSFRow excelRow = excelSheet.getRow(row);
                     XSSFCell excelMaMHN = excelRow.getCell(0);
                     // Kiểm tra xem mã mặt hàng nhập đã tồn tại trong tập hợp chưa
@@ -663,27 +670,34 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
                         }
                     }
 
+                    XSSFCell excelTenNCC = excelRow.getCell(1);
+                    XSSFCell excelMaSP = excelRow.getCell(2);
+                    XSSFCell excelSoLuongNhap = excelRow.getCell(3);
+                    XSSFCell excelNgayNhap = excelRow.getCell(4);
+                    int soLuongNhap = (int) excelSoLuongNhap.getNumericCellValue();
+                    String ngayNhapString = "";
+                    if (excelNgayNhap.getCellType() == CellType.STRING) {
+                        // Nếu kiểu dữ liệu của cell là String
+                        ngayNhapString = excelNgayNhap.getStringCellValue();
+                        LocalDate ngayNhap = LocalDate.parse(ngayNhapString, formatterExcel);
+                        ngayNhapString = ngayNhap.format(formatterTable);
+                    } else if (DateUtil.isCellDateFormatted(excelNgayNhap)) {
+                        // Nếu kiểu dữ liệu của cell là ngày
+                        Date ngayNhapDate = excelNgayNhap.getDateCellValue();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        ngayNhapString = sdf.format(ngayNhapDate);
+                    }
+                    LocalDate ngayNhap = LocalDate.parse(ngayNhapString);
+
                     if (existingRow != -1) {
-                        // Mặt hàng đã tồn tại, cập nhật các giá trị khác
-                        XSSFCell excelTenNCC = excelRow.getCell(1);
-                        XSSFCell excelMaSP = excelRow.getCell(2);
-                        XSSFCell excelSoLuongNhap = excelRow.getCell(3);
-                        XSSFCell excelNgayNhap = excelRow.getCell(4);
-                        int soLuongNhap = (int) excelSoLuongNhap.getNumericCellValue();
-                        LocalDate ngayNhap = LocalDate.parse(excelNgayNhap.getStringCellValue(), formatter);
+                        //Mã mặt hàng đã tồn tại, cập nhật các giá trị
                         model.setValueAt(excelMaSP.getStringCellValue(), existingRow, 1);
                         model.setValueAt(excelTenNCC.getStringCellValue(), existingRow, 2);
                         model.setValueAt(soLuongNhap, existingRow, 3);
                         model.setValueAt(ngayNhap, existingRow, 4);
                     } else {
-                        maMHNSet.add(maMHN);
-                        XSSFCell excelTenNCC = excelRow.getCell(1);
-                        XSSFCell excelMaSP = excelRow.getCell(2);
-                        XSSFCell excelSoLuongNhap = excelRow.getCell(3);
-                        XSSFCell excelNgayNhap = excelRow.getCell(4);
-                        int soLuongNhap = (int) excelSoLuongNhap.getNumericCellValue();
-                        LocalDate ngayNhap = LocalDate.parse(excelNgayNhap.getStringCellValue(), formatter);
-
+                        //Mã mặt hàng chưa tồn tại, thêm vào table
+//                        maMHNSet.add(maMHN);
                         model.addRow(new Object[]{maMHN, excelMaSP, excelTenNCC, soLuongNhap, ngayNhap});
                     }
                 }
@@ -707,8 +721,8 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
             }
         }
     }
-
     //Hàm kiểm tra mã sản phẩm đã có trong table hay chưa
+
     private boolean kiemTraMaMHNTontaiTrongTable(DefaultTableModel model, String maMHN) {
         for (int row = 0; row < model.getRowCount(); row++) {
             if (model.getValueAt(row, 0).equals(maMHN)) {
@@ -732,6 +746,8 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
                 }
                 XSSFWorkbook workbook = new XSSFWorkbook();
                 XSSFSheet sheet = workbook.createSheet("Danh sách phiếu nhập hàng");
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 XSSFRow row = null;
                 Cell cell = null;
                 row = sheet.createRow(0);
@@ -754,7 +770,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
                     row.createCell(1).setCellValue(tenNCC);
                     row.createCell(2).setCellValue(mhn.getSanPham().getMaSP());
                     row.createCell(3).setCellValue(mhn.getSoLuongNhap());
-                    row.createCell(4).setCellValue(mhn.getNgayNhap().toString());
+                    row.createCell(4).setCellValue(mhn.getNgayNhap().format(formatter));
                 }
                 File f = new File(filePath);
                 try (FileOutputStream fos = new FileOutputStream(f)) {
@@ -816,7 +832,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Số lượng nhập phải lớn hơn 0");
             spinner_SoLuong.requestFocus();
             return false;
-        } 
+        }
         return true;
     }
 
