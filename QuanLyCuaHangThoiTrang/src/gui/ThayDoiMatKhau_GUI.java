@@ -221,10 +221,10 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
                  JOptionPane.showMessageDialog(null, "Tài khoản không được rổng");
                  return;
             }else if(oldPass.trim().length() ==0){
-                 JOptionPane.showMessageDialog(null, "chưa nhập mật khẩu hiện tại");
+                 JOptionPane.showMessageDialog(null, "Chưa nhập mật khẩu hiện tại");
                  return;
             }else if(newPass.trim().length() ==0){
-                 JOptionPane.showMessageDialog(null, "chưa nhập mật khẩu mới");
+                 JOptionPane.showMessageDialog(null, "Chưa nhập mật khẩu mới");
                  return;
             }
             
@@ -235,13 +235,12 @@ public class ThayDoiMatKhau_GUI extends javax.swing.JFrame {
                 Logger.getLogger(ThayDoiMatKhau_GUI.class.getName()).log(Level.SEVERE, null, ex);
             }
             if(tk == null){
-                JOptionPane.showMessageDialog(null, "Tài khoản và mật khẩu không khớp");
+                JOptionPane.showMessageDialog(null, "Mật khẩu hiện tại không chính xác");
             }else {
                 
                 entity.TaiKhoanEntity newTK = new  TaiKhoanEntity(tenTaiKhoan, encodeNewPass);
                 if(tk_dao.lamMoiMatKhau(newTK) == true){
-                    JOptionPane.showMessageDialog(null, "đồi mật khẩu thành công");
-                    jlf_TenTaiKhoan.setText("");
+                    JOptionPane.showMessageDialog(null, "Đồi mật khẩu thành công");
                     jpf_MatKhauHienTai.setText("");
                     jpf_MatKhauMoi.setText("");
                 }

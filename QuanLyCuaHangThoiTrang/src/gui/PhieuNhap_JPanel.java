@@ -447,7 +447,7 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         ArrayList<MatHangNhapEntity> dsMHN = mhn_bus.timKiemMHN(ngayTimKiem);
         if (dsMHN.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Không có phiếu đặt hàng");
+            JOptionPane.showMessageDialog(null, "Không có phiếu nhập hàng");
             lamMoi();
         } else {
             for (MatHangNhapEntity mhn : dsMHN) {
@@ -793,12 +793,6 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
     private boolean validata() {
         String maSP = txt_MaSanPham.getText().trim();
         ArrayList<SanPhamEntity> ketQuaTimKiem = sp_bus.timSanPham(maSP);
-        int soLuongNhap = (int) spinner_SoLuong.getValue();
-        if (soLuongNhap <= 0) {
-            JOptionPane.showMessageDialog(null, "Số lượng nhập phải lớn hơn 0");
-            spinner_SoLuong.requestFocus();
-            return false;
-        }
         if (maSP.isBlank()) {
             JOptionPane.showMessageDialog(null, "Mã sản phẩm không được để trống");
             txt_MaSanPham.requestFocus();
@@ -817,6 +811,12 @@ public class PhieuNhap_JPanel extends javax.swing.JPanel {
             txt_MaSanPham.selectAll();
             return false;
         }
+        int soLuongNhap = (int) spinner_SoLuong.getValue();
+        if (soLuongNhap <= 0) {
+            JOptionPane.showMessageDialog(null, "Số lượng nhập phải lớn hơn 0");
+            spinner_SoLuong.requestFocus();
+            return false;
+        } 
         return true;
     }
 
