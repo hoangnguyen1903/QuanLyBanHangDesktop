@@ -585,10 +585,14 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
 
     private void btn_TimKiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_TimKiemMouseClicked
         String id = txt_NhapSDT.getText();
-        if (id.isBlank()) JOptionPane.showMessageDialog(this, "Bạn chưa nhập số điện thoại của nhân viên!");
+        if (id.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa nhập số điện thoại của nhân viên!");
+            return;
+        }
         NhanVienEntity nv = bus.findOne(id);
         if (nv == null) {
             JOptionPane.showMessageDialog(this, "Nhân viên không tồn tại!");
+            return;
         }
         txt_MaNV.setText(nv.getMaNV());
         txt_HoTen.setText(nv.getHoTen());
@@ -767,7 +771,7 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Số điện thoại phải có 10 ký số và thuộc quốc gia Việt Nam!");
             return false;
         }
-        else if (!email.matches("^[\\w\\.-]+@[\\w\\.-]+\\.\\w+$")) {
+        else if (!diaChi.matches("^([A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]*(?:[ ][A-ZÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ][a-zàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ,]*))*|([a-zA-Z0-9.]+)+$") && diaChi.length() > 50) {
             JOptionPane.showMessageDialog(this, "Địa chỉ email không hợp lệ!");
             return false;
         }
@@ -786,9 +790,9 @@ public class NhanVien_JPanel extends javax.swing.JPanel {
         txt_NhapSDT.setText("");
         buttonGroup1.clearSelection();
         tableModel.setRowCount(0);
-        cbo_CaLamViec.setSelectedIndex(-1);
-        cbo_ChucVu.setSelectedIndex(-1);
-        cbo_TinhTrang.setSelectedIndex(-1);
+        cbo_CaLamViec.setSelectedIndex(0);
+        cbo_ChucVu.setSelectedIndex(0);
+        cbo_TinhTrang.setSelectedIndex(0);
         txt_date.setDate(null);
         txt_email.setText("");
         loadData();

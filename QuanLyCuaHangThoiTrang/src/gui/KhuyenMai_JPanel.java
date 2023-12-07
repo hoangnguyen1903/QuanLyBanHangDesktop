@@ -203,7 +203,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
            
             JOptionPane.showMessageDialog(null, "Thêm thành công !");
             LamMoi();
-            addRows(new Object[]{ctkm.getMaCTKM(),ctkm.getMaLoaiKM().getMaLoaiKM(), ctkm.getTenCTKM(),ctkm.getSoTienToiDa(), ctkm.getSoTienToiThieu(), ctkm.getGiamGia(), ctkm.getNgayBatDau(), ctkm.getNgayKetThuc(),ctkm.getTinhTrang()});
+            addRows(new Object[]{ctkm.getMaCTKM(),ctkm.getMaLoaiKM().getMaLoaiKM(), ctkm.getTenCTKM(), ctkm.getSoTienToiThieu(),ctkm.getSoTienToiDa(), ctkm.getGiamGia(), ctkm.getNgayBatDau(), ctkm.getNgayKetThuc(),ctkm.getTinhTrang()});
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Trùng mã");
@@ -281,13 +281,29 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         }
     }
     
-    private String SetTinhTrang(Date dateKT){
-        Date datenow = new Date();
-        if(datenow.after(dateKT)){
-            return "Đã hết";
-        }
-        
-        return "Còn";
+    private String SetTinhTrang(Date dateKT){ 
+//        Date datenow = new Date();
+//        if(datenow.after(dateKT)){
+//            return "Đã hết";
+//        }
+//        
+//        return "Còn";
+    Date datenow = new Date(); // Lấy ngày hiện tại
+
+    Calendar calendarNow = Calendar.getInstance();
+    calendarNow.setTime(datenow);
+
+    Calendar calendarKT = Calendar.getInstance();
+    calendarKT.setTime(dateKT);
+
+    // Kiểm tra ngày
+    if (calendarNow.get(Calendar.YEAR) > calendarKT.get(Calendar.YEAR) ||
+        (calendarNow.get(Calendar.YEAR) == calendarKT.get(Calendar.YEAR) &&
+         calendarNow.get(Calendar.DAY_OF_YEAR) > calendarKT.get(Calendar.DAY_OF_YEAR))) {
+        return "Đã hết";
+    }
+
+    return "Còn";
     }
     
     private boolean CheckValid(){
@@ -466,6 +482,7 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
         txtMaCTKM.setEditable(false);
         txtMaCTKM.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txtMaCTKM.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtMaCTKM.setBackground(new java.awt.Color(244, 244, 244));
         txtMaCTKM.setBorder(null);
         JPanel_ThongTinCTKM.add(txtMaCTKM, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 170, 30));
 
@@ -666,6 +683,8 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setFocusable(false);
+        jTable1.setRequestFocusEnabled(false);
         jTable1.setModel(jTable1.getModel());
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
         jTable1.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -742,7 +761,10 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
 
     private void rdo_spActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_spActionPerformed
         txtSoTienGiamTD.setEditable(false);
+        txtSoTienGiamTD.setBackground(new java.awt.Color(244, 244, 244));
         txtSoTienGiamTT.setEditable(false);
+        txtSoTienGiamTT.setBackground(new java.awt.Color(244, 244, 244));
+        
         TableColumnModel models = jTable1.getColumnModel();
         if(rdo_sp.isSelected()){
             models.getColumn(3).setWidth(0);
@@ -767,7 +789,9 @@ public class KhuyenMai_JPanel extends javax.swing.JPanel {
 
     private void rdo_hdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdo_hdActionPerformed
         txtSoTienGiamTD.setEditable(true);
+        txtSoTienGiamTD.setBackground(new java.awt.Color(255, 255, 255));
         txtSoTienGiamTT.setEditable(true);
+        txtSoTienGiamTT.setBackground(new java.awt.Color(255, 255, 255));
         TableColumnModel models = jTable1.getColumnModel();
        if(rdo_hd.isSelected()){
             models.getColumn(3).setWidth(100);
