@@ -535,7 +535,7 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Không được để trống");
             return false;
         }
-        if (!tenNCC.matches("^(\\p{L}*\\s)*\\p{L}+$")) {
+        if (!tenNCC.matches("^(\\p{L}*\\s)*[\\p{L}\\p{N}]+$")) {
             JOptionPane.showMessageDialog(null, "Tên nhà cung cấp không đúng định dạng");
             txt_TenNhaCungCap.requestFocus();
             txt_TenNhaCungCap.selectAll();
@@ -547,8 +547,7 @@ public class NhaCungCap_JPanel extends javax.swing.JPanel {
             txt_SoDienThoai.selectAll();
             return false;
         }
-
-        if (!diaChi.matches("^(\\d*\\s)*((\\p{L}*\\s)*\\p{L}+,\\s)+(\\p{L}*\\s)*\\p{L}+$")) {
+        if (!diaChi.matches("^(\\d*\\s)*(([\\p{L}\\p{N}]*\\s)*[\\p{L}\\p{N}]+,\\s)+(\\p{L}*\\s)*\\p{L}+$")) {
             JOptionPane.showMessageDialog(null, "Địa nhà cung cấp không đúng định dạng");
             txt_DiaChi.requestFocus();
             txt_DiaChi.selectAll();

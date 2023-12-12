@@ -240,7 +240,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
         panel_ThongTin.add(lbl_KichThuoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 90, 25));
 
         cbo_KichThuoc.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        cbo_KichThuoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "XS", "S", "M", "L", "XL", "XXL" }));
+        cbo_KichThuoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "XS", "S", "M", "L", "XL", "XXL", "FREESIZE" }));
         cbo_KichThuoc.setSelectedIndex(1);
         cbo_KichThuoc.setSelectedItem("S");
         panel_ThongTin.add(cbo_KichThuoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 200, 30));
@@ -595,6 +595,8 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                 kichThuoc = KichThuocEnum.XL;
             } else if (cbo_KichThuoc.getSelectedItem().equals("XXL")) {
                 kichThuoc = KichThuocEnum.XXL;
+            } else if (cbo_KichThuoc.getSelectedItem().equals("FREESIZE")) {
+                kichThuoc = KichThuocEnum.FREESIZE;
             }
             MauSacEnum mauSac = null;
             if (cbo_MauSac.getSelectedItem().equals("Trắng")) {
@@ -722,7 +724,7 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                     kt = true;
                 }
             }
-            if(!kt){
+            if (!kt) {
                 JOptionPane.showMessageDialog(null, "Không tìm thấy sản phẩm");
                 lamMoi();
             }
@@ -801,6 +803,8 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                             kichThuoc = KichThuocEnum.XL;
                         } else if (cbo_KichThuoc.getSelectedItem().equals("XXL")) {
                             kichThuoc = KichThuocEnum.XXL;
+                        } else if (cbo_KichThuoc.getSelectedItem().equals("FREESIZE")) {
+                            kichThuoc = KichThuocEnum.FREESIZE;
                         }
                         MauSacEnum mauSac = null;
                         if (cbo_MauSac.getSelectedItem().equals("Trắng")) {
@@ -1134,6 +1138,8 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                 kichThuoc = KichThuocEnum.XL;
             } else if (model.getValueAt(i, 2).toString().equals("XXL")) {
                 kichThuoc = KichThuocEnum.XXL;
+            } else if (model.getValueAt(i, 2).toString().equals("FREESIZE")) {
+                kichThuoc = KichThuocEnum.FREESIZE;
             }
             MauSacEnum mauSac = null;
             if (model.getValueAt(i, 3).toString().equals("Trắng")) {
@@ -1149,6 +1155,8 @@ public class SanPham_JPanel extends javax.swing.JPanel {
                 tinhTrang = TinhTrangSPEnum.DANGBAN;
             } else if (model.getValueAt(i, 5).toString().equals("Ngừng bán")) {
                 tinhTrang = TinhTrangSPEnum.NGUNGBAN;
+            } else if (model.getValueAt(i, 5).toString().equals("Hết hàng")) {
+                tinhTrang = TinhTrangSPEnum.HETHANG;
             }
             int soLuongTonKho = Integer.parseInt(model.getValueAt(i, 6).toString());
             String tenChatLieu = model.getValueAt(i, 7).toString();
@@ -1188,8 +1196,8 @@ public class SanPham_JPanel extends javax.swing.JPanel {
 
         if (sanPham.getMaSP().toLowerCase().contains(lowercaseSearch)
                 || sanPham.getTenSP().toLowerCase().contains(lowercaseSearch)
-                || sanPham.getKichThuoc().toString().toLowerCase().contains(lowercaseSearch)
-                || sanPham.getMauSac().toString().toLowerCase().contains(lowercaseSearch)
+                || (sanPham.getKichThuoc() != null && sanPham.getKichThuoc().toString().toLowerCase().contains(lowercaseSearch))
+                || (sanPham.getMauSac() != null && sanPham.getMauSac().toString().toLowerCase().contains(lowercaseSearch))
                 || Double.toString(sanPham.getDonGia()).toLowerCase().contains(lowercaseSearch)
                 || sanPham.getTinhTrang().toString().toLowerCase().contains(lowercaseSearch)
                 || Integer.toString(sanPham.getSoLuongTonKho()).toLowerCase().contains(lowercaseSearch)) {
@@ -1273,7 +1281,12 @@ public class SanPham_JPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Không được để trống");
             return false;
         }
-
+        if(!tenSP.matches("^(\\p{L}{1}\\p{L}*\\s)*(\\p{L}{1}\\p{L}*)$")){
+            JOptionPane.showMessageDialog(null, "Tên sản phẩm không được nhập số");
+            txt_TenSanPham.requestFocus();
+            txt_TenSanPham.selectAll();
+            return false;
+        }
         if (!donGia.matches("^[1-9]\\d*")) {
             JOptionPane.showMessageDialog(null, "Đơn giá phải lớn hơn 0, không được nhập chữ");
             txt_DonGia.requestFocus();

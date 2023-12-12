@@ -66,6 +66,8 @@ public class SanPham_dao implements SanPham_Interface {
                     kichThuocEnum = KichThuocEnum.XL;
                 } else if (kichThuoc.equals("XXL")) {
                     kichThuocEnum = KichThuocEnum.XXL;
+                } else if (kichThuoc.equals("FREESIZE")) {
+                    kichThuocEnum = KichThuocEnum.FREESIZE;
                 }
                 MauSacEnum mauSacEnum = null;
                 if (mauSac.equals("Trắng")) {
@@ -157,6 +159,8 @@ public class SanPham_dao implements SanPham_Interface {
                     kichThuoc = KichThuocEnum.XL;
                 } else if (rs.getString("kichThuoc").equals("XXL")) {
                     kichThuoc = KichThuocEnum.XXL;
+                } else if (rs.getString("kichThuoc").equals("FREESIZE")) {
+                    kichThuoc = KichThuocEnum.FREESIZE;
                 }
                 MauSacEnum mauSac = null;
                 if (rs.getString("mauSac").equals("Trắng")) {
@@ -259,6 +263,8 @@ public class SanPham_dao implements SanPham_Interface {
                     kichThuocEnum = KichThuocEnum.XL;
                 } else if (kichThuoc.equals("XXL")) {
                     kichThuocEnum = KichThuocEnum.XXL;
+                } else if (kichThuoc.equals("FREESIZE")) {
+                    kichThuocEnum = KichThuocEnum.FREESIZE;
                 }
                 MauSacEnum mauSacEnum = null;
                 if (mauSac.equals("Trắng")) {

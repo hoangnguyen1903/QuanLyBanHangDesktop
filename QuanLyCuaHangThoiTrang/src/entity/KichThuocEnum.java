@@ -1,7 +1,7 @@
 package entity;
 
 public enum KichThuocEnum {
-    XS, S, M, L, XL, XXL;
+    XS, S, M, L, XL, XXL, FREESIZE;
 
     @Override
     public String toString() {
@@ -17,7 +17,9 @@ public enum KichThuocEnum {
             case XL:
                 return "XL";
             case XXL:
-                return "XXl";
+                return "XXL";
+            case FREESIZE:
+                return "FREESIZE";
             default:
                 return null;
         }
